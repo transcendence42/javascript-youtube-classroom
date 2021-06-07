@@ -8,7 +8,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import { $, wait } from '../../@shared/utils/utils.js';
-const getModalWrapper = ({ videos }) => {
+import { searchPageModel } from '../../model/search-page/index.js';
+const getModalWrapper = ({ recentSearchItems, videos }) => {
     return `      <div class="modal">
     <div class="modal-inner p-8">
       <button class="modal-close">
@@ -25,9 +26,7 @@ const getModalWrapper = ({ videos }) => {
       </form>
       <section class="mt-2">
         <span class="text-gray-700">최근 검색어: </span>
-        <a class="chip">메이커준</a>
-        <a class="chip">우아한테크코스</a>
-        <a class="chip">우아한형제들</a>
+        ${recentSearchItems}
       </section>
       <section>
         <div class="d-flex justify-end text-gray-700">
@@ -37,6 +36,9 @@ const getModalWrapper = ({ videos }) => {
       ${videos}
     </div>
   </div>`;
+};
+const getRecentSearchItemWrapper = (items) => {
+    return items.map((x) => `<a class="chip">${x}</a>`).join('');
 };
 const getVideoWrapper = ({ videoLink, videoTitle, channelLink, channelTitle, publishedAt, }) => {
     return `<section class="video-wrapper">
@@ -140,7 +142,10 @@ const videoWrapperTMP = `<section class="video-wrapper">
                 </div>
               </article>
             </section>`;
-export const renderSearchPage = () => __awaiter(void 0, void 0, void 0, function* () {
+const getRecentSearchItem = () => {
+    return getRecentSearchItemWrapper(searchPageModel.getLocalStorageItem('recent-search'));
+};
+const renderVideos = () => __awaiter(void 0, void 0, void 0, function* () {
     var _a, _b, _c;
     // const data = await getQueryString({ q: 'bts', maxResults: '10', type: 'video' });
     let result = '';
@@ -154,10 +159,13 @@ export const renderSearchPage = () => __awaiter(void 0, void 0, void 0, function
     //   })
     // ).join('');
     result = `<div id="skeletons">` + skeletonUI.repeat(10) + `</div>`;
-    (_a = $('#app')) === null || _a === void 0 ? void 0 : _a.insertAdjacentHTML('beforeend', getModalWrapper({ videos: result }));
+    (_a = $('#app')) === null || _a === void 0 ? void 0 : _a.insertAdjacentHTML('beforeend', getModalWrapper({ recentSearchItems: getRecentSearchItem(), videos: result }));
     yield wait(3000);
     (_b = $('#skeletons')) === null || _b === void 0 ? void 0 : _b.remove();
     result = videoWrapperTMP.repeat(10);
-    console.log(result);
+    // console.log(result)
     (_c = $('.modal .modal-inner')) === null || _c === void 0 ? void 0 : _c.insertAdjacentHTML('beforeend', result);
+});
+export const renderSearchPage = () => __awaiter(void 0, void 0, void 0, function* () {
+    yield renderVideos();
 });

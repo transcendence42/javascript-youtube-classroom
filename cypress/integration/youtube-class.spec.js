@@ -20,7 +20,7 @@ describe("검색 버튼 눌렀을 때 페이지 구성", () => {
   beforeEach(()=> {
     cy.visit('/');
   })
-  it("youtube API 불러왔을 때 10개의 skeleton UI 생성 확인, () => {
+  it("youtube API 불러왔을 때 10개의 skeleton UI 생성 확인", () => {
     cy.visit('/');
     // cy.get('#search-button').click();
     // cy.get('.modal > .video-wrapper').should('have.length', 10);
@@ -33,7 +33,7 @@ describe("검색 버튼 눌렀을 때 페이지 구성", () => {
   // it("item을 불러왔을때 channelTitle, publishedAt, thumbnail, title, videoId 값 불러오기", () => {
 
   // }),
-  it("BTS 입력 후 검색버튼 누를때 최근 검색어에 BTS 추가", () => {
+  it("BTS 입력 후 검색버튼 누를때 localstorage recent-search에 최근 검색어 BTS 추가", () => {
 
   })
   it("bts 입력후 item 카드로 UI 띄우기", () => {

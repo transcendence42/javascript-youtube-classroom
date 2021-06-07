@@ -1,8 +1,9 @@
 import { ENV } from '../../@shared/constants/env.js';
 import { $, wait } from '../../@shared/utils/utils.js';
 import { getQueryString } from '../../@shared/utils/getQueryString.js';
+import { searchPageModel } from '../../model/search-page/index.js';
 
-const getModalWrapper = ({ videos }: { videos: string }): string => {
+const getModalWrapper = ({ recentSearchItems, videos }: { recentSearchItems: string; videos: string }): string => {
   return `      <div class="modal">
     <div class="modal-inner p-8">
       <button class="modal-close">
@@ -19,9 +20,7 @@ const getModalWrapper = ({ videos }: { videos: string }): string => {
       </form>
       <section class="mt-2">
         <span class="text-gray-700">최근 검색어: </span>
-        <a class="chip">메이커준</a>
-        <a class="chip">우아한테크코스</a>
-        <a class="chip">우아한형제들</a>
+        ${recentSearchItems}
       </section>
       <section>
         <div class="d-flex justify-end text-gray-700">
@@ -31,6 +30,10 @@ const getModalWrapper = ({ videos }: { videos: string }): string => {
       ${videos}
     </div>
   </div>`;
+};
+
+const getRecentSearchItemWrapper = (items: string[]): string => {
+  return items.map((x) => `<a class="chip">${x}</a>`).join('');
 };
 
 const getVideoWrapper = ({
@@ -150,7 +153,11 @@ const videoWrapperTMP = `<section class="video-wrapper">
               </article>
             </section>`;
 
-export const renderSearchPage = async () => {
+const getRecentSearchItem = (): string => {
+  return getRecentSearchItemWrapper(searchPageModel.getLocalStorageItem('recent-search'));
+};
+
+const renderVideos = async () => {
   // const data = await getQueryString({ q: 'bts', maxResults: '10', type: 'video' });
   let result = '';
 
@@ -164,10 +171,18 @@ export const renderSearchPage = async () => {
   //   })
   // ).join('');
   result = `<div id="skeletons">` + skeletonUI.repeat(10) + `</div>`;
-  $('#app')?.insertAdjacentHTML('beforeend', getModalWrapper({ videos: result }));
+
+  $('#app')?.insertAdjacentHTML(
+    'beforeend',
+    getModalWrapper({ recentSearchItems: getRecentSearchItem(), videos: result }),
+  );
   await wait(3000);
   $('#skeletons')?.remove();
   result = videoWrapperTMP.repeat(10);
-  console.log(result)
+  // console.log(result)
   $('.modal .modal-inner')?.insertAdjacentHTML('beforeend', result);
+};
+
+export const renderSearchPage = async () => {
+  await renderVideos();
 };
