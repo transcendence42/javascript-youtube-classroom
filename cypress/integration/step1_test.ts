@@ -1,3 +1,8 @@
+const searchByClickButton = (searchKeyword: string) => {
+  cy.get("#search-input").type(searchKeyword);
+  cy.get("#search-submit-button").click();
+}
+
 describe("step1 test", () => {
   beforeEach(() => {
     cy.visit("http://localhost:5500/");
@@ -12,8 +17,7 @@ describe("step1 test", () => {
 
   // it("'검색버튼'을 클릭하면, 검색 결과 최대 10개를 출력한다.", () => {
   //   cy.get("#search-button").click();
-  //   cy.get("#search-input").type("축구");
-  //   cy.get("#search-submit-button").click();
+  //   searchByClickButton("축구");
   //   cy.get("div.modal article").should("have.length", 1);
   // }); // 입력 값, 길이 수정 필요
 
@@ -37,16 +41,14 @@ describe("step1 test", () => {
 
   // it("'저장 버튼'을 클릭하면, '저장 버튼'이 삭제된다.", () => {
   //   cy.get("#search-button").click();
-  //   cy.get("#search-input").type("축구");
-  //   cy.get("#search-submit-button").click();
+  //   searchByClickButton("축구");
   //   cy.get("div.modal article:nth-child(1) button").click();
   //   cy.get("div.modal article:nth-child(1)").children('button').should("not.exist");
   // });
 
   // it("'저장 버튼'을 클릭하면 해당 영상 id가 웹 스토리지에 저장된다.", () => {
   //   cy.get("#search-button").click();
-  //   cy.get("#search-input").type("축구");
-  //   cy.get("#search-submit-button").click();
+  //   searchByClickButton("축구");
   //   cy.get("div.modal article:nth-child(1) button").click();
   //   //const temp = localStorage.getItem("data");
   //   //expect(temp).to.not.equal('temp');
@@ -54,8 +56,7 @@ describe("step1 test", () => {
 
   // it("저장된 영상의 최대 갯수는 100개이다.", () => {
   //   cy.get("#search-button").click();
-  //   cy.get("#search-input").type("축구");
-  //   cy.get("#search-submit-button").click();
+  //   searchByClickButton("축구");
   //   for (let i = 1; i <= 101; i++) {
   //     if (i % 10 === 0) {
   //       cy.get("div.modal-inner").scrollTo("bottom");
@@ -68,15 +69,13 @@ describe("step1 test", () => {
 
   // it("검색을 진행했을 때, 검색어가 최근 검색어에 포함된다.", () => {
   //   cy.get("#search-button").click();
-  //   cy.get("#search-input").type("축구");
-  //   cy.get("#search-submit-button").click();
+  //   searchByClickButton("축구");
   //   cy.get("div.modal section:nth-child(4) a:nth-child(2)").should("have.text", "축구");
   // });
 
   // it("검색 모달이 다시 로딩된 경우, 최근에 검색한 결과를 보여준다.", () => {
   //   cy.get("#search-button").click();
-  //   cy.get("#search-input").type("축구");
-  //   cy.get("#search-submit-button").click();
+  //   searchByClickButton("축구");
   //   cy.get("path.close-x").click();
   //   cy.get("#search-button").click();
   //   cy.get("#search-input").should("have.value", "축구");
@@ -84,15 +83,12 @@ describe("step1 test", () => {
 
   // it("검색을 4번 진행했을 때, 가장 최근의 3개 검색어를 보여준다.", ()=>{
   //   cy.get("#search-button").click();
-  //   cy.get("#search-input").type("축구");
+  //   searchByClickButton("축구");
+  //   searchByClickButton("야구");
+  //   searchByClickButton("농구");
+  //   searchByClickButton("배구");
   //   cy.get("#search-submit-button").click();
-  //   cy.get("#search-input").type("야구");
-  //   cy.get("#search-submit-button").click();
-  //   cy.get("#search-input").type("농구");
-  //   cy.get("#search-submit-button").click();
-  //   cy.get("#search-input").type("배구");
-  //   cy.get("#search-submit-button").click();
-  // cy.get("div.modal section:nth-child(4)").children().should("have.length", 4);
+  //   cy.get("div.modal section:nth-child(4)").children().should("have.length", 4);
   //   cy.get("div.modal section:nth-child(4) a:nth-child(2)").should("have.text", "배구");
   //   cy.get("div.modal section:nth-child(4) a:nth-child(3)").should("have.text", "농구");
   //   cy.get("div.modal section:nth-child(4) a:nth-child(4)").should("have.text", "야구");
