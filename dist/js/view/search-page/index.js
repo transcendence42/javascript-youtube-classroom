@@ -7,7 +7,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { $ } from '../../@shared/utils/utils.js';
+import { $, wait } from '../../@shared/utils/utils.js';
 const getModalWrapper = ({ videos }) => {
     return `      <div class="modal">
     <div class="modal-inner p-8">
@@ -87,11 +87,10 @@ const skeletonUI = `<section class="video-wrapper">
                   <h3></h3>
                   <div>
                     <a
-                      href="https://www.youtube.com/channel/UC-mOekGSesms0agFntnQang"
+                      href=""
                       target="_blank"
                       class="channel-name mt-1"
                     >
-                      
                     </a>
                     <div class="meta">
                       <p></p>
@@ -106,43 +105,43 @@ const skeletonUI = `<section class="video-wrapper">
                 </div>
               </article>
             </section>`;
-// const videoWrapperTMP = `<section class="video-wrapper">
-//               <article class="clip">
-//                 <div class="preview-container">
-//                   <iframe
-//                     width="100%"
-//                     height="118"
-//                     src="https://www.youtube.com/embed/Ngj3498Tm_0"
-//                     frameborder="0"
-//                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-//                     allowfullscreen
-//                   ></iframe>
-//                 </div>
-//                 <div class="content-container pt-2 px-1">
-//                   <h3>아두이노 무드등</h3>
-//                   <div>
-//                     <a
-//                       href="https://www.youtube.com/channel/UC-mOekGSesms0agFntnQang"
-//                       target="_blank"
-//                       class="channel-name mt-1"
-//                     >
-//                       메이커준
-//                     </a>
-//                     <div class="meta">
-//                       <p>2021년 3월 2일</p>
-//                     </div>
-//                     <div>
-//                       <span class="opacity-hover">✅</span>
-//                       <span class="opacity-hover">👍</span>
-//                       <span class="opacity-hover">💬</span>
-//                       <span class="opacity-hover">🗑️</span>
-//                     </div>
-//                   </div>
-//                 </div>
-//               </article>
-//             </section>`;
+const videoWrapperTMP = `<section class="video-wrapper">
+              <article class="clip">
+                <div class="preview-container">
+                  <iframe
+                    width="100%"
+                    height="118"
+                    src="https://www.youtube.com/embed/Ngj3498Tm_0"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen
+                  ></iframe>
+                </div>
+                <div class="content-container pt-2 px-1">
+                  <h3>아두이노 무드등</h3>
+                  <div>
+                    <a
+                      href="https://www.youtube.com/channel/UC-mOekGSesms0agFntnQang"
+                      target="_blank"
+                      class="channel-name mt-1"
+                    >
+                      메이커준
+                    </a>
+                    <div class="meta">
+                      <p>2021년 3월 2일</p>
+                    </div>
+                    <div>
+                      <span class="opacity-hover">✅</span>
+                      <span class="opacity-hover">👍</span>
+                      <span class="opacity-hover">💬</span>
+                      <span class="opacity-hover">🗑️</span>
+                    </div>
+                  </div>
+                </div>
+              </article>
+            </section>`;
 export const renderSearchPage = () => __awaiter(void 0, void 0, void 0, function* () {
-    var _a;
+    var _a, _b, _c;
     // const data = await getQueryString({ q: 'bts', maxResults: '10', type: 'video' });
     let result = '';
     // result = data.map((x: any) =>
@@ -154,6 +153,11 @@ export const renderSearchPage = () => __awaiter(void 0, void 0, void 0, function
     //     publishedAt: x.snippet.publishedAt,
     //   })
     // ).join('');
-    result = skeletonUI.repeat(10);
+    result = `<div id="skeletons">` + skeletonUI.repeat(10) + `</div>`;
     (_a = $('#app')) === null || _a === void 0 ? void 0 : _a.insertAdjacentHTML('beforeend', getModalWrapper({ videos: result }));
+    yield wait(3000);
+    (_b = $('#skeletons')) === null || _b === void 0 ? void 0 : _b.remove();
+    result = videoWrapperTMP.repeat(10);
+    console.log(result);
+    (_c = $('.modal .modal-inner')) === null || _c === void 0 ? void 0 : _c.insertAdjacentHTML('beforeend', result);
 });

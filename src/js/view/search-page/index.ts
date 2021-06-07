@@ -1,5 +1,5 @@
 import { ENV } from '../../@shared/constants/env.js';
-import { $ } from '../../@shared/utils/utils.js';
+import { $, wait } from '../../@shared/utils/utils.js';
 import { getQueryString } from '../../@shared/utils/getQueryString.js';
 
 const getModalWrapper = ({ videos }: { videos: string }): string => {
@@ -114,42 +114,41 @@ const skeletonUI = `<section class="video-wrapper">
               </article>
             </section>`;
 
-
-// const videoWrapperTMP = `<section class="video-wrapper">
-//               <article class="clip">
-//                 <div class="preview-container">
-//                   <iframe
-//                     width="100%"
-//                     height="118"
-//                     src="https://www.youtube.com/embed/Ngj3498Tm_0"
-//                     frameborder="0"
-//                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-//                     allowfullscreen
-//                   ></iframe>
-//                 </div>
-//                 <div class="content-container pt-2 px-1">
-//                   <h3>아두이노 무드등</h3>
-//                   <div>
-//                     <a
-//                       href="https://www.youtube.com/channel/UC-mOekGSesms0agFntnQang"
-//                       target="_blank"
-//                       class="channel-name mt-1"
-//                     >
-//                       메이커준
-//                     </a>
-//                     <div class="meta">
-//                       <p>2021년 3월 2일</p>
-//                     </div>
-//                     <div>
-//                       <span class="opacity-hover">✅</span>
-//                       <span class="opacity-hover">👍</span>
-//                       <span class="opacity-hover">💬</span>
-//                       <span class="opacity-hover">🗑️</span>
-//                     </div>
-//                   </div>
-//                 </div>
-//               </article>
-//             </section>`;
+const videoWrapperTMP = `<section class="video-wrapper">
+              <article class="clip">
+                <div class="preview-container">
+                  <iframe
+                    width="100%"
+                    height="118"
+                    src="https://www.youtube.com/embed/Ngj3498Tm_0"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen
+                  ></iframe>
+                </div>
+                <div class="content-container pt-2 px-1">
+                  <h3>아두이노 무드등</h3>
+                  <div>
+                    <a
+                      href="https://www.youtube.com/channel/UC-mOekGSesms0agFntnQang"
+                      target="_blank"
+                      class="channel-name mt-1"
+                    >
+                      메이커준
+                    </a>
+                    <div class="meta">
+                      <p>2021년 3월 2일</p>
+                    </div>
+                    <div>
+                      <span class="opacity-hover">✅</span>
+                      <span class="opacity-hover">👍</span>
+                      <span class="opacity-hover">💬</span>
+                      <span class="opacity-hover">🗑️</span>
+                    </div>
+                  </div>
+                </div>
+              </article>
+            </section>`;
 
 export const renderSearchPage = async () => {
   // const data = await getQueryString({ q: 'bts', maxResults: '10', type: 'video' });
@@ -164,6 +163,11 @@ export const renderSearchPage = async () => {
   //     publishedAt: x.snippet.publishedAt,
   //   })
   // ).join('');
-  result = skeletonUI.repeat(10);
+  result = `<div id="skeletons">` + skeletonUI.repeat(10) + `</div>`;
   $('#app')?.insertAdjacentHTML('beforeend', getModalWrapper({ videos: result }));
+  await wait(3000);
+  $('#skeletons')?.remove();
+  result = videoWrapperTMP.repeat(10);
+  console.log(result)
+  $('.modal .modal-inner')?.insertAdjacentHTML('beforeend', result);
 };
