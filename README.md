@@ -134,3 +134,17 @@ Then : 시나리오를 완료했을 때 보장해야 하는 결과를 명시합�
 - [ ] 창 크기가 600px 일 때 row에 영상 2개가 출력된다.
 - [ ] 창 크기가 500px 일 때 row에 영상 1개가 출력된다.
 - [ ] Lazy loading 적용 여부(테스트 케이스 적용 가능여부 검토 필요)
+
+## 화면 구조
+
+- title section
+- navigator section
+- article section
+  - article
+
+- modal
+  - modal title section
+  - modal search input section
+  - modal recent keyword section
+  - modal article section
+    - modal article
