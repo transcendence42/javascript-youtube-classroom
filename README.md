@@ -137,14 +137,13 @@ Then : 시나리오를 완료했을 때 보장해야 하는 결과를 명시합�
 
 ## 화면 구조
 
-- title section
-- navigator section
-- article section
-  - article
+- [ ] title section
+- [ ] article section
+  - [ ] article
 
-- modal
-  - modal title section
-  - modal search input section
-  - modal recent keyword section
-  - modal article section
-    - modal article
+- [ ] modal
+  - [ ] modal title section
+  - [ ] modal search form section
+  - [ ] modal recent keyword section
+  - [ ] modal article section
+    - [ ] modal article
