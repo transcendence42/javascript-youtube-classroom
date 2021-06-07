@@ -15,6 +15,7 @@
   ]
 
 - [ ] Data fetch
+  - [ ] API_KEY github에 공개 안되게 하기/
   - [ ] 동영상 검색 버튼 누르면 유튜브 api json으로 가져오는거 console.log로 확인
   
 - [ ] View

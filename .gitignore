@@ -1,3 +1,6 @@
+dist/js/env.js
+src/js/env.ts
+
 # Logs
 logs
 *.log
