@@ -62,3 +62,7 @@
   - 768px 이하: 2개
   - 576px 이하: 1개
 - [ ] 스크롤 페이징 방식을 이용해서 Lazy loading을 개선한다.
+
+### err
+
+[Refused to display 'url' in a frame because it set 'X-Frame-Options' to 'SAMEORIGIN'](https://stackoverflow.com/questions/41522652/refused-to-display-url-in-a-frame-because-it-set-x-frame-options-to-sameori)

@@ -80,18 +80,90 @@ const getVideoWrapper = ({
 </section>`;
 };
 
+const skeletonUI = `<section class="video-wrapper">
+              <article class="clip skeleton">
+                <div class="preview-container image">
+                  <iframe
+                    width="100%"
+                    height="118"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen
+                  ></iframe>
+                </div>
+                <div class="content-container pt-2 px-1 line">
+                  <h3></h3>
+                  <div>
+                    <a
+                      href=""
+                      target="_blank"
+                      class="channel-name mt-1"
+                    >
+                    </a>
+                    <div class="meta">
+                      <p></p>
+                    </div>
+                    <div>
+                      <span class="opacity-hover">✅</span>
+                      <span class="opacity-hover">👍</span>
+                      <span class="opacity-hover">💬</span>
+                      <span class="opacity-hover">🗑️</span>
+                    </div>
+                  </div>
+                </div>
+              </article>
+            </section>`;
+
+
+// const videoWrapperTMP = `<section class="video-wrapper">
+//               <article class="clip">
+//                 <div class="preview-container">
+//                   <iframe
+//                     width="100%"
+//                     height="118"
+//                     src="https://www.youtube.com/embed/Ngj3498Tm_0"
+//                     frameborder="0"
+//                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+//                     allowfullscreen
+//                   ></iframe>
+//                 </div>
+//                 <div class="content-container pt-2 px-1">
+//                   <h3>아두이노 무드등</h3>
+//                   <div>
+//                     <a
+//                       href="https://www.youtube.com/channel/UC-mOekGSesms0agFntnQang"
+//                       target="_blank"
+//                       class="channel-name mt-1"
+//                     >
+//                       메이커준
+//                     </a>
+//                     <div class="meta">
+//                       <p>2021년 3월 2일</p>
+//                     </div>
+//                     <div>
+//                       <span class="opacity-hover">✅</span>
+//                       <span class="opacity-hover">👍</span>
+//                       <span class="opacity-hover">💬</span>
+//                       <span class="opacity-hover">🗑️</span>
+//                     </div>
+//                   </div>
+//                 </div>
+//               </article>
+//             </section>`;
+
 export const renderSearchPage = async () => {
-  const data = await getQueryString({ q: 'bts', maxResults: '10', type: 'video' });
+  // const data = await getQueryString({ q: 'bts', maxResults: '10', type: 'video' });
   let result = '';
 
-  result = data.map((x: any) =>
-    getVideoWrapper({
-      videoLink: ENV.YOUTUBE_WATCH_URL + x.id.videoId,
-      videoTitle: x.snippet.title,
-      channelLink: ENV.YOUTUBE_CHANNEL_URL + x.snippet.channelId,
-      channelTitle: x.snippet.channelTitle,
-      publishedAt: x.snippet.publishedAt,
-    })
-  ).join('');
+  // result = data.map((x: any) =>
+  //   getVideoWrapper({
+  //     videoLink: ENV.YOUTUBE_WATCH_URL + x.id.videoId,
+  //     videoTitle: x.snippet.title,
+  //     channelLink: ENV.YOUTUBE_CHANNEL_URL + x.snippet.channelId,
+  //     channelTitle: x.snippet.channelTitle,
+  //     publishedAt: x.snippet.publishedAt,
+  //   })
+  // ).join('');
+  result = skeletonUI.repeat(10);
   $('#app')?.insertAdjacentHTML('beforeend', getModalWrapper({ videos: result }));
 };

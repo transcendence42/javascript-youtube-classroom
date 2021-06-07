@@ -1,27 +1,38 @@
-import { ENV } from '../../src/js/env.ts'
+import { ENV } from '../../src/js/@shared/constants/env.ts'
 
-const BTSQUERY = `https://www.googleapis.com/youtube/v3/search?key=${ENV.API_KEY}&part=snippet&q=bts&maxResults=10&type=video&videoEmbeddable=true`;
+// const BTSQUERY = `https://www.googleapis.com/youtube/v3/search?key=${ENV.API_KEY}&part=snippet&q=bts&maxResults=10&type=video&videoEmbeddable=true`;
 
-describe("API 유효성 확인", () => {
-  it("BTS 검색해 youtube API 요청 시 상태코드 200인지 확인", () => {
-    cy.visit('/');
-    cy.request({
-      url: BTSQUERY,
-      followRedirection: false,
-    }).then((resp) => {
-      expect(resp.status).to.eq(200);
-    });
-  });
-})
+// describe("API 유효성 확인", () => {
+//   it("BTS 검색해 youtube API 요청 시 상태코드 200인지 확인", () => {
+//     cy.visit('/');
+//     cy.request({
+//       url: BTSQUERY,
+//       followRedirection: false,
+//     }).then((resp) => {
+//       cy.log(resp.status)
+//       expect(resp.status).to.eq(200);
+//     });
+//   });
+// })
 
 
 describe("검색 버튼 눌렀을 때 페이지 구성", () => {
+  beforeEach(()=> {
+    cy.visit('/');
+  })
+  it("youtube API 불러왔을 때 10개의 skeleton UI 생성 확인, () => {
+    cy.visit('/');
+    // cy.get('#search-button').click();
+    // cy.get('.modal > .video-wrapper').should('have.length', 10);
+  })
   it("youtube API 불러왔을 때 10개의 item이 있는지 확인", () => {
+    cy.visit('/');
+    // cy.get('#search-button').click();
+    // cy.get('.modal > .video-wrapper').should('have.length', 10);
+  })
+  // it("item을 불러왔을때 channelTitle, publishedAt, thumbnail, title, videoId 값 불러오기", () => {
 
-  }),
-  it("item을 불러왔을때 channelTitle, publishedAt, thumbnail, title, videoId 값 불러오기", () => {
-
-  }),
+  // }),
   it("BTS 입력 후 검색버튼 누를때 최근 검색어에 BTS 추가", () => {
 
   })
