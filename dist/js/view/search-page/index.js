@@ -21,12 +21,14 @@ const getModalWrapper = ({ recentSearchItems, videos }) => {
         <h2 class="text-center">🔎 유튜브 검색</h2>
       </header>
       <form class="d-flex">
-        <input type="text" class="w-100 mr-2 pl-2" placeholder="검색" />
-        <button type="button" class="btn bg-cyan-500">검색</button>
+        <input type="text" id="modal-search-input" class="w-100 mr-2 pl-2" placeholder="검색" />
+        <button type="button" id="modal-search-button" class="btn bg-cyan-500">검색</button>
       </form>
       <section class="mt-2">
         <span class="text-gray-700">최근 검색어: </span>
+        <div id="modal-recent-search-items">
         ${recentSearchItems}
+        </div>
       </section>
       <section>
         <div class="d-flex justify-end text-gray-700">

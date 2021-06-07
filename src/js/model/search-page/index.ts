@@ -10,7 +10,7 @@ export const searchPageModel = {
   addRecentSearch(str: string){
     let recentSearchItems = this.getLocalStorageItem('recent-search');
     if (recentSearchItems.length > 2) {
-      recentSearchItems.pop();
+      recentSearchItems.shift();
     }
     recentSearchItems.push(str);
     localStorage.setItem('recent-search', JSON.stringify(recentSearchItems));

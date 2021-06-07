@@ -9,8 +9,24 @@ const onModalClose = () => {
   $('.modal')?.classList.remove('open');
 };
 
+const clickModalRecentSearch = () => {
+
+};
+
+const clickModalSearchButton = () => {
+  const modalSearchInput: HTMLInputElement | null = <HTMLInputElement>$("#modal-search-input");
+  if (modalSearchInput) {
+    searchPageModel.addRecentSearch(modalSearchInput.value);
+  } else {
+    alert('검색어를 입력하세요.');
+    // modalSearchInput.value = "";
+    // modalSearchInput.focus();
+  }
+};
+
 export const initModalController = () => {
   $('#search-button')?.addEventListener('click', onModalShow);
   $('.modal-close')?.addEventListener('click', onModalClose);
-  searchPageModel.addRecentSearch('hi');
+  $("#modal-search-button")?.addEventListener('click', clickModalSearchButton);
+  $('#modal-recent-search-items')?.addEventListener('click', clickModalRecentSearch);
 };
