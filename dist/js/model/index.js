@@ -9,6 +9,9 @@ class VideoModel {
         this.checkLike = false;
         this.checkView = false;
     }
+    // get _videoLink(): string {
+    //   return this.videoLink;
+    // }
     setVideoModel({ videoLink, videoTitle, channelLink, channelTitle, publishedAt, checkLike, checkView, }) {
         this.videoLink = videoLink;
         this.videoTitle = videoTitle;
@@ -26,7 +29,7 @@ class VideoModel {
         this.channelTitle = (_d = videoWrapper === null || videoWrapper === void 0 ? void 0 : videoWrapper.querySelector('.content-container a')) === null || _d === void 0 ? void 0 : _d.innerText;
         (this.publishedAt = (_e = videoWrapper === null || videoWrapper === void 0 ? void 0 : videoWrapper.querySelector('.meta p')) === null || _e === void 0 ? void 0 : _e.innerHTML),
             (this.checkLike = false),
-            (this.checkView = true);
+            (this.checkView = false);
         return this;
     }
     getVideoModel() {

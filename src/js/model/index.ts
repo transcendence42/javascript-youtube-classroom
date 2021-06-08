@@ -20,6 +20,10 @@ class VideoModel {
     this.checkView = false;
   }
 
+  // get _videoLink(): string {
+  //   return this.videoLink;
+  // }
+
   setVideoModel({
     videoLink,
     videoTitle,
@@ -53,7 +57,7 @@ class VideoModel {
     this.channelTitle = (<HTMLLinkElement>videoWrapper?.querySelector('.content-container a'))?.innerText;
     (this.publishedAt = <string>videoWrapper?.querySelector('.meta p')?.innerHTML),
       (this.checkLike = false),
-      (this.checkView = true);
+      (this.checkView = false);
     return this;
   }
 
