@@ -1,6 +1,6 @@
-import { $, removeChildNodes } from '../../@shared/utils/utils.js';
-import { renderSearchPage, getRecentSearchItem, renderSavedVideoLength } from '../../view/search-page.js';
-import { VideoModel, model } from '../../model/index.js';
+import { $, removeChildNodes } from '../@shared/utils/utils.js';
+import { renderSearchPage, getRecentSearchItem, renderSavedVideoLength } from '../view/search-page.js';
+import { VideoModel, model } from '../model/index.js';
 const onModalShow = () => {
     var _a;
     renderSavedVideoLength(model.getLocalStorageItem('videos').length);

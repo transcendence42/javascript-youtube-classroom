@@ -1,4 +1,4 @@
-import { initModalController } from "./search-page/index.js"
+import { initModalController } from "./search-page.js"
 
 export function initController() {
     initModalController();

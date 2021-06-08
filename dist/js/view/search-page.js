@@ -1,11 +1,18 @@
-import { ENV } from '../../@shared/constants/env.js';
-import { $, wait } from '../../@shared/utils/utils.js';
-import { getQueryString } from '../../@shared/utils/getQueryString.js';
-import { model } from '../../model/index.js';
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+import { ENV } from '../@shared/constants/env.js';
+import { $, wait } from '../@shared/utils/utils.js';
+import { model } from '../model/index.js';
 import { DATA_JSON } from './data.js';
-
-const getModalWrapper = (): string => {
-  return `<div class="modal">
+const getModalWrapper = () => {
+    return `<div class="modal">
             <div class="modal-inner p-8">
               <button class="modal-close">
                 <svg viewbox="0 0 40 40">
@@ -34,28 +41,14 @@ const getModalWrapper = (): string => {
             </div>
           </div>`;
 };
-
-const getRecentSearchItemWrapper = (items: string[]): string => {
-  return items
-    .map((x) => `<a class="chip">${x}</a>`)
-    .reverse()
-    .join('');
+const getRecentSearchItemWrapper = (items) => {
+    return items
+        .map((x) => `<a class="chip">${x}</a>`)
+        .reverse()
+        .join('');
 };
-
-const getVideoWrapper = ({
-  videoLink,
-  videoTitle,
-  channelLink,
-  channelTitle,
-  publishedAt,
-}: {
-  videoLink: string;
-  videoTitle: string;
-  channelLink: string;
-  channelTitle: string;
-  publishedAt: string;
-}): string => {
-  return `<article class="clip">
+const getVideoWrapper = ({ videoLink, videoTitle, channelLink, channelTitle, publishedAt, }) => {
+    return `<article class="clip">
   <div class="preview-container">
     <iframe
       width="100%"
@@ -86,7 +79,6 @@ const getVideoWrapper = ({
   </div>
 </article>`;
 };
-
 const skeletonUI = `<article class="clip skeleton">
                 <div class="preview-container image">
                   <iframe
@@ -115,7 +107,6 @@ const skeletonUI = `<article class="clip skeleton">
                   </div>
                 </div>
               </article>`;
-
 const videoWrapperTMP = `<section class="video-wrapper">
               <article class="clip">
                 <div class="preview-container">
@@ -151,50 +142,39 @@ const videoWrapperTMP = `<section class="video-wrapper">
                 </div>
               </article>
             </section>`;
-
-const renderSavedVideoLength = (videoLength: number) => {
-  $('#modal-saved-video-length')!.innerText = `저장된 영상 갯수: ${videoLength}개`;
+const renderSavedVideoLength = (videoLength) => {
+    $('#modal-saved-video-length').innerText = `저장된 영상 갯수: ${videoLength}개`;
 };
-
-const getRecentSearchItem = (): string => {
-  return getRecentSearchItemWrapper(model.getLocalStorageItem('recent-search'));
+const getRecentSearchItem = () => {
+    return getRecentSearchItemWrapper(model.getLocalStorageItem('recent-search'));
 };
-
-const getSkeletonUIWrapper = (): string => {
-  return skeletonUI.repeat(10);
+const getSkeletonUIWrapper = () => {
+    return skeletonUI.repeat(10);
 };
-
-const renderSearchPage = async ({ q, maxResults, type }: { q: string; maxResults: string; type: string }) => {
-  const modalVideos: HTMLDivElement | null = $('#modal-videos') as HTMLDivElement;
-
-  if (!modalVideos) {
-    return;
-  }
-
-  $('#modal-recent-search-items')?.insertAdjacentHTML('afterbegin', getRecentSearchItem());
-  modalVideos?.insertAdjacentHTML('afterbegin', getSkeletonUIWrapper());
-
-  let result = '';
-
-  /* temp code */
-  await wait(1000);
-  const data = DATA_JSON;
-
-  /* real code */
-  // const data = await getQueryString({ q, maxResults, type });
-  modalVideos.innerHTML = '';
-  result = data.items
-    .map((x: any) =>
-      getVideoWrapper({
+const renderSearchPage = ({ q, maxResults, type }) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a, _b;
+    const modalVideos = $('#modal-videos');
+    if (!modalVideos) {
+        return;
+    }
+    (_a = $('#modal-recent-search-items')) === null || _a === void 0 ? void 0 : _a.insertAdjacentHTML('afterbegin', getRecentSearchItem());
+    modalVideos === null || modalVideos === void 0 ? void 0 : modalVideos.insertAdjacentHTML('afterbegin', getSkeletonUIWrapper());
+    let result = '';
+    /* temp code */
+    yield wait(1000);
+    const data = DATA_JSON;
+    /* real code */
+    // const data = await getQueryString({ q, maxResults, type });
+    modalVideos.innerHTML = '';
+    result = data.items
+        .map((x) => getVideoWrapper({
         videoLink: ENV.YOUTUBE_WATCH_URL + x.id.videoId,
         videoTitle: x.snippet.title,
         channelLink: ENV.YOUTUBE_CHANNEL_URL + x.snippet.channelId,
         channelTitle: x.snippet.channelTitle,
         publishedAt: x.snippet.publishedAt,
-      }),
-    )
-    .join('');
-  $('#modal-videos')?.insertAdjacentHTML('afterbegin', result);
-};
-
+    }))
+        .join('');
+    (_b = $('#modal-videos')) === null || _b === void 0 ? void 0 : _b.insertAdjacentHTML('afterbegin', result);
+});
 export { getModalWrapper, getRecentSearchItem, renderSearchPage, renderSavedVideoLength };
