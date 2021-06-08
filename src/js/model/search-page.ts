@@ -11,6 +11,9 @@ export const searchPageModel = {
   },
   addRecentSearch(str: string): void {
     let recentSearchItems = this.getLocalStorageItem('recent-search');
+    if (recentSearchItems.includes(str)) {
+      return;
+    }
     if (recentSearchItems.length > 2) {
       recentSearchItems.shift();
     }
@@ -20,7 +23,7 @@ export const searchPageModel = {
   addSaveVideos(video: VideoModel): void {
     let videoItems = this.getLocalStorageItem('videos');
     if (videoItems.some((x) => x.videoLink === video.videoLink)) {
-      return ;
+      return;
     }
     videoItems.push(video);
     localStorage.setItem('videos', JSON.stringify(videoItems));

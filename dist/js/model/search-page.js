@@ -10,6 +10,9 @@ export const searchPageModel = {
     },
     addRecentSearch(str) {
         let recentSearchItems = this.getLocalStorageItem('recent-search');
+        if (recentSearchItems.includes(str)) {
+            return;
+        }
         if (recentSearchItems.length > 2) {
             recentSearchItems.shift();
         }
