@@ -12,4 +12,10 @@ const $$ = (selector) => document.querySelectorAll(selector);
 const wait = (delay) => __awaiter(void 0, void 0, void 0, function* () {
     return new Promise((resolve) => setTimeout(resolve, delay));
 });
-export { $, $$, wait };
+const removeChildNodes = (element) => {
+    while (element === null || element === void 0 ? void 0 : element.hasChildNodes()) {
+        console.log(element === null || element === void 0 ? void 0 : element.hasChildNodes());
+        element === null || element === void 0 ? void 0 : element.removeChild(element.childNodes[0]);
+    }
+};
+export { $, $$, wait, removeChildNodes };

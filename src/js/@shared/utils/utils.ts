@@ -6,4 +6,11 @@ const wait = async (delay: number): Promise<number> => {
   return new Promise<number>((resolve) => setTimeout(resolve, delay));
 };
 
-export { $, $$, wait };
+const removeChildNodes = (element: HTMLElement | null):void => {
+  while (element?.hasChildNodes()) {
+    console.log(element?.hasChildNodes())
+    element?.removeChild( element.childNodes[0] );
+  }
+}
+
+export { $, $$, wait, removeChildNodes };

@@ -9,8 +9,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 import { $, wait } from '../../@shared/utils/utils.js';
 import { searchPageModel } from '../../model/search-page/index.js';
-const getModalWrapper = ({ recentSearchItems, videos }) => {
-    return `      <div class="modal">
+const getModalWrapper = () => {
+    return `<div class="modal">
     <div class="modal-inner p-8">
       <button class="modal-close">
         <svg viewbox="0 0 40 40">
@@ -27,7 +27,6 @@ const getModalWrapper = ({ recentSearchItems, videos }) => {
       <section class="mt-2">
         <span class="text-gray-700">최근 검색어: </span>
         <div id="modal-recent-search-items">
-        ${recentSearchItems}
         </div>
       </section>
       <section>
@@ -35,12 +34,13 @@ const getModalWrapper = ({ recentSearchItems, videos }) => {
           저장된 영상 갯수: 50개
         </div>
       </section>
-      ${videos}
+      <div id="modal-videos">
+      </div>
     </div>
   </div>`;
 };
 const getRecentSearchItemWrapper = (items) => {
-    return items.map((x) => `<a class="chip">${x}</a>`).join('');
+    return items.map((x) => `<a class="chip">${x}</a>`).reverse().join('');
 };
 const getVideoWrapper = ({ videoLink, videoTitle, channelLink, channelTitle, publishedAt, }) => {
     return `<section class="video-wrapper">
@@ -147,27 +147,34 @@ const videoWrapperTMP = `<section class="video-wrapper">
 const getRecentSearchItem = () => {
     return getRecentSearchItemWrapper(searchPageModel.getLocalStorageItem('recent-search'));
 };
-const renderVideos = () => __awaiter(void 0, void 0, void 0, function* () {
-    var _a, _b, _c;
-    // const data = await getQueryString({ q: 'bts', maxResults: '10', type: 'video' });
+const getSkeletonUIWrapper = () => {
+    return `<div id="skeletons">` + skeletonUI.repeat(10) + `</div>`;
+};
+const renderSearchPage = () => __awaiter(void 0, void 0, void 0, function* () {
+    var _a, _b, _c, _d;
+    // $('#app')?.insertAdjacentHTML('beforeend', getModalWrapper());
+    (_a = $('#modal-recent-search-items')) === null || _a === void 0 ? void 0 : _a.insertAdjacentHTML('afterbegin', getRecentSearchItem());
+    (_b = $('#modal-videos')) === null || _b === void 0 ? void 0 : _b.insertAdjacentHTML('afterbegin', getSkeletonUIWrapper());
+    /* temp code */
     let result = '';
-    // result = data.map((x: any) =>
-    //   getVideoWrapper({
-    //     videoLink: ENV.YOUTUBE_WATCH_URL + x.id.videoId,
-    //     videoTitle: x.snippet.title,
-    //     channelLink: ENV.YOUTUBE_CHANNEL_URL + x.snippet.channelId,
-    //     channelTitle: x.snippet.channelTitle,
-    //     publishedAt: x.snippet.publishedAt,
-    //   })
-    // ).join('');
-    result = `<div id="skeletons">` + skeletonUI.repeat(10) + `</div>`;
-    (_a = $('#app')) === null || _a === void 0 ? void 0 : _a.insertAdjacentHTML('beforeend', getModalWrapper({ recentSearchItems: getRecentSearchItem(), videos: result }));
     yield wait(3000);
-    (_b = $('#skeletons')) === null || _b === void 0 ? void 0 : _b.remove();
+    (_c = $('#skeletons')) === null || _c === void 0 ? void 0 : _c.remove();
     result = videoWrapperTMP.repeat(10);
-    // console.log(result)
-    (_c = $('.modal .modal-inner')) === null || _c === void 0 ? void 0 : _c.insertAdjacentHTML('beforeend', result);
+    console.log(result);
+    (_d = $('.modal .modal-inner')) === null || _d === void 0 ? void 0 : _d.insertAdjacentHTML('beforeend', result);
+    /* real code */
+    // let result = '';
+    // const data = await getQueryString({ q: 'bts', maxResults: '10', type: 'video' });
+    // result = data
+    //   .map((x: any) =>
+    //     getVideoWrapper({
+    //       videoLink: ENV.YOUTUBE_WATCH_URL + x.id.videoId,
+    //       videoTitle: x.snippet.title,
+    //       channelLink: ENV.YOUTUBE_CHANNEL_URL + x.snippet.channelId,
+    //       channelTitle: x.snippet.channelTitle,
+    //       publishedAt: x.snippet.publishedAt,
+    //     }),
+    //   )
+    //   .join('');
 });
-export const renderSearchPage = () => __awaiter(void 0, void 0, void 0, function* () {
-    yield renderVideos();
-});
+export { getModalWrapper, getRecentSearchItem, renderSearchPage };

@@ -35,7 +35,7 @@ const getModalWrapper = (): string => {
 };
 
 const getRecentSearchItemWrapper = (items: string[]): string => {
-  return items.map((x) => `<a class="chip">${x}</a>`).join('');
+  return items.map((x) => `<a class="chip">${x}</a>`).reverse().join('');
 };
 
 const getVideoWrapper = ({
@@ -159,34 +159,37 @@ const getRecentSearchItem = (): string => {
   return getRecentSearchItemWrapper(searchPageModel.getLocalStorageItem('recent-search'));
 };
 
-const renderVideos = async () => {
-  // const data = await getQueryString({ q: 'bts', maxResults: '10', type: 'video' });
+const getSkeletonUIWrapper = (): string => {
+  return `<div id="skeletons">` + skeletonUI.repeat(10) + `</div>`;
+};
+
+const renderSearchPage = async () => {
+  // $('#app')?.insertAdjacentHTML('beforeend', getModalWrapper());
+  $('#modal-recent-search-items')?.insertAdjacentHTML('afterbegin', getRecentSearchItem());
+  $('#modal-videos')?.insertAdjacentHTML('afterbegin', getSkeletonUIWrapper());
+
+  /* temp code */
   let result = '';
-
-  // result = data.map((x: any) =>
-  //   getVideoWrapper({
-  //     videoLink: ENV.YOUTUBE_WATCH_URL + x.id.videoId,
-  //     videoTitle: x.snippet.title,
-  //     channelLink: ENV.YOUTUBE_CHANNEL_URL + x.snippet.channelId,
-  //     channelTitle: x.snippet.channelTitle,
-  //     publishedAt: x.snippet.publishedAt,
-  //   })
-  // ).join('');
-  result = `<div id="skeletons">` + skeletonUI.repeat(10) + `</div>`;
-
-  $('#app')?.insertAdjacentHTML(
-    'beforeend',
-    getModalWrapper(),
-  );
-  // recentitems rendering
-
   await wait(3000);
   $('#skeletons')?.remove();
   result = videoWrapperTMP.repeat(10);
-  // console.log(result)
+  console.log(result);
   $('.modal .modal-inner')?.insertAdjacentHTML('beforeend', result);
+
+  /* real code */
+  // let result = '';
+  // const data = await getQueryString({ q: 'bts', maxResults: '10', type: 'video' });
+  // result = data
+  //   .map((x: any) =>
+  //     getVideoWrapper({
+  //       videoLink: ENV.YOUTUBE_WATCH_URL + x.id.videoId,
+  //       videoTitle: x.snippet.title,
+  //       channelLink: ENV.YOUTUBE_CHANNEL_URL + x.snippet.channelId,
+  //       channelTitle: x.snippet.channelTitle,
+  //       publishedAt: x.snippet.publishedAt,
+  //     }),
+  //   )
+  //   .join('');
 };
 
-export const renderSearchPage = async () => {
-  await renderVideos();
-};
+export { getModalWrapper, getRecentSearchItem, renderSearchPage };

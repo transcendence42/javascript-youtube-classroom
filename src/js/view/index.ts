@@ -1,5 +1,6 @@
-import { renderSearchPage } from './search-page/index.js';
+import { $ } from '../@shared/utils/utils.js'
+import {getModalWrapper} from './search-page/index.js';
 
 export const renderView = () => {
-    renderSearchPage();
+    $('#app')?.insertAdjacentHTML('beforeend', getModalWrapper());
 }

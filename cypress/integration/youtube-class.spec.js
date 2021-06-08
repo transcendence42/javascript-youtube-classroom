@@ -37,7 +37,13 @@ describe("검색 버튼 눌렀을 때 페이지 구성", () => {
     cy.get('#search-button').click();
     cy.get('#modal-search-input').type('bts');
     cy.get('#modal-search-button').click();
-    cy.get('modal-recent-search-items').eq(0).should('have.value', 'bts');
+    cy.get('#modal-recent-search-items > :nth-child(1)').should('have.text', 'bts');
+    cy.get('#modal-search-input').type('ccc');
+    cy.get('#modal-search-button').click();
+    cy.get('#modal-recent-search-items > :nth-child(1)').should('have.text', 'ccc');
+    cy.get('#modal-search-input').type('aaa');
+    cy.get('#modal-search-button').click();
+    cy.get('#modal-recent-search-items > :nth-child(1)').should('have.text', 'aaa');
   })
   // it("bts 입력후 item 카드로 UI 띄우기", () => {
 
