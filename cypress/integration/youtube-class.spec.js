@@ -27,19 +27,6 @@ import { model } from '../../dist/js/model/index.js';
 //       }
 //   ]
 
-describe('볼 영상 버튼 눌렀을때 페이지 구성', () => {
-  // it("bts영상 저장 후 영상 버튼 눌렀을 때, local storage의 saved-videos중 checkView가 false인것 렌더링", () => {
-  // })
-  // it("삭제 버튼 클릭시 자료구조에서 해당 item 삭제", () => {
-  // })
-  // it("checkLike false일 때 좋아요 버튼 클릭시, checkLike true로 변경", () => {
-  // })
-  // it("checkLike true일 때 좋아요 버튼 클릭시, checkLike false로 변경", () => {
-  // })
-  // it("checkView가 false일때 체크박스 클릭 시, 자료구조 checkView 값 true로 변경.", () => {
-  // })
-});
-
 // describe("본 영상 버튼 눌렀을때 페이지 구성", () => {
 //   it("local storage의 saved-videos중 checkView가 true인것 렌더링", () => {
 
