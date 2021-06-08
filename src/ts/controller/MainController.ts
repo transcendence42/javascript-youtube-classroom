@@ -1,17 +1,10 @@
 import { $, $$ } from '../util.js'
 import { modalArticle } from '../view/modalPage/modalArticle.js';
-
-interface IVideoInfo {
-  videoId: string,
-  videoTitle: string,
-  publishedAt: string,
-  channelId: string,
-  channelTitle: string
-}
+import { IVideoInfo } from '../model/IVideoInfo.js';
+import { renderRecentKeyword, renderSearchedArticle } from "../view/renderElements.js";
 
 export default class MainController {
   constructor() {
-    //this.getSearchResult();
     const $modal: HTMLDivElement = $('.modal') as HTMLDivElement;
     $('#search-button')!.addEventListener('click', () => this.onModalShow($modal));
     $(".modal-close")!.addEventListener('click', () => this.onModalClose($modal));
@@ -69,8 +62,7 @@ export default class MainController {
           channelId: video.snippet.channelId,
           channelTitle: video.snippet.channelTitle
         }
-        const $articleSection: HTMLElement = $("div.modal-inner section.video-wrapper") as HTMLElement;
-        $articleSection.insertAdjacentHTML("beforeend", modalArticle(videoInfo));
+        renderSearchedArticle(videoInfo);
       });
       this.addRecentKeyword(searchValue);
     });
@@ -82,12 +74,11 @@ export default class MainController {
         elem.remove();
       }
     });
-    const $recentKeywordSpan: HTMLSpanElement = $("#recent-keyword > span") as HTMLSpanElement;
-    $recentKeywordSpan.insertAdjacentHTML("afterend", `<a class="chip">${searchValue}</a>`);
+    renderRecentKeyword(searchValue);
     if (($$('.chip') as NodeList).length === 4) {
       $('a.chip:last-child')?.remove();
     }
-    $recentKeywordSpan.nextSibling?.addEventListener("click", ()=>{
+    $("#recent-keyword > span")?.nextSibling?.addEventListener("click", ()=>{
       $("div.modal-inner section.video-wrapper")!.innerHTML = "";
       ($("#search-input") as HTMLInputElement).value = searchValue;
       this.renderArticles(searchValue);
