@@ -48,9 +48,9 @@ describe("검색 버튼 눌렀을 때 페이지 구성", () => {
   // it("bts 입력후 item 카드로 UI 띄우기", () => {
 
   // })
-  // it("한 item에 대해 저장 버튼 눌렀을 때 localstorage saved-videos 자료구조에 추가되는지 확인", () => {
+  it("한 item에 대해 저장 버튼 눌렀을 때 localstorage videos 자료구조에 추가되는지 확인", () => {
 
-  // })
+  })
   // it("한 item에 대해 저장 버튼 눌렀을 때 저장된 영상 갯수 오른쪽 상단에 띄우기", () => {
 
   // })
@@ -61,10 +61,12 @@ describe("검색 버튼 눌렀을 때 페이지 구성", () => {
 
   // })
 })
-
+// ⬇️ 저장
+// ↪️ 저장 취소
 // - model (local storage)
 //   - [ ] video : [
 //       "a": {
+//           videodata: videoModel,
 //           checkLike : boolean,
 //           checkView: boolean
 //       }

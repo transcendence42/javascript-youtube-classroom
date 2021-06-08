@@ -77,7 +77,7 @@ const getVideoWrapper = ({
         <p>${publishedAt}</p>
       </div>
       <div class="d-flex justify-end">
-        <button class="btn">⬇️ 저장</button>
+        <button class="btn modal-save-button">⬇️ 저장</button>
       </div>
     </div>
   </div>
@@ -170,11 +170,18 @@ const renderSearchPage = async () => {
 
   /* temp code */
   let result = '';
-  await wait(3000);
+  await wait(1200);
   $('#skeletons')?.remove();
-  result = videoWrapperTMP.repeat(10);
-  console.log(result);
-  $('.modal .modal-inner')?.insertAdjacentHTML('beforeend', result);
+  result = getVideoWrapper({
+    videoLink: "https://www.youtube.com/embed/Ngj3498Tm_0",
+    videoTitle: "아두이노 무드등",
+    channelLink: "https://www.youtube.com/channel/UC-mOekGSesms0agFntnQang",
+    channelTitle: "메이커준",
+    publishedAt: "2021년 3월 2일",
+  }).repeat(10);
+  // result = videoWrapperTMP.repeat(10);
+  // console.log(result);
+  $('#modal-videos')?.insertAdjacentHTML('afterbegin', result);
 
   /* real code */
   // let result = '';

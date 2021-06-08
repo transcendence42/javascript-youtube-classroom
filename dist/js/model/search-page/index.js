@@ -16,4 +16,9 @@ export const searchPageModel = {
         recentSearchItems.push(str);
         localStorage.setItem('recent-search', JSON.stringify(recentSearchItems));
     },
+    addSaveVideos(video) {
+        let videoItems = this.getLocalStorageItem('videos');
+        videoItems.push(video);
+        localStorage.setItem('videos', JSON.stringify(videoItems));
+    }
 };

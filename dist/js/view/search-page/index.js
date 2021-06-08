@@ -69,7 +69,7 @@ const getVideoWrapper = ({ videoLink, videoTitle, channelLink, channelTitle, pub
         <p>${publishedAt}</p>
       </div>
       <div class="d-flex justify-end">
-        <button class="btn">⬇️ 저장</button>
+        <button class="btn modal-save-button">⬇️ 저장</button>
       </div>
     </div>
   </div>
@@ -157,11 +157,18 @@ const renderSearchPage = () => __awaiter(void 0, void 0, void 0, function* () {
     (_b = $('#modal-videos')) === null || _b === void 0 ? void 0 : _b.insertAdjacentHTML('afterbegin', getSkeletonUIWrapper());
     /* temp code */
     let result = '';
-    yield wait(3000);
+    yield wait(1200);
     (_c = $('#skeletons')) === null || _c === void 0 ? void 0 : _c.remove();
-    result = videoWrapperTMP.repeat(10);
-    console.log(result);
-    (_d = $('.modal .modal-inner')) === null || _d === void 0 ? void 0 : _d.insertAdjacentHTML('beforeend', result);
+    result = getVideoWrapper({
+        videoLink: "https://www.youtube.com/embed/Ngj3498Tm_0",
+        videoTitle: "아두이노 무드등",
+        channelLink: "https://www.youtube.com/channel/UC-mOekGSesms0agFntnQang",
+        channelTitle: "메이커준",
+        publishedAt: "2021년 3월 2일",
+    }).repeat(10);
+    // result = videoWrapperTMP.repeat(10);
+    // console.log(result);
+    (_d = $('#modal-videos')) === null || _d === void 0 ? void 0 : _d.insertAdjacentHTML('afterbegin', result);
     /* real code */
     // let result = '';
     // const data = await getQueryString({ q: 'bts', maxResults: '10', type: 'video' });
