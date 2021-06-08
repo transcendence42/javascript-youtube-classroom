@@ -34,21 +34,35 @@ export default class MainController {
     $modal.classList.remove("open");
   }
 
+  convertDateFormat(originalFormat :string) {
+    const temp = new Date(originalFormat);
+    return `${temp.getFullYear()}년 ${temp.getMonth() + 1}월 ${temp.getDate() + 1}일`;
+  }
+
+  isValidSearchInput(searchValue: string): boolean {
+    if (searchValue.trim() === '') {
+      return false;
+    }
+    return true;
+  }
+
   sendAPIRequest() {
     const inputValue: string = ($('#search-input') as HTMLInputElement).value;
+    if (!this.isValidSearchInput(inputValue)) {
+      $("#search-input")?.focus();
+      alert('검색어를 입력해주세요.');
+      return ;
+    }
     const searchResult = this.getSearchResult(inputValue);
     searchResult.then(result=>{
       const temp = JSON.parse(result);
-      temp.items.forEach(element => {
-        const temp = new Date(element.snippet.publishedAt);
-        console.log(`${temp.getFullYear()}년 ${temp.getMonth() + 1}월 ${temp.getDate() + 1}일`)
-
+      temp.items.forEach(video => {
         const videoInfo: IVideoInfo = {
-          videoId: element.id.videoId,
-          videoTitle: element.snippet.title,
-          publishedAt: element.snippet.publishedAt,
-          channelId: element.snippet.channelId,
-          channelTitle: element.snippet.channelTitle
+          videoId: video.id.videoId,
+          videoTitle: video.snippet.title,
+          publishedAt: this.convertDateFormat(video.snippet.publishedAt),
+          channelId: video.snippet.channelId,
+          channelTitle: video.snippet.channelTitle
         }
         const $articleSection: HTMLElement = $("div.modal-inner section.video-wrapper") as HTMLElement;
         $articleSection.insertAdjacentHTML("beforeend", modalArticle(videoInfo));
