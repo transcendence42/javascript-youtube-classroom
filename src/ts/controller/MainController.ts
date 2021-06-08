@@ -1,7 +1,7 @@
 import { $, $$ } from '../util.js'
 import { IVideoInfo } from '../model/IVideoInfo.js';
-import { renderNotFoundImage, renderRecentKeyword, renderSearchedArticle } from "../view/renderElements.js";
-import { removeModalArticles, removeDuplicateRecentKeyword, removeOldSearchKeyword } from '../view/removeElements.js';
+import { renderNotFoundImage, renderRecentKeyword, renderSearchedArticle, renderSkeleton } from "../view/renderElements.js";
+import { removeModalArticles, removeDuplicateRecentKeyword, removeOldSearchKeyword, removeSkeletons } from '../view/removeElements.js';
 
 export default class MainController {
   constructor() {
@@ -53,8 +53,10 @@ export default class MainController {
   }
 
   renderArticles(searchValue: string) {
+    renderSkeleton();
     const searchResult: Promise<string> = this.getSearchResult(searchValue);
     searchResult.then(result=>{
+      removeSkeletons();
       const resultJSON = JSON.parse(result);
       if (resultJSON.pageInfo.totalResults === 0) {
         renderNotFoundImage();

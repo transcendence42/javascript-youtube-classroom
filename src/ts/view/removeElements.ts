@@ -21,3 +21,7 @@ export const removeOldSearchKeyword = () => {
     $('a.chip:last-child')?.remove();
   }
 }
+
+export const removeSkeletons = () => {
+  $('div.modal-inner section.video-wrapper')!.innerHTML = "";
+}

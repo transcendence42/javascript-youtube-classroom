@@ -3,6 +3,7 @@ import { $, $$ } from '../util.js';
 import { modalArticle } from './modalPage/index.js';
 import { IVideoInfo } from '../model/IVideoInfo.js';
 import { removeModalArticles, removeNotFoundImage } from './removeElements.js';
+import { skeleton } from './modalPage/skeleton.js';
 
 export const renderSearchedArticle = (videoInfo: IVideoInfo) => {
   removeNotFoundImage();
@@ -18,4 +19,8 @@ export const renderRecentKeyword = (searchValue: string) => {
 export const renderNotFoundImage = () => {
   $("div.modal-inner section.video-wrapper")?.insertAdjacentHTML("beforebegin", "<img src='./src/images/status/not_found.png' />");
   removeModalArticles();
+}
+
+export const renderSkeleton = () => {
+  $("div.modal-inner section.video-wrapper")?.insertAdjacentHTML("beforeend", skeleton().repeat(10));
 }
