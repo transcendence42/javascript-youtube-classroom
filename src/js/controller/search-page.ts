@@ -48,7 +48,7 @@ const clickModalVideosSaveButton = (e: Event | null) => {
   }
 };
 
-export const initModalController = () => {
+export const modalController = () => {
   $('#search-button')?.addEventListener('click', onModalShow);
   $('.modal-close')?.addEventListener('click', onModalClose);
   $('#modal-search-button')?.addEventListener('click', clickModalSearchButton);

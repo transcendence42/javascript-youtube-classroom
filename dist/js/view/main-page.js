@@ -25,11 +25,10 @@ const getToWatchVideoClip = (video) => {
         <div class="meta">
           <p>${video.publishedAt}</p>
         </div>
-        <div>
-          <span class="opacity-hover">✅</span>
-          <span class="opacity-hover">👍</span>
-          <span class="opacity-hover">💬</span>
-          <span class="opacity-hover">🗑️</span>
+        <div class="check-buttons">
+          <span class="checkView ${video.checkView ? '' : 'opacity-hover'}">✅</span>
+          <span class="checkLike ${video.checkLike ? '' : 'opacity-hover'}">👍</span>
+          <span class="checkDelete opacity-hover">🗑️</span>
         </div>
       </div>
     </div>
@@ -37,7 +36,7 @@ const getToWatchVideoClip = (video) => {
 };
 export const renderMainPage = () => {
     const videosToWatch = model.getLocalStorageItem('videos').filter((x) => x.checkView === false);
-    const result = videosToWatch.map(x => getToWatchVideoClip(x)).join('');
+    const result = videosToWatch.map((x) => getToWatchVideoClip(x)).join('');
     const mainVideoSection = $('#main-videos');
     if (mainVideoSection) {
         mainVideoSection.innerHTML = '';

@@ -44,7 +44,7 @@ const clickModalVideosSaveButton = (e) => {
         }
     }
 };
-export const initModalController = () => {
+export const modalController = () => {
     var _a, _b, _c, _d, _e;
     (_a = $('#search-button')) === null || _a === void 0 ? void 0 : _a.addEventListener('click', onModalShow);
     (_b = $('.modal-close')) === null || _b === void 0 ? void 0 : _b.addEventListener('click', onModalClose);

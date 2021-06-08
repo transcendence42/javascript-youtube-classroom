@@ -2,7 +2,7 @@ import { $ } from '../@shared/utils/utils.js';
 import { VideoModel, model } from '../model/index.js';
 
 const getToWatchVideoClip = (video: VideoModel): string => {
-    return `<article class="clip">
+  return `<article class="clip">
     <div class="preview-container">
       <iframe
         width="100%"
@@ -26,23 +26,22 @@ const getToWatchVideoClip = (video: VideoModel): string => {
         <div class="meta">
           <p>${video.publishedAt}</p>
         </div>
-        <div>
-          <span class="opacity-hover">✅</span>
-          <span class="opacity-hover">👍</span>
-          <span class="opacity-hover">💬</span>
-          <span class="opacity-hover">🗑️</span>
+        <div class="check-buttons">
+          <span class="checkView ${video.checkView ? '' : 'opacity-hover'}">✅</span>
+          <span class="checkLike ${video.checkLike ? '' : 'opacity-hover'}">👍</span>
+          <span class="checkDelete opacity-hover">🗑️</span>
         </div>
       </div>
     </div>
-  </article>`
-}
+  </article>`;
+};
 
 export const renderMainPage = () => {
   const videosToWatch = model.getLocalStorageItem('videos').filter((x) => x.checkView === false);
-  const result = videosToWatch.map(x => getToWatchVideoClip(x)).join('');
+  const result = videosToWatch.map((x) => getToWatchVideoClip(x)).join('');
   const mainVideoSection: HTMLElement | null = $('#main-videos');
-  if (mainVideoSection){
-      mainVideoSection.innerHTML = '';
+  if (mainVideoSection) {
+    mainVideoSection.innerHTML = '';
   }
   mainVideoSection?.insertAdjacentHTML('beforeend', result);
 };
