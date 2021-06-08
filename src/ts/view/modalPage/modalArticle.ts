@@ -2,14 +2,14 @@ export const modalArticle = (): string => {
   return `
   <article class="clip">
     <div class="preview-container">
-      <iframe width="100%" height="118" src="${'https://www.youtube.com/embed/Ngj3498Tm_0'}" frameborder="0"
+      <iframe width="100%" height="118" src="https://www.youtube.com/embed/${'Ngj3498Tm_0'}" frameborder="0"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
         allowfullscreen></iframe>
     </div>
     <div class="content-container pt-2 px-1">
       <h3>${'아두이노 무드등'}</h3>
       <div>
-        <a href="${'https://www.youtube.com/channel/UC-mOekGSesms0agFntnQang'}" target="_blank"
+        <a href="https://www.youtube.com/channel/${'UC-mOekGSesms0agFntnQang'}" target="_blank"
           class="channel-name mt-1">
           ${'메이커준'}
         </a>
