@@ -36,7 +36,7 @@ const clickModalVideosSaveButton = (e) => {
     if ((e === null || e === void 0 ? void 0 : e.target).classList.contains('modal-save-button')) {
         const modalSaveButton = e === null || e === void 0 ? void 0 : e.target;
         if (modalSaveButton) {
-            const videoWrapper = modalSaveButton.closest('.video-wrapper');
+            const videoWrapper = modalSaveButton.closest('.clip');
             console.log(videoWrapper);
             let newVideo = new VideoModel();
             model.addSaveVideos(newVideo.setVideoModelFromVideoWrapper(videoWrapper));
