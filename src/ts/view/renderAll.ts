@@ -12,7 +12,6 @@ const renderAll = () => {
   $('div.modal-inner')?.insertAdjacentHTML('beforeend', modalSearchFormSection());
   $('div.modal-inner')?.insertAdjacentHTML('beforeend', modalRecentKeywordSection());
   $('div.modal-inner')?.insertAdjacentHTML('beforeend', modalArticleSection());
-  $('div.modal-inner section.video-wrapper')?.insertAdjacentHTML('beforeend', modalArticle());
 };
 
 export { renderAll }
