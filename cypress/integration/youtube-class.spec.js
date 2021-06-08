@@ -1,4 +1,5 @@
-import { ENV } from '../../src/js/@shared/constants/env.ts'
+import { ENV } from '../../src/js/@shared/constants/env.ts';
+import { model } from '../../dist/js/model/index.js';
 
 // const BTSQUERY = `https://www.googleapis.com/youtube/v3/search?key=${ENV.API_KEY}&part=snippet&q=bts&maxResults=10&type=video&videoEmbeddable=true`;
 
@@ -15,52 +16,6 @@ import { ENV } from '../../src/js/@shared/constants/env.ts'
 //   });
 // })
 
-
-describe("검색 버튼 눌렀을 때 페이지 구성", () => {
-  beforeEach(()=> {
-    cy.visit('/');
-  })
-  // it("youtube API 불러왔을 때 10개의 skeleton UI 생성 확인", () => {
-  //   cy.visit('/');
-  //   // cy.get('#search-button').click();
-  //   // cy.get('.modal > .video-wrapper').should('have.length', 10);
-  // })
-  // it("youtube API 불러왔을 때 10개의 item이 있는지 확인", () => {
-  //   cy.visit('/');
-  //   // cy.get('#search-button').click();
-  //   // cy.get('.modal > .video-wrapper').should('have.length', 10);
-  // })
-  // it("item을 불러왔을때 channelTitle, publishedAt, thumbnail, title, videoId 값 불러오기", () => {
-
-  // }),
-  it("BTS 입력 후 검색버튼 누를때 최근 검색어 shift 최대 3개", () => {
-    cy.get('#search-button').click();
-    cy.get('#modal-search-input').type('bts');
-    cy.get('#modal-search-button').click();
-    cy.get('#modal-recent-search-items > :nth-child(1)').should('have.text', 'bts');
-    cy.get('#modal-search-input').type('ccc');
-    cy.get('#modal-search-button').click();
-    cy.get('#modal-recent-search-items > :nth-child(1)').should('have.text', 'ccc');
-    cy.get('#modal-search-input').type('aaa');
-    cy.get('#modal-search-button').click();
-    cy.get('#modal-recent-search-items > :nth-child(1)').should('have.text', 'aaa');
-  })
-  // it("bts 입력후 item 카드로 UI 띄우기", () => {
-
-  // })
-  // it("한 item에 대해 저장 버튼 눌렀을 때 localstorage videos 자료구조에 추가되는지 확인", () => {
-//  검색어 중복처리
-  // })
-  // it("한 item에 대해 저장 버튼 눌렀을 때 저장된 영상 갯수 오른쪽 상단에 띄우기", () => {
-
-  // })
-  // it("[3단계] scroll 했을때 10개씩 늘어나게 하기(lazy loading)", () => {
-
-  // })
-  // it("한 item에 대해 저장 버튼 눌렀을 때 저장된 영상 갯수 100개 제한하기", () => {
-
-  // })
-})
 // ⬇️ 저장
 // ↪️ 저장 취소
 // - model (local storage)
@@ -72,23 +27,18 @@ describe("검색 버튼 눌렀을 때 페이지 구성", () => {
 //       }
 //   ]
 
-describe("볼 영상 버튼 눌렀을때 페이지 구성", () => {
+describe('볼 영상 버튼 눌렀을때 페이지 구성', () => {
   // it("bts영상 저장 후 영상 버튼 눌렀을 때, local storage의 saved-videos중 checkView가 false인것 렌더링", () => {
-
   // })
   // it("삭제 버튼 클릭시 자료구조에서 해당 item 삭제", () => {
-
   // })
   // it("checkLike false일 때 좋아요 버튼 클릭시, checkLike true로 변경", () => {
-
   // })
   // it("checkLike true일 때 좋아요 버튼 클릭시, checkLike false로 변경", () => {
-
   // })
   // it("checkView가 false일때 체크박스 클릭 시, 자료구조 checkView 값 true로 변경.", () => {
-
   // })
-})
+});
 
 // describe("본 영상 버튼 눌렀을때 페이지 구성", () => {
 //   it("local storage의 saved-videos중 checkView가 true인것 렌더링", () => {
@@ -131,4 +81,3 @@ describe("볼 영상 버튼 눌렀을때 페이지 구성", () => {
 
 //   })
 // })
-
