@@ -2,40 +2,44 @@ import { ENV } from '../../@shared/constants/env.js';
 import { $, wait } from '../../@shared/utils/utils.js';
 import { getQueryString } from '../../@shared/utils/getQueryString.js';
 import { model } from '../../model/index.js';
+import { DATA_JSON } from './data.js';
 
 const getModalWrapper = (): string => {
   return `<div class="modal">
-    <div class="modal-inner p-8">
-      <button class="modal-close">
-        <svg viewbox="0 0 40 40">
-          <path class="close-x" d="M 10,10 L 30,30 M 30,10 L 10,30" />
-        </svg>
-      </button>
-      <header>
-        <h2 class="text-center">🔎 유튜브 검색</h2>
-      </header>
-      <form class="d-flex">
-        <input type="text" id="modal-search-input" class="w-100 mr-2 pl-2" placeholder="검색" />
-        <button type="button" id="modal-search-button" class="btn bg-cyan-500">검색</button>
-      </form>
-      <section class="mt-2">
-        <span class="text-gray-700">최근 검색어: </span>
-        <div id="modal-recent-search-items">
-        </div>
-      </section>
-      <section>
-        <div id="modal-saved-video-length" class="d-flex justify-end text-gray-700">
-          저장된 영상 갯수: 50개
-        </div>
-      </section>
-      <div id="modal-videos">
-      </div>
-    </div>
-  </div>`;
+            <div class="modal-inner p-8">
+              <button class="modal-close">
+                <svg viewbox="0 0 40 40">
+                  <path class="close-x" d="M 10,10 L 30,30 M 30,10 L 10,30" />
+                </svg>
+              </button>
+              <header>
+                <h2 class="text-center">🔎 유튜브 검색</h2>
+              </header>
+              <form class="d-flex">
+                <input type="text" id="modal-search-input" class="w-100 mr-2 pl-2" placeholder="검색" />
+                <button type="button" id="modal-search-button" class="btn bg-cyan-500">검색</button>
+              </form>
+              <section class="mt-2">
+                <span class="text-gray-700">최근 검색어: </span>
+                <div id="modal-recent-search-items">
+                </div>
+              </section>
+              <section>
+                <div id="modal-saved-video-length" class="d-flex justify-end text-gray-700">
+                  저장된 영상 갯수: 50개
+                </div>
+              </section>
+              <section id="modal-videos" class="video-wrapper">
+              </section>
+            </div>
+          </div>`;
 };
 
 const getRecentSearchItemWrapper = (items: string[]): string => {
-  return items.map((x) => `<a class="chip">${x}</a>`).reverse().join('');
+  return items
+    .map((x) => `<a class="chip">${x}</a>`)
+    .reverse()
+    .join('');
 };
 
 const getVideoWrapper = ({
@@ -51,8 +55,7 @@ const getVideoWrapper = ({
   channelTitle: string;
   publishedAt: string;
 }): string => {
-  return `<section class="video-wrapper">
-<article class="clip">
+  return `<article class="clip">
   <div class="preview-container">
     <iframe
       width="100%"
@@ -81,12 +84,10 @@ const getVideoWrapper = ({
       </div>
     </div>
   </div>
-</article>
-</section>`;
+</article>`;
 };
 
-const skeletonUI = `<section class="video-wrapper">
-              <article class="clip skeleton">
+const skeletonUI = `<article class="clip skeleton">
                 <div class="preview-container image">
                   <iframe
                     width="100%"
@@ -108,16 +109,12 @@ const skeletonUI = `<section class="video-wrapper">
                     <div class="meta">
                       <p></p>
                     </div>
-                    <div>
-                      <span class="opacity-hover">✅</span>
-                      <span class="opacity-hover">👍</span>
-                      <span class="opacity-hover">💬</span>
-                      <span class="opacity-hover">🗑️</span>
+                    <div class="d-flex justify-end">
+                      <button class="btn modal-save-button">⬇️ 저장</button>
                     </div>
                   </div>
                 </div>
-              </article>
-            </section>`;
+              </article>`;
 
 const videoWrapperTMP = `<section class="video-wrapper">
               <article class="clip">
@@ -155,52 +152,49 @@ const videoWrapperTMP = `<section class="video-wrapper">
               </article>
             </section>`;
 
-const renderSavedVideoLength = (videoLength: number)=> {
+const renderSavedVideoLength = (videoLength: number) => {
   $('#modal-saved-video-length')!.innerText = `저장된 영상 갯수: ${videoLength}개`;
-}
+};
 
 const getRecentSearchItem = (): string => {
   return getRecentSearchItemWrapper(model.getLocalStorageItem('recent-search'));
 };
 
 const getSkeletonUIWrapper = (): string => {
-  return `<div id="skeletons">` + skeletonUI.repeat(10) + `</div>`;
+  return skeletonUI.repeat(10);
 };
 
-const renderSearchPage = async () => {
-  // $('#app')?.insertAdjacentHTML('beforeend', getModalWrapper());
+const renderSearchPage = async ({ q, maxResults, type }: { q: string; maxResults: string; type: string }) => {
+  const modalVideos: HTMLDivElement | null = $('#modal-videos') as HTMLDivElement;
+
+  if (!modalVideos) {
+    return;
+  }
+
   $('#modal-recent-search-items')?.insertAdjacentHTML('afterbegin', getRecentSearchItem());
-  $('#modal-videos')?.insertAdjacentHTML('afterbegin', getSkeletonUIWrapper());
+  modalVideos?.insertAdjacentHTML('afterbegin', getSkeletonUIWrapper());
+
+  let result = '';
 
   /* temp code */
-  let result = '';
-  await wait(1200);
-  $('#skeletons')?.remove();
-  result = getVideoWrapper({
-    videoLink: "https://www.youtube.com/embed/Ngj3498Tm_0",
-    videoTitle: "아두이노 무드등",
-    channelLink: "https://www.youtube.com/channel/UC-mOekGSesms0agFntnQang",
-    channelTitle: "메이커준",
-    publishedAt: "2021년 3월 2일",
-  }).repeat(10);
-  // result = videoWrapperTMP.repeat(10);
-  // console.log(result);
-  $('#modal-videos')?.insertAdjacentHTML('afterbegin', result);
+  await wait(1000);
+  const data = DATA_JSON;
 
   /* real code */
-  // let result = '';
-  // const data = await getQueryString({ q: 'bts', maxResults: '10', type: 'video' });
-  // result = data
-  //   .map((x: any) =>
-  //     getVideoWrapper({
-  //       videoLink: ENV.YOUTUBE_WATCH_URL + x.id.videoId,
-  //       videoTitle: x.snippet.title,
-  //       channelLink: ENV.YOUTUBE_CHANNEL_URL + x.snippet.channelId,
-  //       channelTitle: x.snippet.channelTitle,
-  //       publishedAt: x.snippet.publishedAt,
-  //     }),
-  //   )
-  //   .join('');
+  // const data = await getQueryString({ q, maxResults, type });
+  modalVideos.innerHTML = '';
+  result = data.items
+    .map((x: any) =>
+      getVideoWrapper({
+        videoLink: ENV.YOUTUBE_WATCH_URL + x.id.videoId,
+        videoTitle: x.snippet.title,
+        channelLink: ENV.YOUTUBE_CHANNEL_URL + x.snippet.channelId,
+        channelTitle: x.snippet.channelTitle,
+        publishedAt: x.snippet.publishedAt,
+      }),
+    )
+    .join('');
+  $('#modal-videos')?.insertAdjacentHTML('afterbegin', result);
 };
 
 export { getModalWrapper, getRecentSearchItem, renderSearchPage, renderSavedVideoLength };

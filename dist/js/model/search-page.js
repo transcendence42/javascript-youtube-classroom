@@ -10,9 +10,10 @@ export const searchPageModel = {
     },
     addRecentSearch(str) {
         let recentSearchItems = this.getLocalStorageItem('recent-search');
-        if (recentSearchItems.includes(str)) {
-            return;
-        }
+        // todo: 중복 로직 고치기
+        // if (recentSearchItems[2] === str) {
+        //   return;
+        // }
         if (recentSearchItems.length > 2) {
             recentSearchItems.shift();
         }

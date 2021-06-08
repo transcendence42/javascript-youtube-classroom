@@ -3,7 +3,6 @@ import { renderSearchPage, getRecentSearchItem, renderSavedVideoLength } from '.
 import { VideoModel, model } from '../../model/index.js';
 
 const onModalShow = () => {
-  renderSearchPage();
   renderSavedVideoLength(model.getLocalStorageItem('videos').length);
   $('.modal')?.classList.add('open');
 };
@@ -12,25 +11,31 @@ const onModalClose = () => {
   $('.modal')?.classList.remove('open');
 };
 
-const clickModalRecentSearch = () => {};
+const clickModalSearchButton = (e: Event) => {
+  let modalSearchInput: string;
 
-const clickModalSearchButton = () => {
-  const modalSearchInput: HTMLInputElement | null = <HTMLInputElement>$('#modal-search-input');
+  modalSearchInput =
+    (<HTMLElement>e?.target).tagName === 'BUTTON'
+      ? (<HTMLInputElement>$('#modal-search-input'))?.value
+      : (<HTMLElement>e?.target).innerText;
+
+  console.log(modalSearchInput);
+
   if (modalSearchInput) {
-    model.addRecentSearch(modalSearchInput.value);
+    model.addRecentSearch(modalSearchInput);
     removeChildNodes($('#modal-recent-search-items'));
     $('#modal-recent-search-items')?.insertAdjacentHTML('afterbegin', getRecentSearchItem());
     // init
-    modalSearchInput.value = '';
+    (<HTMLInputElement>$('#modal-search-input')).value = '';
   } else {
     alert('검색어를 입력하세요.');
     // modalSearchInput.value = "";
     // modalSearchInput.focus();
   }
+  renderSearchPage({ q: modalSearchInput, maxResults: '10', type: 'video' });
 };
 
 const clickModalVideosSaveButton = (e: Event | null) => {
-  console.log('hi');
   if ((<HTMLElement>e?.target).classList.contains('modal-save-button')) {
     const modalSaveButton: HTMLButtonElement | null = e?.target as HTMLButtonElement;
     if (modalSaveButton) {
@@ -47,6 +52,6 @@ export const initModalController = () => {
   $('#search-button')?.addEventListener('click', onModalShow);
   $('.modal-close')?.addEventListener('click', onModalClose);
   $('#modal-search-button')?.addEventListener('click', clickModalSearchButton);
-  $('#modal-recent-search-items')?.addEventListener('click', clickModalRecentSearch);
+  $('#modal-recent-search-items')?.addEventListener('click', clickModalSearchButton);
   $('#modal-videos')?.addEventListener('click', clickModalVideosSaveButton);
 };
