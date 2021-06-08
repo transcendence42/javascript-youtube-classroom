@@ -1,4 +1,5 @@
-export class VideoModel {
+import { searchPageModel } from './search-page.js';
+class VideoModel {
     constructor() {
         this.videoLink = '';
         this.videoTitle = '';
@@ -40,3 +41,5 @@ export class VideoModel {
         };
     }
 }
+const model = Object.assign({}, searchPageModel);
+export { VideoModel, model };

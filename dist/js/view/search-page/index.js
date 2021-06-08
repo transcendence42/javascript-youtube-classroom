@@ -8,7 +8,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import { $, wait } from '../../@shared/utils/utils.js';
-import { searchPageModel } from '../../model/search-page/index.js';
+import { model } from '../../model/index.js';
 const getModalWrapper = () => {
     return `<div class="modal">
     <div class="modal-inner p-8">
@@ -30,7 +30,7 @@ const getModalWrapper = () => {
         </div>
       </section>
       <section>
-        <div class="d-flex justify-end text-gray-700">
+        <div id="modal-saved-video-length" class="d-flex justify-end text-gray-700">
           저장된 영상 갯수: 50개
         </div>
       </section>
@@ -144,8 +144,11 @@ const videoWrapperTMP = `<section class="video-wrapper">
                 </div>
               </article>
             </section>`;
+const renderSavedVideoLength = (videoLength) => {
+    $('#modal-saved-video-length').innerText = `저장된 영상 갯수: ${videoLength}개`;
+};
 const getRecentSearchItem = () => {
-    return getRecentSearchItemWrapper(searchPageModel.getLocalStorageItem('recent-search'));
+    return getRecentSearchItemWrapper(model.getLocalStorageItem('recent-search'));
 };
 const getSkeletonUIWrapper = () => {
     return `<div id="skeletons">` + skeletonUI.repeat(10) + `</div>`;
@@ -184,4 +187,4 @@ const renderSearchPage = () => __awaiter(void 0, void 0, void 0, function* () {
     //   )
     //   .join('');
 });
-export { getModalWrapper, getRecentSearchItem, renderSearchPage };
+export { getModalWrapper, getRecentSearchItem, renderSearchPage, renderSavedVideoLength };

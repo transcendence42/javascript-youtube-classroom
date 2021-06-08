@@ -1,10 +1,10 @@
 import { $, removeChildNodes } from '../../@shared/utils/utils.js';
-import { searchPageModel } from '../../model/search-page/index.js';
-import { renderSearchPage, getRecentSearchItem } from '../../view/search-page/index.js';
-import { VideoModel } from '../../model/index.js';
+import { renderSearchPage, getRecentSearchItem, renderSavedVideoLength } from '../../view/search-page/index.js';
+import { VideoModel, model } from '../../model/index.js';
 const onModalShow = () => {
     var _a;
     renderSearchPage();
+    renderSavedVideoLength(model.getLocalStorageItem('videos').length);
     (_a = $('.modal')) === null || _a === void 0 ? void 0 : _a.classList.add('open');
 };
 const onModalClose = () => {
@@ -16,10 +16,11 @@ const clickModalSearchButton = () => {
     var _a;
     const modalSearchInput = $('#modal-search-input');
     if (modalSearchInput) {
-        searchPageModel.addRecentSearch(modalSearchInput.value);
+        model.addRecentSearch(modalSearchInput.value);
         removeChildNodes($('#modal-recent-search-items'));
         (_a = $('#modal-recent-search-items')) === null || _a === void 0 ? void 0 : _a.insertAdjacentHTML('afterbegin', getRecentSearchItem());
-        modalSearchInput.value = "";
+        // init
+        modalSearchInput.value = '';
     }
     else {
         alert('검색어를 입력하세요.');
@@ -32,10 +33,11 @@ const clickModalVideosSaveButton = (e) => {
     if ((e === null || e === void 0 ? void 0 : e.target).classList.contains('modal-save-button')) {
         const modalSaveButton = e === null || e === void 0 ? void 0 : e.target;
         if (modalSaveButton) {
-            const videoWrapper = modalSaveButton.closest(".video-wrapper");
+            const videoWrapper = modalSaveButton.closest('.video-wrapper');
             console.log(videoWrapper);
             let newVideo = new VideoModel();
-            searchPageModel.addSaveVideos(newVideo.setVideoModelFromVideoWrapper(videoWrapper));
+            model.addSaveVideos(newVideo.setVideoModelFromVideoWrapper(videoWrapper));
+            renderSavedVideoLength(model.getLocalStorageItem('videos').length);
         }
     }
 };

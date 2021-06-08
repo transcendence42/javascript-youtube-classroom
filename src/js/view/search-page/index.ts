@@ -1,7 +1,7 @@
 import { ENV } from '../../@shared/constants/env.js';
 import { $, wait } from '../../@shared/utils/utils.js';
 import { getQueryString } from '../../@shared/utils/getQueryString.js';
-import { searchPageModel } from '../../model/search-page/index.js';
+import { model } from '../../model/index.js';
 
 const getModalWrapper = (): string => {
   return `<div class="modal">
@@ -24,7 +24,7 @@ const getModalWrapper = (): string => {
         </div>
       </section>
       <section>
-        <div class="d-flex justify-end text-gray-700">
+        <div id="modal-saved-video-length" class="d-flex justify-end text-gray-700">
           저장된 영상 갯수: 50개
         </div>
       </section>
@@ -155,8 +155,12 @@ const videoWrapperTMP = `<section class="video-wrapper">
               </article>
             </section>`;
 
+const renderSavedVideoLength = (videoLength: number)=> {
+  $('#modal-saved-video-length')!.innerText = `저장된 영상 갯수: ${videoLength}개`;
+}
+
 const getRecentSearchItem = (): string => {
-  return getRecentSearchItemWrapper(searchPageModel.getLocalStorageItem('recent-search'));
+  return getRecentSearchItemWrapper(model.getLocalStorageItem('recent-search'));
 };
 
 const getSkeletonUIWrapper = (): string => {
@@ -199,4 +203,4 @@ const renderSearchPage = async () => {
   //   .join('');
 };
 
-export { getModalWrapper, getRecentSearchItem, renderSearchPage };
+export { getModalWrapper, getRecentSearchItem, renderSearchPage, renderSavedVideoLength };

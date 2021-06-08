@@ -1,6 +1,7 @@
 import { ENV } from '../@shared/constants/env.js';
+import { searchPageModel } from './search-page.js';
 
-export class VideoModel {
+class VideoModel {
   videoLink: string;
   videoTitle: string;
   channelLink: string;
@@ -68,3 +69,9 @@ export class VideoModel {
     };
   }
 }
+
+const model = {
+    ...searchPageModel,
+}
+
+export { VideoModel, model }
