@@ -3,8 +3,8 @@ import { $, wait } from '../../@shared/utils/utils.js';
 import { getQueryString } from '../../@shared/utils/getQueryString.js';
 import { searchPageModel } from '../../model/search-page/index.js';
 
-const getModalWrapper = ({ recentSearchItems, videos }: { recentSearchItems: string; videos: string }): string => {
-  return `      <div class="modal">
+const getModalWrapper = (): string => {
+  return `<div class="modal">
     <div class="modal-inner p-8">
       <button class="modal-close">
         <svg viewbox="0 0 40 40">
@@ -21,7 +21,6 @@ const getModalWrapper = ({ recentSearchItems, videos }: { recentSearchItems: str
       <section class="mt-2">
         <span class="text-gray-700">최근 검색어: </span>
         <div id="modal-recent-search-items">
-        ${recentSearchItems}
         </div>
       </section>
       <section>
@@ -29,7 +28,8 @@ const getModalWrapper = ({ recentSearchItems, videos }: { recentSearchItems: str
           저장된 영상 갯수: 50개
         </div>
       </section>
-      ${videos}
+      <div id="modal-videos">
+      </div>
     </div>
   </div>`;
 };
@@ -176,8 +176,10 @@ const renderVideos = async () => {
 
   $('#app')?.insertAdjacentHTML(
     'beforeend',
-    getModalWrapper({ recentSearchItems: getRecentSearchItem(), videos: result }),
+    getModalWrapper(),
   );
+  // recentitems rendering
+
   await wait(3000);
   $('#skeletons')?.remove();
   result = videoWrapperTMP.repeat(10);
