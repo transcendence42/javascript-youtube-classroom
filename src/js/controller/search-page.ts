@@ -1,5 +1,5 @@
 import { $, $$, removeChildNodes, wait } from '../@shared/utils/utils.js';
-import { renderSearchPage, getRecentSearchItem,getVideoWrapper, renderSavedVideoLength } from '../view/search-page.js';
+import { renderSearchPage, getRecentSearchItem, getVideoWrapper, renderSavedVideoLength } from '../view/search-page.js';
 import { ENV } from '../@shared/constants/env.js';
 import { VideoModel, model } from '../model/index.js';
 import { renderMainPage } from '../view/main-page.js';
@@ -54,15 +54,13 @@ const clickModalVideosSaveButton = (e: Event | null) => {
   }
 };
 
-const doSomething = async (scrollPos: number) => {
+const scrollDownEvent = async (scrollPos: number): Promise<void> => {
   const modalInner: HTMLDivElement = $('.modal-inner') as HTMLDivElement;
 
-  if ( 0.9 < scrollPos/(modalInner.scrollHeight - modalInner.offsetHeight)) {
-    // 10개 또 불러와서 뿌려주기
+  if (0.9 < scrollPos / (modalInner.scrollHeight - modalInner.offsetHeight)) {
     const data = DATA_JSON;
-    let result: string;
-    const saveVideoLinks = model.getLocalStorageItem('videos').map(x => x.videoLink);
-    result = data.items
+    const saveVideoLinks = model.getLocalStorageItem('videos').map((x) => x.videoLink);
+    let result: string = data.items
       .map((x: any) => {
         return getVideoWrapper({
           videoLink: ENV.YOUTUBE_WATCH_URL + x.id.videoId,
@@ -75,15 +73,15 @@ const doSomething = async (scrollPos: number) => {
       })
       .join('');
     $('#modal-videos')?.insertAdjacentHTML('afterbegin', result);
-    modalInner.scroll(0, scrollPos) //올려주기
+    modalInner.scroll(0, scrollPos);
   }
-}
+};
 
-const scrollThrottling = (lastKnownScrollPosition: number , ticking: boolean) => {
+const scrollThrottling = (lastKnownScrollPosition: number, ticking: boolean) => {
   lastKnownScrollPosition = $('.modal-inner')?.scrollTop as number;
   if (!ticking) {
-    window.requestAnimationFrame(function () {
-      doSomething(lastKnownScrollPosition);
+    window.requestAnimationFrame(() => {
+      scrollDownEvent(lastKnownScrollPosition);
       ticking = false;
     });
     ticking = true;
