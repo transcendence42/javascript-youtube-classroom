@@ -167,6 +167,11 @@ const getSkeletonUIWrapper = (): string => {
   return skeletonUI.repeat(10);
 };
 
+const renderSkeletonUI = (modalVideos: HTMLDivElement): void => {
+  modalVideos.innerHTML = ''
+  modalVideos.insertAdjacentHTML('afterbegin', getSkeletonUIWrapper());
+}
+
 const renderSearchPage = async ({ q, maxResults, type }: { q: string; maxResults: string; type: string }) => {
   const modalVideos: HTMLDivElement | null = $('#modal-videos') as HTMLDivElement;
 
@@ -175,7 +180,7 @@ const renderSearchPage = async ({ q, maxResults, type }: { q: string; maxResults
   }
 
   $('#modal-recent-search-items')?.insertAdjacentHTML('afterbegin', getRecentSearchItem());
-  modalVideos?.insertAdjacentHTML('afterbegin', getSkeletonUIWrapper());
+  renderSkeletonUI(modalVideos);
 
   let result = '';
 

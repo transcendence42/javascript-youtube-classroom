@@ -152,6 +152,10 @@ const getRecentSearchItem = () => {
 const getSkeletonUIWrapper = () => {
     return skeletonUI.repeat(10);
 };
+const renderSkeletonUI = (modalVideos) => {
+    modalVideos.innerHTML = '';
+    modalVideos.insertAdjacentHTML('afterbegin', getSkeletonUIWrapper());
+};
 const renderSearchPage = ({ q, maxResults, type }) => __awaiter(void 0, void 0, void 0, function* () {
     var _a, _b;
     const modalVideos = $('#modal-videos');
@@ -159,7 +163,7 @@ const renderSearchPage = ({ q, maxResults, type }) => __awaiter(void 0, void 0, 
         return;
     }
     (_a = $('#modal-recent-search-items')) === null || _a === void 0 ? void 0 : _a.insertAdjacentHTML('afterbegin', getRecentSearchItem());
-    modalVideos === null || modalVideos === void 0 ? void 0 : modalVideos.insertAdjacentHTML('afterbegin', getSkeletonUIWrapper());
+    renderSkeletonUI(modalVideos);
     let result = '';
     /* temp code */
     yield wait(1000);
