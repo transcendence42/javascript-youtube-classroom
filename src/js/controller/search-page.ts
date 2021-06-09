@@ -14,24 +14,27 @@ const onModalClose = () => {
   $('.modal')?.classList.remove('open');
 };
 
-const clickModalSearchButton = (e: Event) => {
+const clickModalSearchButton = (e: Event | KeyboardEvent) => {
+  console.log((<KeyboardEvent>e).keyCode);
+  if ((<KeyboardEvent>e).keyCode && (<KeyboardEvent>e).keyCode !== 13) {
+    return;
+  }
   let modalSearchInput: string;
 
   modalSearchInput =
-    (<HTMLElement>e?.target).tagName === 'BUTTON'
+    (<HTMLElement>e?.target).tagName === 'BUTTON' || (<HTMLElement>e?.target).tagName === 'INPUT'
       ? (<HTMLInputElement>$('#modal-search-input'))?.value
       : (<HTMLElement>e?.target).innerText;
 
   if (modalSearchInput) {
     model.addRecentSearch(modalSearchInput);
     removeChildNodes($('#modal-recent-search-items'));
-    // init
     (<HTMLInputElement>$('#modal-search-input')).value = '';
     renderSearchPage({ q: modalSearchInput, maxResults: '10', type: 'video' });
   } else {
     alert('검색어를 입력하세요.');
-    // modalSearchInput.value = "";
-    // modalSearchInput.focus();
+    (<HTMLInputElement>$('#modal-search-input')).value = "";
+    (<HTMLInputElement>$('#modal-search-input')).focus();
   }
 };
 
@@ -95,10 +98,16 @@ const scrollModalInner = (e: Event | null): void => {
   scrollThrottling(lastKnownScrollPosition, ticking);
 };
 
+const submitPreventDefault = (e: Event | null) => {
+  e?.preventDefault();
+};
+
 export const modalController = () => {
   $('#search-button')?.addEventListener('click', onModalShow);
   $('.modal-close')?.addEventListener('click', onModalClose);
   $('#modal-search-button')?.addEventListener('click', clickModalSearchButton);
+  $('#modal-search-input')?.addEventListener('keyup', clickModalSearchButton);
+  $('#modal-search-form')?.addEventListener('submit', submitPreventDefault);
   $('#modal-recent-search-items')?.addEventListener('click', clickModalSearchButton);
   $('#modal-videos')?.addEventListener('click', clickModalVideosSaveButton);
   $('.modal-inner')?.addEventListener('scroll', scrollModalInner);

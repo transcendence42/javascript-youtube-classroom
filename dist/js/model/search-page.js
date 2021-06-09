@@ -14,12 +14,7 @@ export const searchPageModel = {
             if (str === recentSearchItems[recentSearchItems.length - 1]) {
                 return;
             }
-            else {
-                recentSearchItems.splice(recentSearchItems.indexOf(str), 1);
-                // recentSearchItems.push(str);
-                // localStorage.setItem('recent-search', JSON.stringify(recentSearchItems));
-                // return ;
-            }
+            recentSearchItems.splice(recentSearchItems.indexOf(str), 1);
         }
         if (recentSearchItems.length > 2) {
             recentSearchItems.shift();

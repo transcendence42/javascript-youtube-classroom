@@ -22,7 +22,7 @@ const getModalWrapper = () => {
               <header>
                 <h2 class="text-center">🔎 유튜브 검색</h2>
               </header>
-              <form class="d-flex">
+              <form id="modal-search-form" class="d-flex">
                 <input type="text" id="modal-search-input" class="w-100 mr-2 pl-2" placeholder="검색" />
                 <button type="button" id="modal-search-button" class="btn bg-cyan-500">검색</button>
               </form>
@@ -56,6 +56,7 @@ const getVideoWrapper = ({ videoLink, videoTitle, channelLink, channelTitle, pub
       src="${videoLink}"
       frameborder="0"
       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      loading="lazy"
       allowfullscreen
     ></iframe>
   </div>

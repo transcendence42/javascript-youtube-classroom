@@ -24,22 +24,25 @@ const onModalClose = () => {
 };
 const clickModalSearchButton = (e) => {
     var _a;
+    console.log(e.keyCode);
+    if (e.keyCode && e.keyCode !== 13) {
+        return;
+    }
     let modalSearchInput;
     modalSearchInput =
-        (e === null || e === void 0 ? void 0 : e.target).tagName === 'BUTTON'
+        (e === null || e === void 0 ? void 0 : e.target).tagName === 'BUTTON' || (e === null || e === void 0 ? void 0 : e.target).tagName === 'INPUT'
             ? (_a = $('#modal-search-input')) === null || _a === void 0 ? void 0 : _a.value
             : (e === null || e === void 0 ? void 0 : e.target).innerText;
     if (modalSearchInput) {
         model.addRecentSearch(modalSearchInput);
         removeChildNodes($('#modal-recent-search-items'));
-        // init
         $('#modal-search-input').value = '';
         renderSearchPage({ q: modalSearchInput, maxResults: '10', type: 'video' });
     }
     else {
         alert('검색어를 입력하세요.');
-        // modalSearchInput.value = "";
-        // modalSearchInput.focus();
+        $('#modal-search-input').value = "";
+        $('#modal-search-input').focus();
     }
 };
 const disableSaveButton = (modalSaveButton) => {
@@ -97,12 +100,17 @@ const scrollModalInner = (e) => {
     let ticking = false;
     scrollThrottling(lastKnownScrollPosition, ticking);
 };
+const submitPreventDefault = (e) => {
+    e === null || e === void 0 ? void 0 : e.preventDefault();
+};
 export const modalController = () => {
-    var _a, _b, _c, _d, _e, _f;
+    var _a, _b, _c, _d, _e, _f, _g, _h;
     (_a = $('#search-button')) === null || _a === void 0 ? void 0 : _a.addEventListener('click', onModalShow);
     (_b = $('.modal-close')) === null || _b === void 0 ? void 0 : _b.addEventListener('click', onModalClose);
     (_c = $('#modal-search-button')) === null || _c === void 0 ? void 0 : _c.addEventListener('click', clickModalSearchButton);
-    (_d = $('#modal-recent-search-items')) === null || _d === void 0 ? void 0 : _d.addEventListener('click', clickModalSearchButton);
-    (_e = $('#modal-videos')) === null || _e === void 0 ? void 0 : _e.addEventListener('click', clickModalVideosSaveButton);
-    (_f = $('.modal-inner')) === null || _f === void 0 ? void 0 : _f.addEventListener('scroll', scrollModalInner);
+    (_d = $('#modal-search-input')) === null || _d === void 0 ? void 0 : _d.addEventListener('keyup', clickModalSearchButton);
+    (_e = $('#modal-search-form')) === null || _e === void 0 ? void 0 : _e.addEventListener('submit', submitPreventDefault);
+    (_f = $('#modal-recent-search-items')) === null || _f === void 0 ? void 0 : _f.addEventListener('click', clickModalSearchButton);
+    (_g = $('#modal-videos')) === null || _g === void 0 ? void 0 : _g.addEventListener('click', clickModalVideosSaveButton);
+    (_h = $('.modal-inner')) === null || _h === void 0 ? void 0 : _h.addEventListener('scroll', scrollModalInner);
 };
