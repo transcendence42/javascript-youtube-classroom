@@ -2,6 +2,7 @@ import { modalController } from './search-page.js';
 import { mainPageController } from './main-page.js';
 import { watchedPageController } from './watched-page.js';
 import { model } from '../model/index.js';
+import { $ } from '../@shared/utils/utils.js';
 const clickCheckView = (clip) => {
     var _a, _b;
     const checkViewClassList = (_a = clip === null || clip === void 0 ? void 0 : clip.querySelector('.checkView')) === null || _a === void 0 ? void 0 : _a.classList;
@@ -47,9 +48,18 @@ const clickCheckButtons = (e) => {
             break;
     }
 };
+const clickNavButtons = (e) => {
+    var _a, _b, _c;
+    (_a = $('#main-page-button')) === null || _a === void 0 ? void 0 : _a.classList.remove('bg-cyan-100');
+    (_b = $('#watched-page-button')) === null || _b === void 0 ? void 0 : _b.classList.remove('bg-cyan-100');
+    (_c = $('#search-button')) === null || _c === void 0 ? void 0 : _c.classList.remove('bg-cyan-100');
+    (e === null || e === void 0 ? void 0 : e.target).classList.add('bg-cyan-100');
+};
 function initController() {
+    var _a;
     mainPageController();
     modalController();
     watchedPageController();
+    (_a = $('#nav-buttons')) === null || _a === void 0 ? void 0 : _a.addEventListener('click', clickNavButtons);
 }
 export { clickCheckButtons, initController };
