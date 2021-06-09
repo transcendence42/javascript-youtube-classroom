@@ -1,7 +1,7 @@
 import { ENV } from '../@shared/constants/env.js';
 import { $, wait } from '../@shared/utils/utils.js';
 import { getQueryString } from '../@shared/utils/getQueryString.js';
-import { model } from '../model/index.js'
+import { model } from '../model/index.js';
 import { DATA_JSON } from './data.js';
 
 const getModalWrapper = (): string => {
@@ -48,12 +48,14 @@ const getVideoWrapper = ({
   channelLink,
   channelTitle,
   publishedAt,
+  checkView,
 }: {
   videoLink: string;
   videoTitle: string;
   channelLink: string;
   channelTitle: string;
   publishedAt: string;
+  checkView: boolean;
 }): string => {
   return `<article class="clip">
   <div class="preview-container">
@@ -80,7 +82,7 @@ const getVideoWrapper = ({
         <p>${publishedAt}</p>
       </div>
       <div class="d-flex justify-end">
-        <button class="btn modal-save-button">⬇️ 저장</button>
+        <button class="btn modal-save-button" ${checkView ? 'disabled': ''}>${checkView ? '✅ 저장 완료' : '⬇️ 저장'}</button>
       </div>
     </div>
   </div>
@@ -184,16 +186,18 @@ const renderSearchPage = async ({ q, maxResults, type }: { q: string; maxResults
   /* real code */
   // const data = await getQueryString({ q, maxResults, type });
   modalVideos.innerHTML = '';
+  const saveVideoLinks = model.getLocalStorageItem('videos').map(x => x.videoLink);
   result = data.items
-    .map((x: any) =>
-      getVideoWrapper({
+    .map((x: any) => {
+      return getVideoWrapper({
         videoLink: ENV.YOUTUBE_WATCH_URL + x.id.videoId,
         videoTitle: x.snippet.title,
         channelLink: ENV.YOUTUBE_CHANNEL_URL + x.snippet.channelId,
         channelTitle: x.snippet.channelTitle,
         publishedAt: x.snippet.publishedAt,
-      }),
-    )
+        checkView: saveVideoLinks.includes(ENV.YOUTUBE_WATCH_URL + x.id.videoId),
+      });
+    })
     .join('');
   $('#modal-videos')?.insertAdjacentHTML('afterbegin', result);
 };

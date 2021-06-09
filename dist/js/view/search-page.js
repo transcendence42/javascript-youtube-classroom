@@ -47,7 +47,7 @@ const getRecentSearchItemWrapper = (items) => {
         .reverse()
         .join('');
 };
-const getVideoWrapper = ({ videoLink, videoTitle, channelLink, channelTitle, publishedAt, }) => {
+const getVideoWrapper = ({ videoLink, videoTitle, channelLink, channelTitle, publishedAt, checkView, }) => {
     return `<article class="clip">
   <div class="preview-container">
     <iframe
@@ -73,7 +73,7 @@ const getVideoWrapper = ({ videoLink, videoTitle, channelLink, channelTitle, pub
         <p>${publishedAt}</p>
       </div>
       <div class="d-flex justify-end">
-        <button class="btn modal-save-button">⬇️ 저장</button>
+        <button class="btn modal-save-button" ${checkView ? 'disabled' : ''}>${checkView ? '✅ 저장 완료' : '⬇️ 저장'}</button>
       </div>
     </div>
   </div>
@@ -167,14 +167,18 @@ const renderSearchPage = ({ q, maxResults, type }) => __awaiter(void 0, void 0, 
     /* real code */
     // const data = await getQueryString({ q, maxResults, type });
     modalVideos.innerHTML = '';
+    const saveVideoLinks = model.getLocalStorageItem('videos').map(x => x.videoLink);
     result = data.items
-        .map((x) => getVideoWrapper({
-        videoLink: ENV.YOUTUBE_WATCH_URL + x.id.videoId,
-        videoTitle: x.snippet.title,
-        channelLink: ENV.YOUTUBE_CHANNEL_URL + x.snippet.channelId,
-        channelTitle: x.snippet.channelTitle,
-        publishedAt: x.snippet.publishedAt,
-    }))
+        .map((x) => {
+        return getVideoWrapper({
+            videoLink: ENV.YOUTUBE_WATCH_URL + x.id.videoId,
+            videoTitle: x.snippet.title,
+            channelLink: ENV.YOUTUBE_CHANNEL_URL + x.snippet.channelId,
+            channelTitle: x.snippet.channelTitle,
+            publishedAt: x.snippet.publishedAt,
+            checkView: saveVideoLinks.includes(ENV.YOUTUBE_WATCH_URL + x.id.videoId),
+        });
+    })
         .join('');
     (_b = $('#modal-videos')) === null || _b === void 0 ? void 0 : _b.insertAdjacentHTML('afterbegin', result);
 });
