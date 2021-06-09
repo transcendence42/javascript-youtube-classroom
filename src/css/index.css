@@ -25,6 +25,10 @@ a {
   opacity: 1;
 }
 
+.modal-inner {
+  height: 70%;
+}
+
 
 .skeleton {
   background-color: #e2e5e7;
