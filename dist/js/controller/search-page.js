@@ -19,8 +19,9 @@ const onModalShow = () => {
     (_a = $('.modal')) === null || _a === void 0 ? void 0 : _a.classList.add('open');
 };
 const onModalClose = () => {
-    var _a;
+    var _a, _b;
     (_a = $('.modal')) === null || _a === void 0 ? void 0 : _a.classList.remove('open');
+    (_b = $('#main-page-button')) === null || _b === void 0 ? void 0 : _b.click();
 };
 const clickModalSearchButton = (e) => {
     var _a;

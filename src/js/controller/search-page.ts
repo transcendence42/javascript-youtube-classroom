@@ -12,6 +12,7 @@ const onModalShow = () => {
 
 const onModalClose = () => {
   $('.modal')?.classList.remove('open');
+  $('#main-page-button')?.click();
 };
 
 const clickModalSearchButton = (e: Event | KeyboardEvent) => {

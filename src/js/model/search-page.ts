@@ -9,8 +9,9 @@ export const searchPageModel = {
       return JSON.parse(rawItem);
     }
   },
-  addRecentSearch(str: string): void {
+  addRecentSearch(keyword: string): void {
     let recentSearchItems = this.getLocalStorageItem('recent-search');
+    const str = keyword.trim();
     if (recentSearchItems.includes(str)) {
       if (str === recentSearchItems[recentSearchItems.length - 1]) {
         return;
