@@ -1,10 +1,5 @@
-interface IVideoInfo {
-  videoId: string,
-  videoTitle: string,
-  publishedAt: string,
-  channelId: string,
-  channelTitle: string
-}
+import { IVideoInfo } from "../../model/IVideoInfo.js";
+
 export const modalArticle = (obj: IVideoInfo): string => {
   return `
   <article class="clip">
