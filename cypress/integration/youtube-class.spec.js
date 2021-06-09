@@ -27,23 +27,15 @@ import { model } from '../../dist/js/model/index.js';
 //       }
 //   ]
 
-// describe("본 영상 버튼 눌렀을때 페이지 구성", () => {
-//   it("local storage의 saved-videos중 checkView가 true인것 렌더링", () => {
+// describe("부가기능", () => {
+//   it("다크모드 클릭시 다크모드 전환", () => {
 
 //   })
-//   it("삭제 버튼 클릭시 자료구조에서 해당 item 삭제", () => {
-
-//   })
-//   it("checkLike false일때 좋아요 버튼 클릭시, checkLike true로 변경", () => {
-
-//   })
-//   it("checkLike true일때 좋아요 버튼 클릭시, checkLike false로 변경", () => {
-
-//   })
-//   it("checkView가 true일때 체크박스 클릭 시, 자료구조 checkView 값 false로 변경.", () => {
+//   it("각 이벤트 발생시 알림창 띄우기 (추후에 세부적으로 분류)", () => {
 
 //   })
 // })
+
 
 // describe("좋아요 영상 버튼 눌렀을때 페이지 구성", () => {
 //   it("local storage의 saved-videos중 checkLike가 true인것 렌더링", () => {
@@ -56,15 +48,6 @@ import { model } from '../../dist/js/model/index.js';
 
 //   })
 //   it("checkView가 true일때 체크박스 클릭 시, 자료구조 checkView 값 false로 변경.", () => {
-
-//   })
-// })
-
-// describe("부가기능", () => {
-//   it("다크모드 클릭시 다크모드 전환", () => {
-
-//   })
-//   it("각 이벤트 발생시 알림창 띄우기 (추후에 세부적으로 분류)", () => {
 
 //   })
 // })
