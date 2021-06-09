@@ -10,10 +10,17 @@ export const searchPageModel = {
     },
     addRecentSearch(str) {
         let recentSearchItems = this.getLocalStorageItem('recent-search');
-        // todo: 중복 로직 고치기
-        // if (recentSearchItems[2] === str) {
-        //   return;
-        // }
+        if (recentSearchItems.includes(str)) {
+            if (str === recentSearchItems[recentSearchItems.length - 1]) {
+                return;
+            }
+            else {
+                recentSearchItems.splice(recentSearchItems.indexOf(str), 1);
+                // recentSearchItems.push(str);
+                // localStorage.setItem('recent-search', JSON.stringify(recentSearchItems));
+                // return ;
+            }
+        }
         if (recentSearchItems.length > 2) {
             recentSearchItems.shift();
         }

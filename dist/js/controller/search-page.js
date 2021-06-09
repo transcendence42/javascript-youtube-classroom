@@ -59,15 +59,13 @@ const clickModalVideosSaveButton = (e) => {
         }
     }
 };
-const doSomething = (scrollPos) => __awaiter(void 0, void 0, void 0, function* () {
+const scrollDownEvent = (scrollPos) => __awaiter(void 0, void 0, void 0, function* () {
     var _a;
     const modalInner = $('.modal-inner');
     if (0.9 < scrollPos / (modalInner.scrollHeight - modalInner.offsetHeight)) {
-        // 10개 또 불러와서 뿌려주기
         const data = DATA_JSON;
-        let result;
-        const saveVideoLinks = model.getLocalStorageItem('videos').map(x => x.videoLink);
-        result = data.items
+        const saveVideoLinks = model.getLocalStorageItem('videos').map((x) => x.videoLink);
+        let result = data.items
             .map((x) => {
             return getVideoWrapper({
                 videoLink: ENV.YOUTUBE_WATCH_URL + x.id.videoId,
@@ -80,15 +78,15 @@ const doSomething = (scrollPos) => __awaiter(void 0, void 0, void 0, function* (
         })
             .join('');
         (_a = $('#modal-videos')) === null || _a === void 0 ? void 0 : _a.insertAdjacentHTML('afterbegin', result);
-        modalInner.scroll(0, scrollPos); //올려주기
+        modalInner.scroll(0, scrollPos);
     }
 });
 const scrollThrottling = (lastKnownScrollPosition, ticking) => {
     var _a;
     lastKnownScrollPosition = (_a = $('.modal-inner')) === null || _a === void 0 ? void 0 : _a.scrollTop;
     if (!ticking) {
-        window.requestAnimationFrame(function () {
-            doSomething(lastKnownScrollPosition);
+        window.requestAnimationFrame(() => {
+            scrollDownEvent(lastKnownScrollPosition);
             ticking = false;
         });
         ticking = true;
