@@ -1,4 +1,4 @@
-import { $ } from '../@shared/utils/utils.js';
+import { $, removeInnerHTML } from '../@shared/utils/utils.js';
 import { model } from '../model/index.js';
 const getToWatchVideoClip = (video) => {
     return `<article class="clip">
@@ -34,12 +34,11 @@ const getToWatchVideoClip = (video) => {
     </div>
   </article>`;
 };
-export const renderMainPage = () => {
+const renderMainPage = () => {
     const videosToWatch = model.getLocalStorageItem('videos').filter((x) => x.checkView === false);
     const result = videosToWatch.map((x) => getToWatchVideoClip(x)).join('');
     const mainVideoSection = $('#main-videos');
-    if (mainVideoSection) {
-        mainVideoSection.innerHTML = '';
-    }
+    removeInnerHTML(mainVideoSection);
     mainVideoSection === null || mainVideoSection === void 0 ? void 0 : mainVideoSection.insertAdjacentHTML('beforeend', result);
 };
+export { getToWatchVideoClip, renderMainPage };

@@ -6,11 +6,17 @@ const wait = async (delay: number): Promise<number> => {
   return new Promise<number>((resolve) => setTimeout(resolve, delay));
 };
 
-const removeChildNodes = (element: HTMLElement | null):void => {
+const removeChildNodes = (element: HTMLElement | null): void => {
   while (element?.hasChildNodes()) {
-    console.log(element?.hasChildNodes())
-    element?.removeChild( element.childNodes[0] );
+    console.log(element?.hasChildNodes());
+    element?.removeChild(element.childNodes[0]);
   }
-}
+};
 
-export { $, $$, wait, removeChildNodes };
+const removeInnerHTML = (element: HTMLElement | null) => {
+  if (element) {
+    element.innerHTML = '';
+  }
+};
+
+export { $, $$, wait, removeChildNodes, removeInnerHTML };

@@ -18,4 +18,9 @@ const removeChildNodes = (element) => {
         element === null || element === void 0 ? void 0 : element.removeChild(element.childNodes[0]);
     }
 };
-export { $, $$, wait, removeChildNodes };
+const removeInnerHTML = (element) => {
+    if (element) {
+        element.innerHTML = '';
+    }
+};
+export { $, $$, wait, removeChildNodes, removeInnerHTML };
