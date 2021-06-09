@@ -23,5 +23,7 @@ export const removeOldSearchKeyword = () => {
 }
 
 export const removeSkeletons = () => {
-  $('div.modal-inner section.video-wrapper')!.innerHTML = "";
+  $$('div.modal-inner section.video-wrapper .skeleton')?.forEach(elem=>{
+    elem.parentElement?.remove();
+  });
 }

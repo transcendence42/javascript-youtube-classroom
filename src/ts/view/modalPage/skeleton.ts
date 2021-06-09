@@ -11,9 +11,6 @@ export const skeleton = (): string => {
         <div class="meta skeleton">
           <p></p>
         </div>
-        <div class="d-flex justify-end">
-          <button class="btn">⬇️ 저장</button>
-        </div>
       </div>
     </div>
   </article>`;
