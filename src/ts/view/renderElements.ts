@@ -4,6 +4,7 @@ import { modalArticle } from './modalPage/index.js';
 import { IVideoInfo } from '../model/IVideoInfo.js';
 import { removeModalArticles, removeNotFoundImage } from './removeElements.js';
 import { skeleton } from './modalPage/skeleton.js';
+import { getSavedVideos } from '../model/articleManager.js';
 
 export const renderSearchedArticle = (videoInfo: IVideoInfo) => {
   removeNotFoundImage();
@@ -27,4 +28,8 @@ export const renderSkeleton = () => {
 
 export const reRenderSavedButtonText = ($button: HTMLButtonElement) => {
   $button.innerText = $button.innerText === "❌ 저장 취소" ? "⬇️ 저장" : "❌ 저장 취소";
+}
+
+export const reRenderNumOfSavedVideos = () => {
+  ($("#num-of-videos") as HTMLSpanElement).innerText = String(getSavedVideos().length);
 }

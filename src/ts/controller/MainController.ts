@@ -1,8 +1,8 @@
 import { $, $$ } from '../util.js'
 import { IVideoInfo } from '../model/IVideoInfo.js';
-import { renderNotFoundImage, renderRecentKeyword, renderSearchedArticle, renderSkeleton, reRenderSavedButtonText } from "../view/renderElements.js";
+import { renderNotFoundImage, renderRecentKeyword, renderSearchedArticle, renderSkeleton, reRenderSavedButtonText, reRenderNumOfSavedVideos } from "../view/renderElements.js";
 import { removeModalArticles, removeDuplicateRecentKeyword, removeOldSearchKeyword, removeSkeletons } from '../view/removeElements.js';
-import { saveVideo, unsaveVideo, isSavedVideo } from '../model/articleManager.js';
+import { saveVideo, unsaveVideo, isSavedVideo, getSavedVideos } from '../model/articleManager.js';
 
 export default class MainController {
   nextPageToken: string;
@@ -93,6 +93,10 @@ export default class MainController {
         const $saveButton: HTMLButtonElement = $("div.modal-inner article.clip:last-child button") as HTMLButtonElement;
         $saveButton.addEventListener("click", ()=>{
           if ($saveButton.dataset.saved === "no") {
+            if (getSavedVideos().length === 5) {
+              alert("저장된 동영상의 갯수가 100개를 넘을 수 없습니다.");
+              return;
+            }
             saveVideo(videoInfo);
             $saveButton.dataset.saved = "yes";
           } else {
@@ -100,6 +104,7 @@ export default class MainController {
             $saveButton.dataset.saved = "no";
           }
           reRenderSavedButtonText($saveButton);
+          reRenderNumOfSavedVideos();
         });
       });
       this.addRecentKeyword(searchValue);
