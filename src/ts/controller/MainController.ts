@@ -1,7 +1,8 @@
 import { $, $$ } from '../util.js'
 import { IVideoInfo } from '../model/IVideoInfo.js';
-import { renderNotFoundImage, renderRecentKeyword, renderSearchedArticle, renderSkeleton } from "../view/renderElements.js";
+import { renderNotFoundImage, renderRecentKeyword, renderSearchedArticle, renderSkeleton, reRenderSavedButtonText } from "../view/renderElements.js";
 import { removeModalArticles, removeDuplicateRecentKeyword, removeOldSearchKeyword, removeSkeletons } from '../view/removeElements.js';
+import { saveVideo, unsaveVideo, isSavedVideo } from '../model/articleManager.js';
 
 export default class MainController {
   nextPageToken: string;
@@ -85,9 +86,21 @@ export default class MainController {
           videoTitle: video.snippet.title,
           publishedAt: this.convertDateFormat(video.snippet.publishedAt),
           channelId: video.snippet.channelId,
-          channelTitle: video.snippet.channelTitle
+          channelTitle: video.snippet.channelTitle,
+          saved: isSavedVideo(video.id.videoId) ? "yes" : "no"
         }
         renderSearchedArticle(videoInfo);
+        const $saveButton: HTMLButtonElement = $("div.modal-inner article.clip:last-child button") as HTMLButtonElement;
+        $saveButton.addEventListener("click", ()=>{
+          if ($saveButton.dataset.saved === "no") {
+            saveVideo(videoInfo);
+            $saveButton.dataset.saved = "yes";
+          } else {
+            unsaveVideo($saveButton.dataset.videoId!);
+            $saveButton.dataset.saved = "no";
+          }
+          reRenderSavedButtonText($saveButton);
+        });
       });
       this.addRecentKeyword(searchValue);
     });

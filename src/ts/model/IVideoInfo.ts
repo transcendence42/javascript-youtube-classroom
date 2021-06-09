@@ -3,5 +3,6 @@ export interface IVideoInfo {
   videoTitle: string,
   publishedAt: string,
   channelId: string,
-  channelTitle: string
+  channelTitle: string,
+  saved: string
 }

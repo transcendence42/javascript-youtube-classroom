@@ -24,3 +24,7 @@ export const renderNotFoundImage = () => {
 export const renderSkeleton = () => {
   $("div.modal-inner section.video-wrapper")?.insertAdjacentHTML("beforeend", skeleton().repeat(10));
 }
+
+export const reRenderSavedButtonText = ($button: HTMLButtonElement) => {
+  $button.innerText = $button.innerText === "❌ 저장 취소" ? "⬇️ 저장" : "❌ 저장 취소";
+}
