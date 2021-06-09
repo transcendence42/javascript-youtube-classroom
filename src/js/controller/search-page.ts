@@ -22,8 +22,6 @@ const clickModalSearchButton = (e: Event) => {
       ? (<HTMLInputElement>$('#modal-search-input'))?.value
       : (<HTMLElement>e?.target).innerText;
 
-  console.log(modalSearchInput);
-
   if (modalSearchInput) {
     model.addRecentSearch(modalSearchInput);
     removeChildNodes($('#modal-recent-search-items'));
@@ -47,7 +45,6 @@ const clickModalVideosSaveButton = (e: Event | null) => {
     const modalSaveButton: HTMLButtonElement | null = e?.target as HTMLButtonElement;
     if (modalSaveButton) {
       const videoWrapper: HTMLElement | null = modalSaveButton.closest('.clip');
-      console.log(videoWrapper);
       let newVideo: VideoModel = new VideoModel();
       model.addSaveVideos(newVideo.setVideoModelFromVideoWrapper(videoWrapper));
       renderSavedVideoLength(model.getLocalStorageItem('videos').length);
@@ -60,9 +57,8 @@ const clickModalVideosSaveButton = (e: Event | null) => {
 const doSomething = async (scrollPos: number) => {
   const modalInner: HTMLDivElement = $('.modal-inner') as HTMLDivElement;
 
-  if ( 0.7 < scrollPos/(modalInner.scrollHeight - modalInner.offsetHeight)) {
+  if ( 0.9 < scrollPos/(modalInner.scrollHeight - modalInner.offsetHeight)) {
     // 10개 또 불러와서 뿌려주기
-    await wait(1200);
     const data = DATA_JSON;
     let result: string;
     const saveVideoLinks = model.getLocalStorageItem('videos').map(x => x.videoLink);
@@ -79,13 +75,12 @@ const doSomething = async (scrollPos: number) => {
       })
       .join('');
     $('#modal-videos')?.insertAdjacentHTML('afterbegin', result);
-    modalInner.scroll(0, scrollPos/(modalInner.scrollHeight - modalInner.offsetHeight) * 100) //올려주기
+    modalInner.scroll(0, scrollPos) //올려주기
   }
 }
 
 const scrollThrottling = (lastKnownScrollPosition: number , ticking: boolean) => {
   lastKnownScrollPosition = $('.modal-inner')?.scrollTop as number;
-  console.log(lastKnownScrollPosition)
   if (!ticking) {
     window.requestAnimationFrame(function () {
       doSomething(lastKnownScrollPosition);

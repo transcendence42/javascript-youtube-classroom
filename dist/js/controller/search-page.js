@@ -7,7 +7,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { $, removeChildNodes, wait } from '../@shared/utils/utils.js';
+import { $, removeChildNodes } from '../@shared/utils/utils.js';
 import { renderSearchPage, getVideoWrapper, renderSavedVideoLength } from '../view/search-page.js';
 import { ENV } from '../@shared/constants/env.js';
 import { VideoModel, model } from '../model/index.js';
@@ -29,7 +29,6 @@ const clickModalSearchButton = (e) => {
         (e === null || e === void 0 ? void 0 : e.target).tagName === 'BUTTON'
             ? (_a = $('#modal-search-input')) === null || _a === void 0 ? void 0 : _a.value
             : (e === null || e === void 0 ? void 0 : e.target).innerText;
-    console.log(modalSearchInput);
     if (modalSearchInput) {
         model.addRecentSearch(modalSearchInput);
         removeChildNodes($('#modal-recent-search-items'));
@@ -52,7 +51,6 @@ const clickModalVideosSaveButton = (e) => {
         const modalSaveButton = e === null || e === void 0 ? void 0 : e.target;
         if (modalSaveButton) {
             const videoWrapper = modalSaveButton.closest('.clip');
-            console.log(videoWrapper);
             let newVideo = new VideoModel();
             model.addSaveVideos(newVideo.setVideoModelFromVideoWrapper(videoWrapper));
             renderSavedVideoLength(model.getLocalStorageItem('videos').length);
@@ -64,9 +62,8 @@ const clickModalVideosSaveButton = (e) => {
 const doSomething = (scrollPos) => __awaiter(void 0, void 0, void 0, function* () {
     var _a;
     const modalInner = $('.modal-inner');
-    if (0.7 < scrollPos / (modalInner.scrollHeight - modalInner.offsetHeight)) {
+    if (0.9 < scrollPos / (modalInner.scrollHeight - modalInner.offsetHeight)) {
         // 10개 또 불러와서 뿌려주기
-        yield wait(1200);
         const data = DATA_JSON;
         let result;
         const saveVideoLinks = model.getLocalStorageItem('videos').map(x => x.videoLink);
@@ -83,13 +80,12 @@ const doSomething = (scrollPos) => __awaiter(void 0, void 0, void 0, function* (
         })
             .join('');
         (_a = $('#modal-videos')) === null || _a === void 0 ? void 0 : _a.insertAdjacentHTML('afterbegin', result);
-        modalInner.scroll(0, scrollPos / (modalInner.scrollHeight - modalInner.offsetHeight) * 100);
+        modalInner.scroll(0, scrollPos); //올려주기
     }
 });
 const scrollThrottling = (lastKnownScrollPosition, ticking) => {
     var _a;
     lastKnownScrollPosition = (_a = $('.modal-inner')) === null || _a === void 0 ? void 0 : _a.scrollTop;
-    console.log(lastKnownScrollPosition);
     if (!ticking) {
         window.requestAnimationFrame(function () {
             doSomething(lastKnownScrollPosition);
