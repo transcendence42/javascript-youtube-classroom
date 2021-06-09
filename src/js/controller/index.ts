@@ -6,10 +6,7 @@ import { model } from '../model/index.js';
 const clickCheckView = (clip: HTMLElement | null) => {
   const checkViewClassList: DOMTokenList = clip?.querySelector('.checkView')?.classList as DOMTokenList;
   model.toggleCheckView(clip?.querySelector('iframe')?.src);
-  if (checkViewClassList.contains('opacity-hover')) {
-    checkViewClassList.remove('opacity-hover');
-    clip?.remove();
-  }
+  clip?.remove();
 };
 
 const clickCheckLike = (clip: HTMLElement | null) => {
