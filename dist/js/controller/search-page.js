@@ -32,6 +32,10 @@ const clickModalSearchButton = (e) => {
         // modalSearchInput.focus();
     }
 };
+const disableSaveButton = (modalSaveButton) => {
+    modalSaveButton.innerText = '✅ 저장 완료';
+    modalSaveButton.disabled = true;
+};
 const clickModalVideosSaveButton = (e) => {
     if ((e === null || e === void 0 ? void 0 : e.target).classList.contains('modal-save-button')) {
         const modalSaveButton = e === null || e === void 0 ? void 0 : e.target;
@@ -41,6 +45,7 @@ const clickModalVideosSaveButton = (e) => {
             let newVideo = new VideoModel();
             model.addSaveVideos(newVideo.setVideoModelFromVideoWrapper(videoWrapper));
             renderSavedVideoLength(model.getLocalStorageItem('videos').length);
+            disableSaveButton(modalSaveButton);
             renderMainPage();
         }
     }

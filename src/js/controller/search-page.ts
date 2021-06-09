@@ -35,6 +35,11 @@ const clickModalSearchButton = (e: Event) => {
   }
 };
 
+const disableSaveButton = (modalSaveButton: HTMLButtonElement): void => {
+  modalSaveButton.innerText = '✅ 저장 완료';
+  modalSaveButton.disabled = true;
+}
+
 const clickModalVideosSaveButton = (e: Event | null) => {
   if ((<HTMLElement>e?.target).classList.contains('modal-save-button')) {
     const modalSaveButton: HTMLButtonElement | null = e?.target as HTMLButtonElement;
@@ -44,6 +49,7 @@ const clickModalVideosSaveButton = (e: Event | null) => {
       let newVideo: VideoModel = new VideoModel();
       model.addSaveVideos(newVideo.setVideoModelFromVideoWrapper(videoWrapper));
       renderSavedVideoLength(model.getLocalStorageItem('videos').length);
+      disableSaveButton(modalSaveButton);
       renderMainPage();
     }
   }
