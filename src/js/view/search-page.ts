@@ -190,6 +190,7 @@ const renderSearchPage = async ({ q, maxResults, type }: { q: string; maxResults
 
   /* real code */
   // const data = await getQueryString({ q, maxResults, type });
+
   modalVideos.innerHTML = '';
   const saveVideoLinks = model.getLocalStorageItem('videos').map(x => x.videoLink);
   result = data.items
@@ -207,4 +208,4 @@ const renderSearchPage = async ({ q, maxResults, type }: { q: string; maxResults
   $('#modal-videos')?.insertAdjacentHTML('afterbegin', result);
 };
 
-export { getModalWrapper, getRecentSearchItem, renderSearchPage, renderSavedVideoLength };
+export { getModalWrapper, getRecentSearchItem, getVideoWrapper, renderSearchPage, renderSavedVideoLength };

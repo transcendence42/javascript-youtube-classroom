@@ -186,4 +186,4 @@ const renderSearchPage = ({ q, maxResults, type }) => __awaiter(void 0, void 0, 
         .join('');
     (_b = $('#modal-videos')) === null || _b === void 0 ? void 0 : _b.insertAdjacentHTML('afterbegin', result);
 });
-export { getModalWrapper, getRecentSearchItem, renderSearchPage, renderSavedVideoLength };
+export { getModalWrapper, getRecentSearchItem, getVideoWrapper, renderSearchPage, renderSavedVideoLength };
