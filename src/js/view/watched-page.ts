@@ -1,5 +1,5 @@
 import { $, removeInnerHTML } from '../@shared/utils/utils.js';
-import { VideoModel, model } from '../model/index.js';
+import { model } from '../model/index.js';
 import { getToWatchVideoClip } from './main-page.js'
 
 export const renderWatchedPage = () => {

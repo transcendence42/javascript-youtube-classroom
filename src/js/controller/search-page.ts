@@ -1,6 +1,7 @@
 import { $, $$, removeChildNodes } from '../@shared/utils/utils.js';
 import { renderSearchPage, getRecentSearchItem, renderSavedVideoLength } from '../view/search-page.js';
 import { VideoModel, model } from '../model/index.js';
+import { renderMainPage } from '../view/main-page.js';
 
 const onModalShow = () => {
   renderSavedVideoLength(model.getLocalStorageItem('videos').length);
@@ -43,6 +44,7 @@ const clickModalVideosSaveButton = (e: Event | null) => {
       let newVideo: VideoModel = new VideoModel();
       model.addSaveVideos(newVideo.setVideoModelFromVideoWrapper(videoWrapper));
       renderSavedVideoLength(model.getLocalStorageItem('videos').length);
+      renderMainPage();
     }
   }
 };
