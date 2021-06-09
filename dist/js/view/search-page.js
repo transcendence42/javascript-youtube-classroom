@@ -146,6 +146,7 @@ const renderSavedVideoLength = (videoLength) => {
     $('#modal-saved-video-length').innerText = `저장된 영상 갯수: ${videoLength}개`;
 };
 const getRecentSearchItem = () => {
+    console.log('getRecentSearchItem()', model.getLocalStorageItem('recent-search'));
     return getRecentSearchItemWrapper(model.getLocalStorageItem('recent-search'));
 };
 const getSkeletonUIWrapper = () => {

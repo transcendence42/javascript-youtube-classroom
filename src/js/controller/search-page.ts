@@ -24,15 +24,14 @@ const clickModalSearchButton = (e: Event) => {
   if (modalSearchInput) {
     model.addRecentSearch(modalSearchInput);
     removeChildNodes($('#modal-recent-search-items'));
-    $('#modal-recent-search-items')?.insertAdjacentHTML('afterbegin', getRecentSearchItem());
     // init
     (<HTMLInputElement>$('#modal-search-input')).value = '';
+    renderSearchPage({ q: modalSearchInput, maxResults: '10', type: 'video' });
   } else {
     alert('검색어를 입력하세요.');
     // modalSearchInput.value = "";
     // modalSearchInput.focus();
   }
-  renderSearchPage({ q: modalSearchInput, maxResults: '10', type: 'video' });
 };
 
 const clickModalVideosSaveButton = (e: Event | null) => {

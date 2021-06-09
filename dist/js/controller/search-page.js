@@ -1,5 +1,5 @@
 import { $, removeChildNodes } from '../@shared/utils/utils.js';
-import { renderSearchPage, getRecentSearchItem, renderSavedVideoLength } from '../view/search-page.js';
+import { renderSearchPage, renderSavedVideoLength } from '../view/search-page.js';
 import { VideoModel, model } from '../model/index.js';
 const onModalShow = () => {
     var _a;
@@ -11,7 +11,7 @@ const onModalClose = () => {
     (_a = $('.modal')) === null || _a === void 0 ? void 0 : _a.classList.remove('open');
 };
 const clickModalSearchButton = (e) => {
-    var _a, _b;
+    var _a;
     let modalSearchInput;
     modalSearchInput =
         (e === null || e === void 0 ? void 0 : e.target).tagName === 'BUTTON'
@@ -21,16 +21,15 @@ const clickModalSearchButton = (e) => {
     if (modalSearchInput) {
         model.addRecentSearch(modalSearchInput);
         removeChildNodes($('#modal-recent-search-items'));
-        (_b = $('#modal-recent-search-items')) === null || _b === void 0 ? void 0 : _b.insertAdjacentHTML('afterbegin', getRecentSearchItem());
         // init
         $('#modal-search-input').value = '';
+        renderSearchPage({ q: modalSearchInput, maxResults: '10', type: 'video' });
     }
     else {
         alert('검색어를 입력하세요.');
         // modalSearchInput.value = "";
         // modalSearchInput.focus();
     }
-    renderSearchPage({ q: modalSearchInput, maxResults: '10', type: 'video' });
 };
 const clickModalVideosSaveButton = (e) => {
     if ((e === null || e === void 0 ? void 0 : e.target).classList.contains('modal-save-button')) {

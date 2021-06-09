@@ -14,7 +14,7 @@ const wait = (delay) => __awaiter(void 0, void 0, void 0, function* () {
 });
 const removeChildNodes = (element) => {
     while (element === null || element === void 0 ? void 0 : element.hasChildNodes()) {
-        console.log(element === null || element === void 0 ? void 0 : element.hasChildNodes());
+        console.log('removeChildNodes', element === null || element === void 0 ? void 0 : element.hasChildNodes());
         element === null || element === void 0 ? void 0 : element.removeChild(element.childNodes[0]);
     }
 };
