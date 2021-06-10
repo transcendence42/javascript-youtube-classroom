@@ -1,4 +1,5 @@
 import { $, removeInnerHTML } from '../@shared/utils/utils.js';
+import { ENV } from '../@shared/constants/env.js';
 import { model } from '../model/index.js';
 const getToWatchVideoClip = (video) => {
     return `<article class="clip">
@@ -40,6 +41,11 @@ const renderMainPage = () => {
     const result = videosToWatch.map((x) => getToWatchVideoClip(x)).join('');
     const mainVideoSection = $('#main-videos');
     removeInnerHTML(mainVideoSection);
+    if (videosToWatch.length === 0) {
+        console.log("hahahahaha");
+        mainVideoSection === null || mainVideoSection === void 0 ? void 0 : mainVideoSection.insertAdjacentHTML('afterbegin', `<img src="${ENV.PAGE_NOT_FOUND_IMG}"/>`);
+        return;
+    }
     mainVideoSection === null || mainVideoSection === void 0 ? void 0 : mainVideoSection.insertAdjacentHTML('beforeend', result);
 };
 export { getToWatchVideoClip, renderMainPage };

@@ -157,7 +157,7 @@ const renderSkeletonUI = (modalVideos) => {
     modalVideos.insertAdjacentHTML('afterbegin', getSkeletonUIWrapper());
 };
 const renderSearchPage = ({ q }) => __awaiter(void 0, void 0, void 0, function* () {
-    var _a, _b;
+    var _a, _b, _c;
     const modalVideos = $('#modal-videos');
     if (!modalVideos) {
         return;
@@ -170,9 +170,12 @@ const renderSearchPage = ({ q }) => __awaiter(void 0, void 0, void 0, function* 
     // const data = DATA_JSON;
     /* real code */
     const data = yield getQueryString({ q, maxResults: ENV.YOUTUBE_MAX_RESULTS, type: ENV.YOUTUBE_TYPE, nextPageToken: '' });
-    console.log("THIS IS DATA", data);
-    $('#modal-search-input').dataset.token = data.nextPageToken;
     modalVideos.innerHTML = '';
+    $('#modal-search-input').dataset.token = data.nextPageToken;
+    if (data.items.length === 0) {
+        (_b = $('#modal-videos')) === null || _b === void 0 ? void 0 : _b.insertAdjacentHTML('afterbegin', `<img src="${ENV.PAGE_NOT_FOUND_IMG}"/>`);
+    }
+    console.log("THIS IS DATA", data);
     const saveVideoLinks = model.getLocalStorageItem('videos').map(x => x.videoLink);
     result = data.items
         .map((x) => {
@@ -186,6 +189,6 @@ const renderSearchPage = ({ q }) => __awaiter(void 0, void 0, void 0, function* 
         });
     })
         .join('');
-    (_b = $('#modal-videos')) === null || _b === void 0 ? void 0 : _b.insertAdjacentHTML('afterbegin', result);
+    (_c = $('#modal-videos')) === null || _c === void 0 ? void 0 : _c.insertAdjacentHTML('afterbegin', result);
 });
 export { getModalWrapper, getRecentSearchItem, getVideoWrapper, renderSearchPage, renderSavedVideoLength };

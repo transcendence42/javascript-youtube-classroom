@@ -4,7 +4,6 @@ import { renderSearchPage, getRecentSearchItem, getVideoWrapper, renderSavedVide
 import { ENV } from '../@shared/constants/env.js';
 import { VideoModel, model } from '../model/index.js';
 import { renderMainPage } from '../view/main-page.js';
-import { DATA_JSON } from '../view/data.js';
 
 const onModalShow = () => {
   renderSavedVideoLength(model.getLocalStorageItem('videos').length);

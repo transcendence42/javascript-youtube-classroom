@@ -6,4 +6,5 @@ export const ENV = {
   YOUTUBE_CHANNEL_URL: `https://www.youtube.com/channel/`,
   YOUTUBE_MAX_RESULTS: '10',
   YOUTUBE_TYPE: 'video',
+  PAGE_NOT_FOUND_IMG: './dist/images/status/not_found.png'
 };
