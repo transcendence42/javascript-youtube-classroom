@@ -1,4 +1,4 @@
-import { $, $$, removeChildNodes, setDataKey, wait, getDataKey } from '../@shared/utils/utils.js';
+import { $, $$, removeChildNodes, setDataKey, removeInnerHTML } from '../@shared/utils/utils.js';
 import { getQueryString } from '../@shared/utils/getQueryString.js';
 import { renderSearchPage, getRecentSearchItem, getVideoWrapper, renderSavedVideoLength } from '../view/search-page.js';
 import { ENV } from '../@shared/constants/env.js';
@@ -8,6 +8,8 @@ import { DATA_JSON } from '../view/data.js';
 
 const onModalShow = () => {
   renderSavedVideoLength(model.getLocalStorageItem('videos').length);
+  removeInnerHTML($('#modal-recent-search-items'));
+  $('#modal-recent-search-items')?.insertAdjacentHTML('afterbegin', getRecentSearchItem());
   $('.modal')?.classList.add('open');
 };
 
@@ -17,10 +19,10 @@ const onModalClose = () => {
 };
 
 const clickModalSearchButton = (e: Event | KeyboardEvent) => {
+  let modalSearchInput: string;
   if ((<KeyboardEvent>e).keyCode && (<KeyboardEvent>e).keyCode !== 13) {
     return;
   }
-  let modalSearchInput: string;
 
   modalSearchInput =
     (<HTMLElement>e?.target).tagName === 'BUTTON' || (<HTMLElement>e?.target).tagName === 'INPUT'
@@ -72,7 +74,6 @@ const scrollDownEvent = async (scrollPos: number): Promise<void> => {
       nextPageToken: $('#modal-search-input')?.dataset.token as string,
     });
 
-    console.log('??????????', data);
     $('#modal-search-input')!.dataset.token = data.nextPageToken;
     const saveVideoLinks = model.getLocalStorageItem('videos').map((x) => x.videoLink);
     let result: string = data.items
@@ -120,8 +121,8 @@ export const modalController = () => {
   $('#search-button')?.addEventListener('click', onModalShow);
   $('.modal-close')?.addEventListener('click', onModalClose);
   $('#modal-search-button')?.addEventListener('click', clickModalSearchButton);
-  $('#modal-search-input')?.addEventListener('keyup', clickModalSearchButton);
   $('#modal-search-form')?.addEventListener('submit', submitPreventDefault);
+  $('#modal-search-input')?.addEventListener('keyup', clickModalSearchButton);
   $('#modal-recent-search-items')?.addEventListener('click', clickModalSearchButton);
   $('#modal-videos')?.addEventListener('click', clickModalVideosSaveButton);
   $('.modal-inner')?.addEventListener('scroll', scrollModalInner);

@@ -4,9 +4,8 @@ import { watchedPageController } from './watched-page.js';
 import { model } from '../model/index.js';
 import { $ } from '../@shared/utils/utils.js';
 const clickCheckView = (clip) => {
-    var _a, _b;
-    const checkViewClassList = (_a = clip === null || clip === void 0 ? void 0 : clip.querySelector('.checkView')) === null || _a === void 0 ? void 0 : _a.classList;
-    model.toggleCheckView((_b = clip === null || clip === void 0 ? void 0 : clip.querySelector('iframe')) === null || _b === void 0 ? void 0 : _b.src);
+    var _a;
+    model.toggleCheckView((_a = clip === null || clip === void 0 ? void 0 : clip.querySelector('iframe')) === null || _a === void 0 ? void 0 : _a.src);
     clip === null || clip === void 0 ? void 0 : clip.remove();
 };
 const clickCheckLike = (clip) => {

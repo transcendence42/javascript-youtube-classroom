@@ -7,16 +7,18 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { $, removeChildNodes, setDataKey } from '../@shared/utils/utils.js';
+import { $, removeChildNodes, setDataKey, removeInnerHTML } from '../@shared/utils/utils.js';
 import { getQueryString } from '../@shared/utils/getQueryString.js';
-import { renderSearchPage, getVideoWrapper, renderSavedVideoLength } from '../view/search-page.js';
+import { renderSearchPage, getRecentSearchItem, getVideoWrapper, renderSavedVideoLength } from '../view/search-page.js';
 import { ENV } from '../@shared/constants/env.js';
 import { VideoModel, model } from '../model/index.js';
 import { renderMainPage } from '../view/main-page.js';
 const onModalShow = () => {
-    var _a;
+    var _a, _b;
     renderSavedVideoLength(model.getLocalStorageItem('videos').length);
-    (_a = $('.modal')) === null || _a === void 0 ? void 0 : _a.classList.add('open');
+    removeInnerHTML($('#modal-recent-search-items'));
+    (_a = $('#modal-recent-search-items')) === null || _a === void 0 ? void 0 : _a.insertAdjacentHTML('afterbegin', getRecentSearchItem());
+    (_b = $('.modal')) === null || _b === void 0 ? void 0 : _b.classList.add('open');
 };
 const onModalClose = () => {
     var _a, _b;
@@ -25,10 +27,10 @@ const onModalClose = () => {
 };
 const clickModalSearchButton = (e) => {
     var _a;
+    let modalSearchInput;
     if (e.keyCode && e.keyCode !== 13) {
         return;
     }
-    let modalSearchInput;
     modalSearchInput =
         (e === null || e === void 0 ? void 0 : e.target).tagName === 'BUTTON' || (e === null || e === void 0 ? void 0 : e.target).tagName === 'INPUT'
             ? (_a = $('#modal-search-input')) === null || _a === void 0 ? void 0 : _a.value
@@ -74,7 +76,6 @@ const scrollDownEvent = (scrollPos) => __awaiter(void 0, void 0, void 0, functio
             type: ENV.YOUTUBE_TYPE,
             nextPageToken: (_b = $('#modal-search-input')) === null || _b === void 0 ? void 0 : _b.dataset.token,
         });
-        console.log('??????????', data);
         $('#modal-search-input').dataset.token = data.nextPageToken;
         const saveVideoLinks = model.getLocalStorageItem('videos').map((x) => x.videoLink);
         let result = data.items
@@ -119,8 +120,8 @@ export const modalController = () => {
     (_a = $('#search-button')) === null || _a === void 0 ? void 0 : _a.addEventListener('click', onModalShow);
     (_b = $('.modal-close')) === null || _b === void 0 ? void 0 : _b.addEventListener('click', onModalClose);
     (_c = $('#modal-search-button')) === null || _c === void 0 ? void 0 : _c.addEventListener('click', clickModalSearchButton);
-    (_d = $('#modal-search-input')) === null || _d === void 0 ? void 0 : _d.addEventListener('keyup', clickModalSearchButton);
-    (_e = $('#modal-search-form')) === null || _e === void 0 ? void 0 : _e.addEventListener('submit', submitPreventDefault);
+    (_d = $('#modal-search-form')) === null || _d === void 0 ? void 0 : _d.addEventListener('submit', submitPreventDefault);
+    (_e = $('#modal-search-input')) === null || _e === void 0 ? void 0 : _e.addEventListener('keyup', clickModalSearchButton);
     (_f = $('#modal-recent-search-items')) === null || _f === void 0 ? void 0 : _f.addEventListener('click', clickModalSearchButton);
     (_g = $('#modal-videos')) === null || _g === void 0 ? void 0 : _g.addEventListener('click', clickModalVideosSaveButton);
     (_h = $('.modal-inner')) === null || _h === void 0 ? void 0 : _h.addEventListener('scroll', scrollModalInner);

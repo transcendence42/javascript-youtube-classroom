@@ -5,7 +5,6 @@ import { model } from '../model/index.js';
 import { $ } from '../@shared/utils/utils.js';
 
 const clickCheckView = (clip: HTMLElement | null) => {
-  const checkViewClassList: DOMTokenList = clip?.querySelector('.checkView')?.classList as DOMTokenList;
   model.toggleCheckView(clip?.querySelector('iframe')?.src);
   clip?.remove();
 };

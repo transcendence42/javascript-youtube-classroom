@@ -160,7 +160,6 @@ const renderSavedVideoLength = (videoLength: number) => {
 };
 
 const getRecentSearchItem = (): string => {
-  console.log('getRecentSearchItem()', model.getLocalStorageItem('recent-search'));
   return getRecentSearchItemWrapper(model.getLocalStorageItem('recent-search'));
 };
 
