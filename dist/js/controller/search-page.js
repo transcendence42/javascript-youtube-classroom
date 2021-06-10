@@ -7,7 +7,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { $, removeChildNodes, setDataKey, getDataKey } from '../@shared/utils/utils.js';
+import { $, removeChildNodes, setDataKey } from '../@shared/utils/utils.js';
 import { getQueryString } from '../@shared/utils/getQueryString.js';
 import { renderSearchPage, getVideoWrapper, renderSavedVideoLength } from '../view/search-page.js';
 import { ENV } from '../@shared/constants/env.js';
@@ -64,18 +64,18 @@ const clickModalVideosSaveButton = (e) => {
     }
 };
 const scrollDownEvent = (scrollPos) => __awaiter(void 0, void 0, void 0, function* () {
-    var _a;
+    var _a, _b, _c;
     const modalInner = $('.modal-inner');
     if (0.9 < scrollPos / (modalInner.scrollHeight - modalInner.offsetHeight)) {
         // const data = DATA_JSON;
-        console.log(getDataKey($('#modal-search-input'), 'nextPageToken'));
         const data = yield getQueryString({
-            q: getDataKey($('#modal-search-input'), 'value'),
+            q: (_a = $('#modal-search-input')) === null || _a === void 0 ? void 0 : _a.dataset.value,
             maxResults: ENV.YOUTUBE_MAX_RESULTS,
             type: ENV.YOUTUBE_TYPE,
-            nextPageToken: getDataKey($('#modal-search-input'), 'nextPageToken'),
+            nextPageToken: (_b = $('#modal-search-input')) === null || _b === void 0 ? void 0 : _b.dataset.token,
         });
         console.log('??????????', data);
+        $('#modal-search-input').dataset.token = data.nextPageToken;
         const saveVideoLinks = model.getLocalStorageItem('videos').map((x) => x.videoLink);
         let result = data.items
             .map((x) => {
@@ -89,7 +89,7 @@ const scrollDownEvent = (scrollPos) => __awaiter(void 0, void 0, void 0, functio
             });
         })
             .join('');
-        (_a = $('#modal-videos')) === null || _a === void 0 ? void 0 : _a.insertAdjacentHTML('afterbegin', result);
+        (_c = $('#modal-videos')) === null || _c === void 0 ? void 0 : _c.insertAdjacentHTML('afterbegin', result);
         modalInner.scroll(0, scrollPos);
     }
 });
@@ -115,7 +115,7 @@ const submitPreventDefault = (e) => {
 export const modalController = () => {
     var _a, _b, _c, _d, _e, _f, _g, _h;
     setDataKey($('#modal-search-input'), 'value', '');
-    setDataKey($('#modal-search-input'), 'nextPageToken', '');
+    setDataKey($('#modal-search-input'), 'token', '');
     (_a = $('#search-button')) === null || _a === void 0 ? void 0 : _a.addEventListener('click', onModalShow);
     (_b = $('.modal-close')) === null || _b === void 0 ? void 0 : _b.addEventListener('click', onModalClose);
     (_c = $('#modal-search-button')) === null || _c === void 0 ? void 0 : _c.addEventListener('click', clickModalSearchButton);

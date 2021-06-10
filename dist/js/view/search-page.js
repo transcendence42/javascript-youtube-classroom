@@ -8,7 +8,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import { ENV } from '../@shared/constants/env.js';
-import { $, setDataKey } from '../@shared/utils/utils.js';
+import { $ } from '../@shared/utils/utils.js';
 import { getQueryString } from '../@shared/utils/getQueryString.js';
 import { model } from '../model/index.js';
 const getModalWrapper = () => {
@@ -170,12 +170,10 @@ const renderSearchPage = ({ q }) => __awaiter(void 0, void 0, void 0, function* 
     // await wait(1000);
     // const data = DATA_JSON;
     /* real code */
-    const data = yield getQueryString({ q, maxResults: ENV.YOUTUBE_MAX_RESULTS, type: ENV.YOUTUBE_TYPE, nextPageToken: '""' });
+    const data = yield getQueryString({ q, maxResults: ENV.YOUTUBE_MAX_RESULTS, type: ENV.YOUTUBE_TYPE, nextPageToken: '' });
+    console.log("THIS IS DATA", data);
+    $('#modal-search-input').dataset.token = data.nextPageToken;
     modalVideos.innerHTML = '';
-    console.log('data.nextPageToken1', data);
-    console.log('data.nextPageToken2', data.nextPageToken);
-    console.log('data.nextPageToken3', data['nextPageToken']);
-    setDataKey($('#modal-search-input'), 'nextPageToken', data.nextPageToken);
     const saveVideoLinks = model.getLocalStorageItem('videos').map(x => x.videoLink);
     result = data.items
         .map((x) => {

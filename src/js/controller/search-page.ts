@@ -65,17 +65,15 @@ const scrollDownEvent = async (scrollPos: number): Promise<void> => {
   if (0.9 < scrollPos / (modalInner.scrollHeight - modalInner.offsetHeight)) {
     // const data = DATA_JSON;
 
-    console.log(getDataKey($('#modal-search-input'), 'nextPageToken'))
-
     const data = await getQueryString({
-      q: getDataKey($('#modal-search-input'), 'value'),
+      q: $('#modal-search-input')?.dataset.value as string,
       maxResults: ENV.YOUTUBE_MAX_RESULTS,
       type: ENV.YOUTUBE_TYPE,
-      nextPageToken: getDataKey($('#modal-search-input'), 'nextPageToken'),
+      nextPageToken: $('#modal-search-input')?.dataset.token as string,
     });
 
     console.log('??????????', data);
-
+    $('#modal-search-input')!.dataset.token = data.nextPageToken;
     const saveVideoLinks = model.getLocalStorageItem('videos').map((x) => x.videoLink);
     let result: string = data.items
       .map((x: any) => {
@@ -118,7 +116,7 @@ const submitPreventDefault = (e: Event | null) => {
 
 export const modalController = () => {
   setDataKey($('#modal-search-input'), 'value', '');
-  setDataKey($('#modal-search-input'), 'nextPageToken', '');
+  setDataKey($('#modal-search-input'), 'token', '');
   $('#search-button')?.addEventListener('click', onModalShow);
   $('.modal-close')?.addEventListener('click', onModalClose);
   $('#modal-search-button')?.addEventListener('click', clickModalSearchButton);
