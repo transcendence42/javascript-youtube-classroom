@@ -7,7 +7,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { $, removeChildNodes } from '../@shared/utils/utils.js';
+import { $, removeChildNodes, setDataKey } from '../@shared/utils/utils.js';
 import { renderSearchPage, getVideoWrapper, renderSavedVideoLength } from '../view/search-page.js';
 import { ENV } from '../@shared/constants/env.js';
 import { VideoModel, model } from '../model/index.js';
@@ -35,6 +35,7 @@ const clickModalSearchButton = (e) => {
             ? (_a = $('#modal-search-input')) === null || _a === void 0 ? void 0 : _a.value
             : (e === null || e === void 0 ? void 0 : e.target).innerText;
     if (modalSearchInput) {
+        setDataKey($('#modal-search-input'), 'value', modalSearchInput);
         model.addRecentSearch(modalSearchInput);
         removeChildNodes($('#modal-recent-search-items'));
         $('#modal-search-input').value = '';

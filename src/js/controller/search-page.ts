@@ -1,4 +1,4 @@
-import { $, $$, removeChildNodes, wait } from '../@shared/utils/utils.js';
+import { $, $$, removeChildNodes, setDataKey, wait } from '../@shared/utils/utils.js';
 import { renderSearchPage, getRecentSearchItem, getVideoWrapper, renderSavedVideoLength } from '../view/search-page.js';
 import { ENV } from '../@shared/constants/env.js';
 import { VideoModel, model } from '../model/index.js';
@@ -16,7 +16,6 @@ const onModalClose = () => {
 };
 
 const clickModalSearchButton = (e: Event | KeyboardEvent) => {
-  console.log((<KeyboardEvent>e).keyCode);
   if ((<KeyboardEvent>e).keyCode && (<KeyboardEvent>e).keyCode !== 13) {
     return;
   }
@@ -28,6 +27,7 @@ const clickModalSearchButton = (e: Event | KeyboardEvent) => {
       : (<HTMLElement>e?.target).innerText;
 
   if (modalSearchInput) {
+    setDataKey($('#modal-search-input'), 'value', modalSearchInput);
     model.addRecentSearch(modalSearchInput);
     removeChildNodes($('#modal-recent-search-items'));
     (<HTMLInputElement>$('#modal-search-input')).value = '';
@@ -104,6 +104,7 @@ const submitPreventDefault = (e: Event | null) => {
 };
 
 export const modalController = () => {
+  setDataKey($('#modal-search-input'), 'value', '');
   $('#search-button')?.addEventListener('click', onModalShow);
   $('.modal-close')?.addEventListener('click', onModalClose);
   $('#modal-search-button')?.addEventListener('click', clickModalSearchButton);

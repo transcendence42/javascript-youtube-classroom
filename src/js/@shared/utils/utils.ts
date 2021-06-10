@@ -19,4 +19,16 @@ const removeInnerHTML = (element: HTMLElement | null) => {
   }
 };
 
-export { $, $$, wait, removeChildNodes, removeInnerHTML };
+const getDataKey = (element: HTMLElement | null, key: string): string | undefined => {
+  if (element) {
+    return element.dataset.key;
+  }
+};
+
+const setDataKey = (element: HTMLElement | null, key: string, text: string): void => {
+  if (element) {
+    element.dataset[`${key}`] = text;
+  }
+};
+
+export { $, $$, wait, removeChildNodes, removeInnerHTML, getDataKey, setDataKey };
