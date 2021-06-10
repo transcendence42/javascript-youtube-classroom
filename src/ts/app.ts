@@ -1,9 +1,9 @@
-import MainController from "./controller/MainController.js";
-import { renderAll } from "./view/renderAll.js";
+import { navigatorController } from "./controller/navigatorController.js";
+import { navigatorRenderer } from "./view/navigatorRenderer.js";
 
 export const app = (): void => {
-  renderAll();
-  new MainController();
+  navigatorRenderer();
+  navigatorController();
 }
 
 app();

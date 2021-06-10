@@ -1,4 +1,4 @@
-import { getSavedVideos } from "../../model/articleManager.js";
+import { getSavedVideos } from "../../model/handleLocalStorage/articleManager.js";
 
 export const modalArticleSection = (): string => {
   return `

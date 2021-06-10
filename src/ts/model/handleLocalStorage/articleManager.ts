@@ -1,4 +1,4 @@
-import { IVideoInfo } from "./IVideoInfo";
+import { IVideoInfo } from "../IVideoInfo.js";
 
 export const getSavedVideos = (): IVideoInfo[] => {
   const savedVideosStr: string | null = localStorage.getItem("savedVideos");
@@ -27,7 +27,6 @@ export const isSavedVideo = (videoId: string): boolean => {
   let ret: boolean = false;
   savedVideosList.forEach((video) => {
     if (video.videoId === videoId) {
-      document.querySelector("body")?.insertAdjacentText("afterend", video.videoId);
       ret = true;
     }
   })

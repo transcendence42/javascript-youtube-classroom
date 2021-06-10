@@ -5,7 +5,6 @@ import { modalTitleSection, modalSearchFormSection, modalRecentKeywordSection, m
 const renderAll = () => {
   $('#app')?.insertAdjacentHTML('beforeend', titleSection());
   $('header')?.insertAdjacentHTML('afterend', articleSection());
-  $('main>section')?.insertAdjacentHTML('beforeend', article());
 
   $('#app')?.insertAdjacentHTML('beforeend', modal());
   $('div.modal-inner')?.insertAdjacentHTML('beforeend', modalTitleSection());
