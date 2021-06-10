@@ -8,8 +8,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import { ENV } from '../constants/env.js';
-export const getQueryString = ({ q, maxResults, type }) => __awaiter(void 0, void 0, void 0, function* () {
-    const data = yield fetch(`${ENV.YOUTUBE_SEARCH_URL}key=${ENV.API_KEY}&part=snippet&q=${q}&maxResults=${maxResults}&type=${type}&videoEmbeddable=true`).then((resp) => resp.json())
+export const getQueryString = ({ q, maxResults, type, nextPageToken, }) => __awaiter(void 0, void 0, void 0, function* () {
+    console.log(`${ENV.YOUTUBE_SEARCH_URL}key=${ENV.API_KEY}&part=snippet&q=${q}&maxResults=${maxResults}&type=${type}&videoEmbeddable=true&nextPageToken=${nextPageToken}`);
+    const data = yield fetch(`${ENV.YOUTUBE_SEARCH_URL}key=${ENV.API_KEY}&part=snippet&q=${q}&maxResults=${maxResults}&type=${type}&videoEmbeddable=true&nextPageToken=${nextPageToken}`)
+        .then((resp) => resp.json())
         .then((items) => items);
-    return data.items;
+    return data;
 });

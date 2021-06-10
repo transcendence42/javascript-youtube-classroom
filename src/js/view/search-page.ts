@@ -1,5 +1,5 @@
 import { ENV } from '../@shared/constants/env.js';
-import { $, wait } from '../@shared/utils/utils.js';
+import { $, setDataKey, wait } from '../@shared/utils/utils.js';
 import { getQueryString } from '../@shared/utils/getQueryString.js';
 import { model } from '../model/index.js';
 import { DATA_JSON } from './data.js';
@@ -173,7 +173,7 @@ const renderSkeletonUI = (modalVideos: HTMLDivElement): void => {
   modalVideos.insertAdjacentHTML('afterbegin', getSkeletonUIWrapper());
 }
 
-const renderSearchPage = async ({ q, maxResults, type }: { q: string; maxResults: string; type: string }) => {
+const renderSearchPage = async ({ q }: { q: string; }) => {
   const modalVideos: HTMLDivElement | null = $('#modal-videos') as HTMLDivElement;
 
   if (!modalVideos) {
@@ -186,13 +186,17 @@ const renderSearchPage = async ({ q, maxResults, type }: { q: string; maxResults
   let result = '';
 
   /* temp code */
-  await wait(1000);
-  const data = DATA_JSON;
+  // await wait(1000);
+  // const data = DATA_JSON;
 
   /* real code */
-  // const data = await getQueryString({ q, maxResults, type });
+  const data = await getQueryString({ q, maxResults: ENV.YOUTUBE_MAX_RESULTS, type: ENV.YOUTUBE_TYPE, nextPageToken: '""' });
 
   modalVideos.innerHTML = '';
+  console.log('data.nextPageToken1', data);
+  console.log('data.nextPageToken2', data.nextPageToken);
+  console.log('data.nextPageToken3', data['nextPageToken']);
+  setDataKey($('#modal-search-input'), 'nextPageToken', data.nextPageToken)
   const saveVideoLinks = model.getLocalStorageItem('videos').map(x => x.videoLink);
   result = data.items
     .map((x: any) => {

@@ -8,9 +8,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import { ENV } from '../@shared/constants/env.js';
-import { $, wait } from '../@shared/utils/utils.js';
+import { $, setDataKey } from '../@shared/utils/utils.js';
+import { getQueryString } from '../@shared/utils/getQueryString.js';
 import { model } from '../model/index.js';
-import { DATA_JSON } from './data.js';
 const getModalWrapper = () => {
     return `<div class="modal">
             <div class="modal-inner p-8">
@@ -157,7 +157,7 @@ const renderSkeletonUI = (modalVideos) => {
     modalVideos.innerHTML = '';
     modalVideos.insertAdjacentHTML('afterbegin', getSkeletonUIWrapper());
 };
-const renderSearchPage = ({ q, maxResults, type }) => __awaiter(void 0, void 0, void 0, function* () {
+const renderSearchPage = ({ q }) => __awaiter(void 0, void 0, void 0, function* () {
     var _a, _b;
     const modalVideos = $('#modal-videos');
     if (!modalVideos) {
@@ -167,11 +167,15 @@ const renderSearchPage = ({ q, maxResults, type }) => __awaiter(void 0, void 0, 
     renderSkeletonUI(modalVideos);
     let result = '';
     /* temp code */
-    yield wait(1000);
-    const data = DATA_JSON;
+    // await wait(1000);
+    // const data = DATA_JSON;
     /* real code */
-    // const data = await getQueryString({ q, maxResults, type });
+    const data = yield getQueryString({ q, maxResults: ENV.YOUTUBE_MAX_RESULTS, type: ENV.YOUTUBE_TYPE, nextPageToken: '""' });
     modalVideos.innerHTML = '';
+    console.log('data.nextPageToken1', data);
+    console.log('data.nextPageToken2', data.nextPageToken);
+    console.log('data.nextPageToken3', data['nextPageToken']);
+    setDataKey($('#modal-search-input'), 'nextPageToken', data.nextPageToken);
     const saveVideoLinks = model.getLocalStorageItem('videos').map(x => x.videoLink);
     result = data.items
         .map((x) => {

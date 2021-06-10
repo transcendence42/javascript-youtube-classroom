@@ -7,12 +7,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { $, removeChildNodes, setDataKey } from '../@shared/utils/utils.js';
+import { $, removeChildNodes, setDataKey, getDataKey } from '../@shared/utils/utils.js';
+import { getQueryString } from '../@shared/utils/getQueryString.js';
 import { renderSearchPage, getVideoWrapper, renderSavedVideoLength } from '../view/search-page.js';
 import { ENV } from '../@shared/constants/env.js';
 import { VideoModel, model } from '../model/index.js';
 import { renderMainPage } from '../view/main-page.js';
-import { DATA_JSON } from '../view/data.js';
 const onModalShow = () => {
     var _a;
     renderSavedVideoLength(model.getLocalStorageItem('videos').length);
@@ -25,7 +25,6 @@ const onModalClose = () => {
 };
 const clickModalSearchButton = (e) => {
     var _a;
-    console.log(e.keyCode);
     if (e.keyCode && e.keyCode !== 13) {
         return;
     }
@@ -39,11 +38,11 @@ const clickModalSearchButton = (e) => {
         model.addRecentSearch(modalSearchInput);
         removeChildNodes($('#modal-recent-search-items'));
         $('#modal-search-input').value = '';
-        renderSearchPage({ q: modalSearchInput, maxResults: '10', type: 'video' });
+        renderSearchPage({ q: modalSearchInput });
     }
     else {
         alert('검색어를 입력하세요.');
-        $('#modal-search-input').value = "";
+        $('#modal-search-input').value = '';
         $('#modal-search-input').focus();
     }
 };
@@ -68,7 +67,15 @@ const scrollDownEvent = (scrollPos) => __awaiter(void 0, void 0, void 0, functio
     var _a;
     const modalInner = $('.modal-inner');
     if (0.9 < scrollPos / (modalInner.scrollHeight - modalInner.offsetHeight)) {
-        const data = DATA_JSON;
+        // const data = DATA_JSON;
+        console.log(getDataKey($('#modal-search-input'), 'nextPageToken'));
+        const data = yield getQueryString({
+            q: getDataKey($('#modal-search-input'), 'value'),
+            maxResults: ENV.YOUTUBE_MAX_RESULTS,
+            type: ENV.YOUTUBE_TYPE,
+            nextPageToken: getDataKey($('#modal-search-input'), 'nextPageToken'),
+        });
+        console.log('??????????', data);
         const saveVideoLinks = model.getLocalStorageItem('videos').map((x) => x.videoLink);
         let result = data.items
             .map((x) => {
@@ -107,6 +114,8 @@ const submitPreventDefault = (e) => {
 };
 export const modalController = () => {
     var _a, _b, _c, _d, _e, _f, _g, _h;
+    setDataKey($('#modal-search-input'), 'value', '');
+    setDataKey($('#modal-search-input'), 'nextPageToken', '');
     (_a = $('#search-button')) === null || _a === void 0 ? void 0 : _a.addEventListener('click', onModalShow);
     (_b = $('.modal-close')) === null || _b === void 0 ? void 0 : _b.addEventListener('click', onModalClose);
     (_c = $('#modal-search-button')) === null || _c === void 0 ? void 0 : _c.addEventListener('click', clickModalSearchButton);

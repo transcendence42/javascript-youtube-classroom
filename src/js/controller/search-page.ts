@@ -1,4 +1,5 @@
-import { $, $$, removeChildNodes, setDataKey, wait } from '../@shared/utils/utils.js';
+import { $, $$, removeChildNodes, setDataKey, wait, getDataKey } from '../@shared/utils/utils.js';
+import { getQueryString } from '../@shared/utils/getQueryString.js';
 import { renderSearchPage, getRecentSearchItem, getVideoWrapper, renderSavedVideoLength } from '../view/search-page.js';
 import { ENV } from '../@shared/constants/env.js';
 import { VideoModel, model } from '../model/index.js';
@@ -31,10 +32,10 @@ const clickModalSearchButton = (e: Event | KeyboardEvent) => {
     model.addRecentSearch(modalSearchInput);
     removeChildNodes($('#modal-recent-search-items'));
     (<HTMLInputElement>$('#modal-search-input')).value = '';
-    renderSearchPage({ q: modalSearchInput, maxResults: '10', type: 'video' });
+    renderSearchPage({ q: modalSearchInput });
   } else {
     alert('검색어를 입력하세요.');
-    (<HTMLInputElement>$('#modal-search-input')).value = "";
+    (<HTMLInputElement>$('#modal-search-input')).value = '';
     (<HTMLInputElement>$('#modal-search-input')).focus();
   }
 };
@@ -62,7 +63,19 @@ const scrollDownEvent = async (scrollPos: number): Promise<void> => {
   const modalInner: HTMLDivElement = $('.modal-inner') as HTMLDivElement;
 
   if (0.9 < scrollPos / (modalInner.scrollHeight - modalInner.offsetHeight)) {
-    const data = DATA_JSON;
+    // const data = DATA_JSON;
+
+    console.log(getDataKey($('#modal-search-input'), 'nextPageToken'))
+
+    const data = await getQueryString({
+      q: getDataKey($('#modal-search-input'), 'value'),
+      maxResults: ENV.YOUTUBE_MAX_RESULTS,
+      type: ENV.YOUTUBE_TYPE,
+      nextPageToken: getDataKey($('#modal-search-input'), 'nextPageToken'),
+    });
+
+    console.log('??????????', data);
+
     const saveVideoLinks = model.getLocalStorageItem('videos').map((x) => x.videoLink);
     let result: string = data.items
       .map((x: any) => {
@@ -105,6 +118,7 @@ const submitPreventDefault = (e: Event | null) => {
 
 export const modalController = () => {
   setDataKey($('#modal-search-input'), 'value', '');
+  setDataKey($('#modal-search-input'), 'nextPageToken', '');
   $('#search-button')?.addEventListener('click', onModalShow);
   $('.modal-close')?.addEventListener('click', onModalClose);
   $('#modal-search-button')?.addEventListener('click', clickModalSearchButton);

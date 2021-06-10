@@ -25,8 +25,9 @@ const removeInnerHTML = (element) => {
 };
 const getDataKey = (element, key) => {
     if (element) {
-        return element.dataset.key;
+        return element.dataset.key ? element.dataset.key : '';
     }
+    return '';
 };
 const setDataKey = (element, key, text) => {
     if (element) {

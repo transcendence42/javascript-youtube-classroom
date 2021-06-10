@@ -19,10 +19,11 @@ const removeInnerHTML = (element: HTMLElement | null) => {
   }
 };
 
-const getDataKey = (element: HTMLElement | null, key: string): string | undefined => {
+const getDataKey = (element: HTMLElement | null, key: string): string => {
   if (element) {
-    return element.dataset.key;
+    return element.dataset.key ? element.dataset.key : '';
   }
+  return '';
 };
 
 const setDataKey = (element: HTMLElement | null, key: string, text: string): void => {
