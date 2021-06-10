@@ -1,5 +1,6 @@
 import { $, $$ } from '../util.js'
 import { IVideoInfo } from '../model/IVideoInfo.js';
+import { getRecentKeywords, saveRecentKeywordList } from '../model/recentKeywordManager.js';
 import { renderNotFoundImage, renderRecentKeyword, renderSearchedArticle, renderSkeleton, reRenderSavedButtonText, reRenderNumOfSavedVideos } from "../view/renderElements.js";
 import { removeModalArticles, removeDuplicateRecentKeyword, removeOldSearchKeyword, removeSkeletons } from '../view/removeElements.js';
 import { saveVideo, unsaveVideo, isSavedVideo, getSavedVideos } from '../model/articleManager.js';
@@ -19,7 +20,11 @@ export default class MainController {
         this.isFirstSearch = false;
         this.renderArticles(($("#search-input") as HTMLInputElement).value);
       }
-    })
+    });
+    getRecentKeywords().reverse().forEach(keyword=>{
+      renderRecentKeyword(keyword);
+      this.addClickEventToRecentKeyword(($("#recent-keyword > span")?.nextSibling) as HTMLAnchorElement, keyword);
+    });
   }
 
   async getSearchResult(searchTarget: string) {  // 이름 변경 필요
@@ -115,7 +120,20 @@ export default class MainController {
     removeDuplicateRecentKeyword(searchValue);
     renderRecentKeyword(searchValue);
     removeOldSearchKeyword();
-    $("#recent-keyword > span")?.nextSibling?.addEventListener("click", ()=>{
+    this.saveRecentKeywordListToLocalStorage();
+    this.addClickEventToRecentKeyword(($("#recent-keyword > span")?.nextSibling) as HTMLAnchorElement, searchValue);
+  }
+
+  saveRecentKeywordListToLocalStorage() {
+    let recentKeywordList: string[] = [];
+    $$("a.chip")?.forEach(keyword=>{
+      recentKeywordList.push(keyword.innerText);
+    });
+    saveRecentKeywordList(recentKeywordList);
+  }
+
+  addClickEventToRecentKeyword($keywordElement: HTMLAnchorElement, searchValue: string) {
+    $keywordElement.addEventListener("click", ()=>{
       removeModalArticles();
       ($("#search-input") as HTMLInputElement).value = searchValue;
       this.renderArticles(searchValue);

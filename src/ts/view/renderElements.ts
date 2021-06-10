@@ -1,5 +1,4 @@
 import { $, $$ } from '../util.js';
-// import {titleSection, articleSection, article, modal} from './mainPage/index.js';
 import { modalArticle } from './modalPage/index.js';
 import { IVideoInfo } from '../model/IVideoInfo.js';
 import { removeModalArticles, removeNotFoundImage } from './removeElements.js';
