@@ -1,6 +1,6 @@
 import { renderLikedPage } from '../view/liked-page.js';
 import { clickCheckButtons } from './index.js';
-import { $ } from '../@shared/utils/utils.js';
+import { $ } from '../@shared/utils.js';
 
 const clickLikedPageButton = (): void => {
   renderLikedPage();

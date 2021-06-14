@@ -1,6 +1,6 @@
 import { renderMainPage } from '../view/main-page.js';
 import { clickCheckButtons } from './index.js';
-import { $ } from '../@shared/utils/utils.js';
+import { $ } from '../@shared/utils.js';
 const clickMainPageButton = () => {
     renderMainPage();
 };

@@ -1,7 +1,7 @@
 import { YoutubeResponse, getQueryString } from '../model/get-query-string.js';
 import { getVideoHTMLWithRawData } from './index.js';
-import { ENV } from '../@shared/constants/env.js';
-import { $ } from '../@shared/utils/utils.js';
+import { ENV } from '../@shared/env.js';
+import { $ } from '../@shared/utils.js';
 import { model, VideoModel } from '../model/index.js';
 
 const getModalWrapper = (): string => {

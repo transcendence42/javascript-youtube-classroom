@@ -1,4 +1,4 @@
-import { $, removeInnerHTML } from '../@shared/utils/utils.js';
+import { $, removeInnerHTML } from '../@shared/utils.js';
 import { VideoModel, model } from '../model/index.js';
 import { getVideoHTML } from './index.js';
 

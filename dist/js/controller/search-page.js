@@ -7,13 +7,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { $, removeChildNodes, setDataKey, removeInnerHTML } from '../@shared/utils/utils.js';
+import { $, removeChildNodes, setDataKey, removeInnerHTML } from '../@shared/utils.js';
 import { getQueryString } from '../model/get-query-string.js';
 import { renderSearchPage, getRecentSearchItem, getSearchVideoWrapper, renderSavedVideoLength, } from '../view/search-page.js';
 import { getVideoHTMLWithRawData } from '../view/index.js';
 import { VideoModel, model } from '../model/index.js';
 import { renderMainPage } from '../view/main-page.js';
-import { ENV } from '../@shared/constants/env.js';
+import { ENV } from '../@shared/env.js';
 const onModalShow = () => {
     var _a, _b;
     renderSavedVideoLength(model.getLocalStorageItem('videos').length);

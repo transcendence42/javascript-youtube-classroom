@@ -1,6 +1,6 @@
 import { renderWatchedPage } from '../view/watched-page.js';
 import { clickCheckButtons } from './index.js';
-import { $ } from '../@shared/utils/utils.js';
+import { $ } from '../@shared/utils.js';
 
 const clickWatchedPageButton = (): void => {
   renderWatchedPage();

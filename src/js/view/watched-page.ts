@@ -1,6 +1,6 @@
 import { getToWatchVideoWrapper } from './main-page.js';
 import { model, VideoModel } from '../model/index.js';
-import { $ } from '../@shared/utils/utils.js';
+import { $ } from '../@shared/utils.js';
 import { getVideoHTML } from './index.js';
 
 export const renderWatchedPage = (): void => {

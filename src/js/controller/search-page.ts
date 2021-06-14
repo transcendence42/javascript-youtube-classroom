@@ -1,4 +1,4 @@
-import { $, removeChildNodes, setDataKey, removeInnerHTML } from '../@shared/utils/utils.js';
+import { $, removeChildNodes, setDataKey, removeInnerHTML } from '../@shared/utils.js';
 import { YoutubeResponse, getQueryString } from '../model/get-query-string.js';
 import {
   renderSearchPage,
@@ -9,7 +9,7 @@ import {
 import { getVideoHTMLWithRawData } from '../view/index.js';
 import { VideoModel, model } from '../model/index.js';
 import { renderMainPage } from '../view/main-page.js';
-import { ENV } from '../@shared/constants/env.js';
+import { ENV } from '../@shared/env.js';
 
 const onModalShow = (): void => {
   renderSavedVideoLength(model.getLocalStorageItem('videos').length);

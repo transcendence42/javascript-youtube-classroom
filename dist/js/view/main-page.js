@@ -1,4 +1,4 @@
-import { $ } from '../@shared/utils/utils.js';
+import { $ } from '../@shared/utils.js';
 import { model } from '../model/index.js';
 import { getVideoHTML } from './index.js';
 const getToWatchVideoWrapper = (video) => {

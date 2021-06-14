@@ -1,4 +1,4 @@
-import { ENV } from '../@shared/constants/env.js';
+import { ENV } from '../@shared/env.js';
 
 interface YoutubeItem {
   kind: string;

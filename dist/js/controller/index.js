@@ -1,11 +1,11 @@
 import { watchedPageController } from './watched-page.js';
-import { MESSAGE } from '../@shared/constants/message.js';
-import { showSnackBar } from '../@shared/utils/utils.js';
 import { likedPageController } from './liked-page.js';
 import { mainPageController } from './main-page.js';
 import { modalController } from './search-page.js';
-import { $ } from '../@shared/utils/utils.js';
+import { showSnackBar } from '../@shared/utils.js';
+import { MESSAGE } from '../@shared/message.js';
 import { model } from '../model/index.js';
+import { $ } from '../@shared/utils.js';
 const clickCheckView = (clip) => {
     var _a, _b, _c;
     const checkViewClassList = (_a = clip === null || clip === void 0 ? void 0 : clip.querySelector('.checkView')) === null || _a === void 0 ? void 0 : _a.classList;

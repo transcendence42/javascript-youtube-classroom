@@ -1,5 +1,5 @@
-import { MESSAGE } from '../@shared/constants/message.js';
-import { showSnackBar } from '../@shared/utils/utils.js';
+import { MESSAGE } from '../@shared/message.js';
+import { showSnackBar } from '../@shared/utils.js';
 import { VideoModel } from './index';
 
 export const searchPageModel = {
