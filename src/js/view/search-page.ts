@@ -2,7 +2,6 @@ import { ENV } from '../@shared/constants/env.js';
 import { $, setDataKey, wait } from '../@shared/utils/utils.js';
 import { getQueryString } from '../@shared/utils/getQueryString.js';
 import { model } from '../model/index.js';
-import { DATA_JSON } from './data.js';
 
 const getModalWrapper = (): string => {
   return `<div class="modal">
@@ -165,13 +164,30 @@ const getRecentSearchItem = (): string => {
   return getRecentSearchItemWrapper(model.getLocalStorageItem('recent-search'));
 };
 
-const getSkeletonUIWrapper = (): string => {
-  return skeletonUI.repeat(10);
-};
-
 const renderSkeletonUI = (modalVideos: HTMLDivElement): void => {
   modalVideos.innerHTML = '';
-  modalVideos.insertAdjacentHTML('afterbegin', getSkeletonUIWrapper());
+  modalVideos.insertAdjacentHTML('afterbegin', skeletonUI.repeat(10));
+};
+
+const getVideoHTML = (data: any): string => {
+  const saveVideoLinks = model.getLocalStorageItem('videos').map((x) => x.videoLink);
+  if (!data.items.length) {
+    return `<img src="${ENV.PAGE_NOT_FOUND_IMG}"/>`;
+  } else {
+    const saveVideoLinks = model.getLocalStorageItem('videos').map((x) => x.videoLink);
+    return data.items
+      .map((x: any) => {
+        return getVideoWrapper({
+          videoLink: ENV.YOUTUBE_WATCH_URL + x.id.videoId,
+          videoTitle: x.snippet.title,
+          channelLink: ENV.YOUTUBE_CHANNEL_URL + x.snippet.channelId,
+          channelTitle: x.snippet.channelTitle,
+          publishedAt: x.snippet.publishedAt,
+          checkView: saveVideoLinks.includes(ENV.YOUTUBE_WATCH_URL + x.id.videoId),
+        });
+      })
+      .join('');
+  }
 };
 
 const renderSearchPage = async ({ q }: { q: string }) => {
@@ -184,38 +200,14 @@ const renderSearchPage = async ({ q }: { q: string }) => {
   $('#modal-recent-search-items')?.insertAdjacentHTML('afterbegin', getRecentSearchItem());
   renderSkeletonUI(modalVideos);
 
-  let result = '';
-
-  /* temp code */
-  // await wait(1000);
-  // const data = DATA_JSON;
-
-  /* real code */
   const data = await getQueryString({
     q,
     maxResults: ENV.YOUTUBE_MAX_RESULTS,
     type: ENV.YOUTUBE_TYPE,
     nextPageToken: '',
   });
-  modalVideos.innerHTML = '';
   $('#modal-search-input')!.dataset.token = data.nextPageToken;
-  if (data.items.length === 0) {
-    $('#modal-videos')?.insertAdjacentHTML('afterbegin', `<img src="${ENV.PAGE_NOT_FOUND_IMG}"/>`);
-  }
-  const saveVideoLinks = model.getLocalStorageItem('videos').map((x) => x.videoLink);
-  result = data.items
-    .map((x: any) => {
-      return getVideoWrapper({
-        videoLink: ENV.YOUTUBE_WATCH_URL + x.id.videoId,
-        videoTitle: x.snippet.title,
-        channelLink: ENV.YOUTUBE_CHANNEL_URL + x.snippet.channelId,
-        channelTitle: x.snippet.channelTitle,
-        publishedAt: x.snippet.publishedAt,
-        checkView: saveVideoLinks.includes(ENV.YOUTUBE_WATCH_URL + x.id.videoId),
-      });
-    })
-    .join('');
-  $('#modal-videos')?.insertAdjacentHTML('afterbegin', result);
+  modalVideos.innerHTML = getVideoHTML(data);
 };
 
 export { getModalWrapper, getRecentSearchItem, getVideoWrapper, renderSearchPage, renderSavedVideoLength };
