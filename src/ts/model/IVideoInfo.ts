@@ -1,8 +1,9 @@
 export interface IVideoInfo {
-  videoId: string,
-  videoTitle: string,
-  publishedAt: string,
-  channelId: string,
-  channelTitle: string,
-  saved: string
+  videoId: string;
+  videoTitle: string;
+  publishedAt: string;
+  channelId: string;
+  channelTitle: string;
+  saved: string;
+  isWatched: boolean;
 }

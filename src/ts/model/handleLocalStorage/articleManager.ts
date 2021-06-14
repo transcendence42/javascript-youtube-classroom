@@ -32,3 +32,13 @@ export const isSavedVideo = (videoId: string): boolean => {
   });
   return ret;
 };
+
+export const changeWatchedState = (videoId: string): void => {
+  let savedVideosList: IVideoInfo[] = getSavedVideos();
+  savedVideosList.forEach((video) => {
+    if (video.videoId === videoId) {
+      video.isWatched = !video.isWatched;
+    }
+  });
+  localStorage.setItem('savedVideos', JSON.stringify(savedVideosList));
+};
