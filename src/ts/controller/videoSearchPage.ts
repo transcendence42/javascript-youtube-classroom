@@ -16,7 +16,7 @@ import {
 import { saveVideo, unsaveVideo, isSavedVideo, getSavedVideos } from '../model/handleLocalStorage/articleManager.js';
 import { uriParameter } from './uriParameter.js';
 import { IYoutubeJSON } from '../model/IYoutubeJSON.js';
-import { renderVideo } from '../view/savedVideoPage.js';
+import { renderArticle } from '../view/savedVideoPage.js';
 
 const onModalClose = ($modal: HTMLDivElement): void => {
   $modal.classList.remove('open');
