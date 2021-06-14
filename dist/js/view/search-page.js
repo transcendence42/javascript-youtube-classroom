@@ -169,14 +169,18 @@ const renderSearchPage = ({ q }) => __awaiter(void 0, void 0, void 0, function* 
     // await wait(1000);
     // const data = DATA_JSON;
     /* real code */
-    const data = yield getQueryString({ q, maxResults: ENV.YOUTUBE_MAX_RESULTS, type: ENV.YOUTUBE_TYPE, nextPageToken: '' });
+    const data = yield getQueryString({
+        q,
+        maxResults: ENV.YOUTUBE_MAX_RESULTS,
+        type: ENV.YOUTUBE_TYPE,
+        nextPageToken: '',
+    });
     modalVideos.innerHTML = '';
     $('#modal-search-input').dataset.token = data.nextPageToken;
     if (data.items.length === 0) {
         (_b = $('#modal-videos')) === null || _b === void 0 ? void 0 : _b.insertAdjacentHTML('afterbegin', `<img src="${ENV.PAGE_NOT_FOUND_IMG}"/>`);
     }
-    console.log("THIS IS DATA", data);
-    const saveVideoLinks = model.getLocalStorageItem('videos').map(x => x.videoLink);
+    const saveVideoLinks = model.getLocalStorageItem('videos').map((x) => x.videoLink);
     result = data.items
         .map((x) => {
         return getVideoWrapper({

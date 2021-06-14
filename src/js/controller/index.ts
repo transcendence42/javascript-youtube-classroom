@@ -1,12 +1,21 @@
 import { modalController } from './search-page.js';
 import { mainPageController } from './main-page.js';
 import { watchedPageController } from './watched-page.js';
+import { likedPageController } from './liked-page.js';
 import { model } from '../model/index.js';
 import { $ } from '../@shared/utils/utils.js';
 
 const clickCheckView = (clip: HTMLElement | null) => {
+  const checkViewClassList: DOMTokenList = clip?.querySelector('.checkView')?.classList as DOMTokenList;
   model.toggleCheckView(clip?.querySelector('iframe')?.src);
-  clip?.remove();
+  if (checkViewClassList.contains('opacity-hover')) {
+    checkViewClassList.remove('opacity-hover');
+  } else {
+    checkViewClassList.add('opacity-hover');
+  }
+  if (!$('#liked-page-button')?.classList.contains('bg-cyan-100')) {
+    clip?.remove();
+  }
 };
 
 const clickCheckLike = (clip: HTMLElement | null) => {
@@ -16,6 +25,9 @@ const clickCheckLike = (clip: HTMLElement | null) => {
     checkLikeClassList.remove('opacity-hover');
   } else {
     checkLikeClassList.add('opacity-hover');
+    if ($('#liked-page-button')?.classList.contains('bg-cyan-100')) {
+      clip?.remove();
+    }
   }
 };
 
@@ -51,15 +63,17 @@ const clickCheckButtons = (e: Event) => {
 const clickNavButtons = (e: Event | null): void => {
   $('#main-page-button')?.classList.remove('bg-cyan-100');
   $('#watched-page-button')?.classList.remove('bg-cyan-100');
+  $('#liked-page-button')?.classList.remove('bg-cyan-100');
   $('#search-button')?.classList.remove('bg-cyan-100');
-  (<HTMLButtonElement>e?.target).classList.add('bg-cyan-100')
-}
+  (<HTMLButtonElement>e?.target).classList.add('bg-cyan-100');
+};
 
 function initController() {
   mainPageController();
   modalController();
   watchedPageController();
-  $('#nav-buttons')?.addEventListener('click', clickNavButtons)
+  likedPageController();
+  $('#nav-buttons')?.addEventListener('click', clickNavButtons);
 }
 
 export { clickCheckButtons, initController };

@@ -22,9 +22,6 @@ const clickModalSearchButton = (e: Event | KeyboardEvent) => {
   if ((<KeyboardEvent>e).keyCode && (<KeyboardEvent>e).keyCode !== 13) {
     return;
   }
-  if ((<KeyboardEvent>e).keyCode && (<KeyboardEvent>e).keyCode === 13) {
-    console.log("hahahahaha", (<HTMLElement>e?.target).tagName)
-  }
   modalSearchInput =
     (<HTMLElement>e?.target).tagName === 'BUTTON' || (<HTMLElement>e?.target).tagName === 'INPUT'
       ? (<HTMLInputElement>$('#modal-search-input'))?.value

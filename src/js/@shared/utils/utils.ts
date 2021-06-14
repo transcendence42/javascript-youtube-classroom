@@ -8,7 +8,6 @@ const wait = async (delay: number): Promise<number> => {
 
 const removeChildNodes = (element: HTMLElement | null): void => {
   while (element?.hasChildNodes()) {
-    console.log('removeChildNodes', element?.hasChildNodes());
     element?.removeChild(element.childNodes[0]);
   }
 };

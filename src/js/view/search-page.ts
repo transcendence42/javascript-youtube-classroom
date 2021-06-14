@@ -83,7 +83,9 @@ const getVideoWrapper = ({
         <p>${publishedAt}</p>
       </div>
       <div class="d-flex justify-end">
-        <button class="btn modal-save-button" ${checkView ? 'disabled': ''}>${checkView ? '✅ 저장 완료' : '⬇️ 저장'}</button>
+        <button class="btn modal-save-button" ${checkView ? 'disabled' : ''}>${
+    checkView ? '✅ 저장 완료' : '⬇️ 저장'
+  }</button>
       </div>
     </div>
   </div>
@@ -168,11 +170,11 @@ const getSkeletonUIWrapper = (): string => {
 };
 
 const renderSkeletonUI = (modalVideos: HTMLDivElement): void => {
-  modalVideos.innerHTML = ''
+  modalVideos.innerHTML = '';
   modalVideos.insertAdjacentHTML('afterbegin', getSkeletonUIWrapper());
-}
+};
 
-const renderSearchPage = async ({ q }: { q: string; }) => {
+const renderSearchPage = async ({ q }: { q: string }) => {
   const modalVideos: HTMLDivElement | null = $('#modal-videos') as HTMLDivElement;
 
   if (!modalVideos) {
@@ -189,15 +191,18 @@ const renderSearchPage = async ({ q }: { q: string; }) => {
   // const data = DATA_JSON;
 
   /* real code */
-  const data = await getQueryString({ q, maxResults: ENV.YOUTUBE_MAX_RESULTS, type: ENV.YOUTUBE_TYPE, nextPageToken: '' });
+  const data = await getQueryString({
+    q,
+    maxResults: ENV.YOUTUBE_MAX_RESULTS,
+    type: ENV.YOUTUBE_TYPE,
+    nextPageToken: '',
+  });
   modalVideos.innerHTML = '';
   $('#modal-search-input')!.dataset.token = data.nextPageToken;
   if (data.items.length === 0) {
     $('#modal-videos')?.insertAdjacentHTML('afterbegin', `<img src="${ENV.PAGE_NOT_FOUND_IMG}"/>`);
   }
-
-  console.log("THIS IS DATA", data);
-  const saveVideoLinks = model.getLocalStorageItem('videos').map(x => x.videoLink);
+  const saveVideoLinks = model.getLocalStorageItem('videos').map((x) => x.videoLink);
   result = data.items
     .map((x: any) => {
       return getVideoWrapper({

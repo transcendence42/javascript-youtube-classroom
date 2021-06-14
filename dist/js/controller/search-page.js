@@ -31,9 +31,6 @@ const clickModalSearchButton = (e) => {
     if (e.keyCode && e.keyCode !== 13) {
         return;
     }
-    if (e.keyCode && e.keyCode === 13) {
-        console.log("hahahahaha", (e === null || e === void 0 ? void 0 : e.target).tagName);
-    }
     modalSearchInput =
         (e === null || e === void 0 ? void 0 : e.target).tagName === 'BUTTON' || (e === null || e === void 0 ? void 0 : e.target).tagName === 'INPUT'
             ? (_a = $('#modal-search-input')) === null || _a === void 0 ? void 0 : _a.value
