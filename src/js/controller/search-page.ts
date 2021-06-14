@@ -52,10 +52,11 @@ const clickModalVideosSaveButton = (e: Event | null) => {
     if (modalSaveButton) {
       const videoWrapper: HTMLElement | null = modalSaveButton.closest('.clip');
       let newVideo: VideoModel = new VideoModel();
-      model.addSaveVideos(newVideo.setVideoModelFromVideoWrapper(videoWrapper));
-      renderSavedVideoLength(model.getLocalStorageItem('videos').length);
-      disableSaveButton(modalSaveButton);
-      renderMainPage();
+      if (model.addSaveVideos(newVideo.setVideoModelFromVideoWrapper(videoWrapper))) {
+        renderSavedVideoLength(model.getLocalStorageItem('videos').length);
+        disableSaveButton(modalSaveButton);
+        renderMainPage();
+      }
     }
   }
 };

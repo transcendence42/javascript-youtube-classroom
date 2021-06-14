@@ -1,3 +1,4 @@
+import { ERROR_MESSAGE } from '../@shared/constants/error-message.js';
 export const searchPageModel = {
     getLocalStorageItem(str) {
         const rawItem = localStorage.getItem(str);
@@ -25,10 +26,15 @@ export const searchPageModel = {
     },
     addSaveVideos(video) {
         let videoItems = this.getLocalStorageItem('videos');
+        if (videoItems.length >= 100) {
+            alert(ERROR_MESSAGE.MAX_VIDEO);
+            return false;
+        }
         if (videoItems.some((x) => x.videoLink === video.videoLink)) {
-            return;
+            return false;
         }
         videoItems.push(video);
         localStorage.setItem('videos', JSON.stringify(videoItems));
+        return true;
     },
 };

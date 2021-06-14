@@ -42,7 +42,6 @@ const renderMainPage = () => {
     const mainVideoSection = $('#main-videos');
     removeInnerHTML(mainVideoSection);
     if (videosToWatch.length === 0) {
-        console.log("hahahahaha");
         mainVideoSection === null || mainVideoSection === void 0 ? void 0 : mainVideoSection.insertAdjacentHTML('afterbegin', `<img src="${ENV.PAGE_NOT_FOUND_IMG}"/>`);
         return;
     }

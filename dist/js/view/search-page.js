@@ -33,7 +33,7 @@ const getModalWrapper = () => {
               </section>
               <section>
                 <div id="modal-saved-video-length" class="d-flex justify-end text-gray-700">
-                  저장된 영상 갯수: 50개
+                  저장된 영상 갯수: 50개/100개
                 </div>
               </section>
               <section id="modal-videos" class="video-wrapper">
@@ -144,7 +144,7 @@ const videoWrapperTMP = `<section class="video-wrapper">
               </article>
             </section>`;
 const renderSavedVideoLength = (videoLength) => {
-    $('#modal-saved-video-length').innerText = `저장된 영상 갯수: ${videoLength}개`;
+    $('#modal-saved-video-length').innerText = `저장된 영상 갯수: ${videoLength}개/100개`;
 };
 const getRecentSearchItem = () => {
     return getRecentSearchItemWrapper(model.getLocalStorageItem('recent-search'));

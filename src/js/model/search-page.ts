@@ -1,4 +1,5 @@
 import { VideoModel } from './index';
+import { ERROR_MESSAGE } from '../@shared/constants/error-message.js';
 
 export const searchPageModel = {
   getLocalStorageItem(str: string): never | Array<any> {
@@ -24,12 +25,17 @@ export const searchPageModel = {
     recentSearchItems.push(str);
     localStorage.setItem('recent-search', JSON.stringify(recentSearchItems));
   },
-  addSaveVideos(video: VideoModel): void {
+  addSaveVideos(video: VideoModel): boolean {
     let videoItems = this.getLocalStorageItem('videos');
+    if (videoItems.length >= 100) {
+      alert(ERROR_MESSAGE.MAX_VIDEO);
+      return false;
+    }
     if (videoItems.some((x) => x.videoLink === video.videoLink)) {
-      return;
+      return false;
     }
     videoItems.push(video);
     localStorage.setItem('videos', JSON.stringify(videoItems));
+    return true;
   },
 };
