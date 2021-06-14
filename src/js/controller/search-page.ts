@@ -1,5 +1,5 @@
 import { $, $$, removeChildNodes, setDataKey, removeInnerHTML } from '../@shared/utils/utils.js';
-import { getQueryString } from '../@shared/utils/getQueryString.js';
+import { YoutubeResponse, getQueryString } from '../model/get-query-string.js';
 import {
   renderSearchPage,
   getRecentSearchItem,
@@ -70,7 +70,7 @@ const scrollDownEvent = async (scrollPos: number): Promise<void> => {
   const modalInner: HTMLDivElement = $('.modal-inner') as HTMLDivElement;
 
   if (0.9 < scrollPos / (modalInner.scrollHeight - modalInner.offsetHeight)) {
-    const data = await getQueryString({
+    const data: YoutubeResponse = await getQueryString({
       q: $('#modal-search-input')?.dataset.value as string,
       maxResults: ENV.YOUTUBE_MAX_RESULTS,
       type: ENV.YOUTUBE_TYPE,

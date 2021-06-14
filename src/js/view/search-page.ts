@@ -1,6 +1,6 @@
 import { ENV } from '../@shared/constants/env.js';
 import { $ } from '../@shared/utils/utils.js';
-import { getQueryString } from '../@shared/utils/getQueryString.js';
+import { YoutubeResponse, getQueryString } from '../model/get-query-string.js';
 import { model } from '../model/index.js';
 import { getVideoHTMLWithRawData } from './index.js';
 
@@ -144,7 +144,7 @@ const renderSearchPage = async ({ q }: { q: string }) => {
   $('#modal-recent-search-items')?.insertAdjacentHTML('afterbegin', getRecentSearchItem());
   renderSkeletonUI(modalVideos);
 
-  const data = await getQueryString({
+  const data: YoutubeResponse = await getQueryString({
     q,
     maxResults: ENV.YOUTUBE_MAX_RESULTS,
     type: ENV.YOUTUBE_TYPE,

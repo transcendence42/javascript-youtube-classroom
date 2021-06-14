@@ -8,7 +8,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import { $, removeChildNodes, setDataKey, removeInnerHTML } from '../@shared/utils/utils.js';
-import { getQueryString } from '../@shared/utils/getQueryString.js';
+import { getQueryString } from '../model/get-query-string.js';
 import { renderSearchPage, getRecentSearchItem, getSearchVideoWrapper, renderSavedVideoLength, } from '../view/search-page.js';
 import { ENV } from '../@shared/constants/env.js';
 import { VideoModel, model } from '../model/index.js';

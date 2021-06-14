@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 import { ENV } from '../@shared/constants/env.js';
 import { $ } from '../@shared/utils/utils.js';
-import { getQueryString } from '../@shared/utils/getQueryString.js';
+import { getQueryString } from '../model/get-query-string.js';
 import { model } from '../model/index.js';
 import { getVideoHTMLWithRawData } from './index.js';
 const getModalWrapper = () => {
