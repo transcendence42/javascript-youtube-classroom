@@ -1,7 +1,8 @@
 import { ENV } from '../@shared/constants/env.js';
-import { $, setDataKey, wait } from '../@shared/utils/utils.js';
+import { $ } from '../@shared/utils/utils.js';
 import { getQueryString } from '../@shared/utils/getQueryString.js';
 import { model } from '../model/index.js';
+import { getVideoHTMLWithRawData } from './index.js';
 
 const getModalWrapper = (): string => {
   return `<div class="modal">
@@ -41,7 +42,7 @@ const getRecentSearchItemWrapper = (items: string[]): string => {
     .join('');
 };
 
-const getVideoWrapper = ({
+const getSearchVideoWrapper = ({
   videoLink,
   videoTitle,
   channelLink,
@@ -120,42 +121,6 @@ const skeletonUI = `<article class="clip skeleton">
                 </div>
               </article>`;
 
-const videoWrapperTMP = `<section class="video-wrapper">
-              <article class="clip">
-                <div class="preview-container">
-                  <iframe
-                    width="100%"
-                    height="118"
-                    src="https://www.youtube.com/embed/Ngj3498Tm_0"
-                    frameborder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowfullscreen
-                  ></iframe>
-                </div>
-                <div class="content-container pt-2 px-1">
-                  <h3>아두이노 무드등</h3>
-                  <div>
-                    <a
-                      href="https://www.youtube.com/channel/UC-mOekGSesms0agFntnQang"
-                      target="_blank"
-                      class="channel-name mt-1"
-                    >
-                      메이커준
-                    </a>
-                    <div class="meta">
-                      <p>2021년 3월 2일</p>
-                    </div>
-                    <div>
-                      <span class="opacity-hover">✅</span>
-                      <span class="opacity-hover">👍</span>
-                      <span class="opacity-hover">💬</span>
-                      <span class="opacity-hover">🗑️</span>
-                    </div>
-                  </div>
-                </div>
-              </article>
-            </section>`;
-
 const renderSavedVideoLength = (videoLength: number) => {
   $('#modal-saved-video-length')!.innerText = `저장된 영상 갯수: ${videoLength}개/100개`;
 };
@@ -167,27 +132,6 @@ const getRecentSearchItem = (): string => {
 const renderSkeletonUI = (modalVideos: HTMLDivElement): void => {
   modalVideos.innerHTML = '';
   modalVideos.insertAdjacentHTML('afterbegin', skeletonUI.repeat(10));
-};
-
-const getVideoHTML = (data: any): string => {
-  const saveVideoLinks = model.getLocalStorageItem('videos').map((x) => x.videoLink);
-  if (!data.items.length) {
-    return `<img src="${ENV.PAGE_NOT_FOUND_IMG}"/>`;
-  } else {
-    const saveVideoLinks = model.getLocalStorageItem('videos').map((x) => x.videoLink);
-    return data.items
-      .map((x: any) => {
-        return getVideoWrapper({
-          videoLink: ENV.YOUTUBE_WATCH_URL + x.id.videoId,
-          videoTitle: x.snippet.title,
-          channelLink: ENV.YOUTUBE_CHANNEL_URL + x.snippet.channelId,
-          channelTitle: x.snippet.channelTitle,
-          publishedAt: x.snippet.publishedAt,
-          checkView: saveVideoLinks.includes(ENV.YOUTUBE_WATCH_URL + x.id.videoId),
-        });
-      })
-      .join('');
-  }
 };
 
 const renderSearchPage = async ({ q }: { q: string }) => {
@@ -207,7 +151,7 @@ const renderSearchPage = async ({ q }: { q: string }) => {
     nextPageToken: '',
   });
   $('#modal-search-input')!.dataset.token = data.nextPageToken;
-  modalVideos.innerHTML = getVideoHTML(data);
+  modalVideos.innerHTML = getVideoHTMLWithRawData(data, getSearchVideoWrapper);
 };
 
-export { getModalWrapper, getRecentSearchItem, getVideoWrapper, renderSearchPage, renderSavedVideoLength };
+export { getModalWrapper, getRecentSearchItem, getSearchVideoWrapper, renderSearchPage, renderSavedVideoLength };

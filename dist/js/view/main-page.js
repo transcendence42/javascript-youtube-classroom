@@ -1,7 +1,7 @@
-import { $, removeInnerHTML } from '../@shared/utils/utils.js';
-import { ENV } from '../@shared/constants/env.js';
+import { $ } from '../@shared/utils/utils.js';
 import { model } from '../model/index.js';
-const getToWatchVideoClip = (video) => {
+import { getVideoHTML } from './index.js';
+const getToWatchVideoWrapper = (video) => {
     return `<article class="clip">
     <div class="preview-container">
       <iframe
@@ -38,13 +38,7 @@ const getToWatchVideoClip = (video) => {
 };
 const renderMainPage = () => {
     const videosToWatch = model.getLocalStorageItem('videos').filter((x) => x.checkView === false);
-    const result = videosToWatch.map((x) => getToWatchVideoClip(x)).join('');
     const mainVideoSection = $('#main-videos');
-    removeInnerHTML(mainVideoSection);
-    if (videosToWatch.length === 0) {
-        mainVideoSection === null || mainVideoSection === void 0 ? void 0 : mainVideoSection.insertAdjacentHTML('afterbegin', `<img src="${ENV.PAGE_NOT_FOUND_IMG}"/>`);
-        return;
-    }
-    mainVideoSection === null || mainVideoSection === void 0 ? void 0 : mainVideoSection.insertAdjacentHTML('beforeend', result);
+    mainVideoSection.innerHTML = getVideoHTML(videosToWatch, getToWatchVideoWrapper);
 };
-export { getToWatchVideoClip, renderMainPage };
+export { getToWatchVideoWrapper, renderMainPage };

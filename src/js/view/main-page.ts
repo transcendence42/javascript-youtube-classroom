@@ -1,8 +1,9 @@
 import { $, removeInnerHTML } from '../@shared/utils/utils.js';
 import { ENV } from '../@shared/constants/env.js';
 import { VideoModel, model } from '../model/index.js';
+import { getVideoHTML } from './index.js';
 
-const getToWatchVideoClip = (video: VideoModel): string => {
+const getToWatchVideoWrapper = (video: VideoModel): string => {
   return `<article class="clip">
     <div class="preview-container">
       <iframe
@@ -40,14 +41,8 @@ const getToWatchVideoClip = (video: VideoModel): string => {
 
 const renderMainPage = () => {
   const videosToWatch = model.getLocalStorageItem('videos').filter((x) => x.checkView === false);
-  const result = videosToWatch.map((x) => getToWatchVideoClip(x)).join('');
-  const mainVideoSection: HTMLElement | null = $('#main-videos');
-  removeInnerHTML(mainVideoSection);
-  if (videosToWatch.length === 0) {
-    mainVideoSection?.insertAdjacentHTML('afterbegin', `<img src="${ENV.PAGE_NOT_FOUND_IMG}"/>`);
-    return;
-  }
-  mainVideoSection?.insertAdjacentHTML('beforeend', result);
+  const mainVideoSection: HTMLElement | null = $('#main-videos') as HTMLElement;
+  mainVideoSection.innerHTML = getVideoHTML(videosToWatch, getToWatchVideoWrapper);
 };
 
-export { getToWatchVideoClip, renderMainPage };
+export { getToWatchVideoWrapper, renderMainPage };

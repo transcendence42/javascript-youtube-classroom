@@ -1,9 +1,15 @@
 import { $, $$, removeChildNodes, setDataKey, removeInnerHTML } from '../@shared/utils/utils.js';
 import { getQueryString } from '../@shared/utils/getQueryString.js';
-import { renderSearchPage, getRecentSearchItem, getVideoWrapper, renderSavedVideoLength } from '../view/search-page.js';
+import {
+  renderSearchPage,
+  getRecentSearchItem,
+  getSearchVideoWrapper,
+  renderSavedVideoLength,
+} from '../view/search-page.js';
 import { ENV } from '../@shared/constants/env.js';
 import { VideoModel, model } from '../model/index.js';
 import { renderMainPage } from '../view/main-page.js';
+import { getVideoHTMLWithRawData } from '../view/index.js';
 
 const onModalShow = () => {
   renderSavedVideoLength(model.getLocalStorageItem('videos').length);
@@ -64,8 +70,6 @@ const scrollDownEvent = async (scrollPos: number): Promise<void> => {
   const modalInner: HTMLDivElement = $('.modal-inner') as HTMLDivElement;
 
   if (0.9 < scrollPos / (modalInner.scrollHeight - modalInner.offsetHeight)) {
-    // const data = DATA_JSON;
-
     const data = await getQueryString({
       q: $('#modal-search-input')?.dataset.value as string,
       maxResults: ENV.YOUTUBE_MAX_RESULTS,
@@ -74,20 +78,7 @@ const scrollDownEvent = async (scrollPos: number): Promise<void> => {
     });
 
     $('#modal-search-input')!.dataset.token = data.nextPageToken;
-    const saveVideoLinks = model.getLocalStorageItem('videos').map((x) => x.videoLink);
-    let result: string = data.items
-      .map((x: any) => {
-        return getVideoWrapper({
-          videoLink: ENV.YOUTUBE_WATCH_URL + x.id.videoId,
-          videoTitle: x.snippet.title,
-          channelLink: ENV.YOUTUBE_CHANNEL_URL + x.snippet.channelId,
-          channelTitle: x.snippet.channelTitle,
-          publishedAt: x.snippet.publishedAt,
-          checkView: saveVideoLinks.includes(ENV.YOUTUBE_WATCH_URL + x.id.videoId),
-        });
-      })
-      .join('');
-    $('#modal-videos')?.insertAdjacentHTML('afterbegin', result);
+    $('#modal-videos')?.insertAdjacentHTML('beforeend', getVideoHTMLWithRawData(data, getSearchVideoWrapper));
     modalInner.scroll(0, scrollPos);
   }
 };

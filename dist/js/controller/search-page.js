@@ -9,10 +9,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 import { $, removeChildNodes, setDataKey, removeInnerHTML } from '../@shared/utils/utils.js';
 import { getQueryString } from '../@shared/utils/getQueryString.js';
-import { renderSearchPage, getRecentSearchItem, getVideoWrapper, renderSavedVideoLength } from '../view/search-page.js';
+import { renderSearchPage, getRecentSearchItem, getSearchVideoWrapper, renderSavedVideoLength, } from '../view/search-page.js';
 import { ENV } from '../@shared/constants/env.js';
 import { VideoModel, model } from '../model/index.js';
 import { renderMainPage } from '../view/main-page.js';
+import { getVideoHTMLWithRawData } from '../view/index.js';
 const onModalShow = () => {
     var _a, _b;
     renderSavedVideoLength(model.getLocalStorageItem('videos').length);
@@ -70,7 +71,6 @@ const scrollDownEvent = (scrollPos) => __awaiter(void 0, void 0, void 0, functio
     var _a, _b, _c;
     const modalInner = $('.modal-inner');
     if (0.9 < scrollPos / (modalInner.scrollHeight - modalInner.offsetHeight)) {
-        // const data = DATA_JSON;
         const data = yield getQueryString({
             q: (_a = $('#modal-search-input')) === null || _a === void 0 ? void 0 : _a.dataset.value,
             maxResults: ENV.YOUTUBE_MAX_RESULTS,
@@ -78,20 +78,7 @@ const scrollDownEvent = (scrollPos) => __awaiter(void 0, void 0, void 0, functio
             nextPageToken: (_b = $('#modal-search-input')) === null || _b === void 0 ? void 0 : _b.dataset.token,
         });
         $('#modal-search-input').dataset.token = data.nextPageToken;
-        const saveVideoLinks = model.getLocalStorageItem('videos').map((x) => x.videoLink);
-        let result = data.items
-            .map((x) => {
-            return getVideoWrapper({
-                videoLink: ENV.YOUTUBE_WATCH_URL + x.id.videoId,
-                videoTitle: x.snippet.title,
-                channelLink: ENV.YOUTUBE_CHANNEL_URL + x.snippet.channelId,
-                channelTitle: x.snippet.channelTitle,
-                publishedAt: x.snippet.publishedAt,
-                checkView: saveVideoLinks.includes(ENV.YOUTUBE_WATCH_URL + x.id.videoId),
-            });
-        })
-            .join('');
-        (_c = $('#modal-videos')) === null || _c === void 0 ? void 0 : _c.insertAdjacentHTML('afterbegin', result);
+        (_c = $('#modal-videos')) === null || _c === void 0 ? void 0 : _c.insertAdjacentHTML('beforeend', getVideoHTMLWithRawData(data, getSearchVideoWrapper));
         modalInner.scroll(0, scrollPos);
     }
 });
