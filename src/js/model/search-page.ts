@@ -1,10 +1,10 @@
-import { VideoModel } from './index';
 import { MESSAGE } from '../@shared/constants/message.js';
 import { showSnackBar } from '../@shared/utils/utils.js';
+import { VideoModel } from './index';
 
 export const searchPageModel = {
-  getLocalStorageItem(str: string): never | Array<any> {
-    const rawItem = localStorage.getItem(str);
+  getLocalStorageItem(str: string): VideoModel[] | string[] {
+    const rawItem: string | null = localStorage.getItem(str);
     if (!rawItem) {
       return [];
     } else {
@@ -12,8 +12,8 @@ export const searchPageModel = {
     }
   },
   addRecentSearch(keyword: string): void {
-    let recentSearchItems = this.getLocalStorageItem('recent-search');
-    const str = keyword.trim();
+    let recentSearchItems: string[] = this.getLocalStorageItem('recent-search') as string[];
+    const str: string = keyword.trim();
     if (recentSearchItems.includes(str)) {
       if (str === recentSearchItems[recentSearchItems.length - 1]) {
         return;
@@ -27,7 +27,7 @@ export const searchPageModel = {
     localStorage.setItem('recent-search', JSON.stringify(recentSearchItems));
   },
   addSaveVideos(video: VideoModel): boolean {
-    let videoItems = this.getLocalStorageItem('videos');
+    let videoItems: VideoModel[] = this.getLocalStorageItem('videos') as VideoModel[];
     if (videoItems.length >= 100) {
       showSnackBar(MESSAGE.MAX_VIDEO_ERROR);
       return false;

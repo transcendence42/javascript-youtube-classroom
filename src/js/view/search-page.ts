@@ -1,8 +1,8 @@
+import { YoutubeResponse, getQueryString } from '../model/get-query-string.js';
+import { getVideoHTMLWithRawData } from './index.js';
 import { ENV } from '../@shared/constants/env.js';
 import { $ } from '../@shared/utils/utils.js';
-import { YoutubeResponse, getQueryString } from '../model/get-query-string.js';
-import { model } from '../model/index.js';
-import { getVideoHTMLWithRawData } from './index.js';
+import { model, VideoModel } from '../model/index.js';
 
 const getModalWrapper = (): string => {
   return `<div class="modal">
@@ -35,12 +35,34 @@ const getModalWrapper = (): string => {
           </div>`;
 };
 
-const getRecentSearchItemWrapper = (items: string[]): string => {
-  return items
-    .map((x) => `<a class="chip">${x}</a>`)
-    .reverse()
-    .join('');
-};
+const skeletonUI: string = `<article class="clip skeleton">
+                <div class="preview-container image">
+                  <iframe
+                    width="100%"
+                    height="118"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen
+                  ></iframe>
+                </div>
+                <div class="content-container pt-2 px-1 line">
+                  <h3></h3>
+                  <div>
+                    <a
+                      href=""
+                      target="_blank"
+                      class="channel-name mt-1"
+                    >
+                    </a>
+                    <div class="meta">
+                      <p></p>
+                    </div>
+                    <div class="d-flex justify-end">
+                      <button class="btn modal-save-button opacity-hover">⬇️ 저장</button>
+                    </div>
+                  </div>
+                </div>
+              </article>`;
 
 const getSearchVideoWrapper = ({
   videoLink,
@@ -92,41 +114,19 @@ const getSearchVideoWrapper = ({
 </article>`;
 };
 
-const skeletonUI = `<article class="clip skeleton">
-                <div class="preview-container image">
-                  <iframe
-                    width="100%"
-                    height="118"
-                    frameborder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowfullscreen
-                  ></iframe>
-                </div>
-                <div class="content-container pt-2 px-1 line">
-                  <h3></h3>
-                  <div>
-                    <a
-                      href=""
-                      target="_blank"
-                      class="channel-name mt-1"
-                    >
-                    </a>
-                    <div class="meta">
-                      <p></p>
-                    </div>
-                    <div class="d-flex justify-end">
-                      <button class="btn modal-save-button opacity-hover">⬇️ 저장</button>
-                    </div>
-                  </div>
-                </div>
-              </article>`;
+const getRecentSearchItemWrapper = (items: string[]): string => {
+  return items
+    .map((x) => `<a class="chip">${x}</a>`)
+    .reverse()
+    .join('');
+};
 
-const renderSavedVideoLength = (videoLength: number) => {
+const renderSavedVideoLength = (videoLength: number): void => {
   $('#modal-saved-video-length')!.innerText = `저장된 영상 갯수: ${videoLength}개/100개`;
 };
 
 const getRecentSearchItem = (): string => {
-  return getRecentSearchItemWrapper(model.getLocalStorageItem('recent-search'));
+  return getRecentSearchItemWrapper(<string[]>model.getLocalStorageItem('recent-search'));
 };
 
 const renderSkeletonUI = (modalVideos: HTMLDivElement): void => {
@@ -134,7 +134,7 @@ const renderSkeletonUI = (modalVideos: HTMLDivElement): void => {
   modalVideos.insertAdjacentHTML('afterbegin', skeletonUI.repeat(10));
 };
 
-const renderSearchPage = async ({ q }: { q: string }) => {
+const renderSearchPage = async ({ q }: { q: string }): Promise<void> => {
   const modalVideos: HTMLDivElement | null = $('#modal-videos') as HTMLDivElement;
 
   if (!modalVideos) {

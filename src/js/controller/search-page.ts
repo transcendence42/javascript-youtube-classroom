@@ -1,4 +1,4 @@
-import { $, $$, removeChildNodes, setDataKey, removeInnerHTML } from '../@shared/utils/utils.js';
+import { $, removeChildNodes, setDataKey, removeInnerHTML } from '../@shared/utils/utils.js';
 import { YoutubeResponse, getQueryString } from '../model/get-query-string.js';
 import {
   renderSearchPage,
@@ -6,24 +6,24 @@ import {
   getSearchVideoWrapper,
   renderSavedVideoLength,
 } from '../view/search-page.js';
-import { ENV } from '../@shared/constants/env.js';
+import { getVideoHTMLWithRawData } from '../view/index.js';
 import { VideoModel, model } from '../model/index.js';
 import { renderMainPage } from '../view/main-page.js';
-import { getVideoHTMLWithRawData } from '../view/index.js';
+import { ENV } from '../@shared/constants/env.js';
 
-const onModalShow = () => {
+const onModalShow = (): void => {
   renderSavedVideoLength(model.getLocalStorageItem('videos').length);
   removeInnerHTML($('#modal-recent-search-items'));
   $('#modal-recent-search-items')?.insertAdjacentHTML('afterbegin', getRecentSearchItem());
   $('.modal')?.classList.add('open');
 };
 
-const onModalClose = () => {
+const onModalClose = (): void => {
   $('.modal')?.classList.remove('open');
   $('#main-page-button')?.click();
 };
 
-const clickModalSearchButton = (e: Event | KeyboardEvent) => {
+const clickModalSearchButton = (e: Event | KeyboardEvent): void => {
   let modalSearchInput: string;
   if ((<KeyboardEvent>e).keyCode && (<KeyboardEvent>e).keyCode !== 13) {
     return;
@@ -51,7 +51,7 @@ const disableSaveButton = (modalSaveButton: HTMLButtonElement): void => {
   modalSaveButton.disabled = true;
 };
 
-const clickModalVideosSaveButton = (e: Event | null) => {
+const clickModalVideosSaveButton = (e: Event | null): void => {
   if ((<HTMLElement>e?.target).classList.contains('modal-save-button')) {
     const modalSaveButton: HTMLButtonElement | null = e?.target as HTMLButtonElement;
     if (modalSaveButton) {
@@ -83,7 +83,7 @@ const scrollDownEvent = async (scrollPos: number): Promise<void> => {
   }
 };
 
-const scrollThrottling = (lastKnownScrollPosition: number, ticking: boolean) => {
+const scrollThrottling = (lastKnownScrollPosition: number, ticking: boolean): void => {
   lastKnownScrollPosition = $('.modal-inner')?.scrollTop as number;
   if (!ticking) {
     window.requestAnimationFrame(() => {
@@ -94,9 +94,9 @@ const scrollThrottling = (lastKnownScrollPosition: number, ticking: boolean) => 
   }
 };
 
-const scrollModalInner = (e: Event | null): void => {
+const scrollModalInner = (): void => {
   let lastKnownScrollPosition: number = 0;
-  let ticking = false;
+  let ticking: boolean = false;
 
   scrollThrottling(lastKnownScrollPosition, ticking);
 };
@@ -105,7 +105,7 @@ const submitPreventDefault = (e: Event | null) => {
   e?.preventDefault();
 };
 
-export const modalController = () => {
+export const modalController = (): void => {
   setDataKey($('#modal-search-input'), 'value', '');
   setDataKey($('#modal-search-input'), 'token', '');
   $('#search-button')?.addEventListener('click', onModalShow);

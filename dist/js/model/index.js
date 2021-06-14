@@ -10,9 +10,6 @@ class VideoModel {
         this.checkLike = false;
         this.checkView = false;
     }
-    // get _videoLink(): string {
-    //   return this.videoLink;
-    // }
     setVideoModel({ videoLink, videoTitle, channelLink, channelTitle, publishedAt, checkLike, checkView, }) {
         this.videoLink = videoLink;
         this.videoTitle = videoTitle;

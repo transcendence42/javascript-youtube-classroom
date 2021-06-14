@@ -12,17 +12,10 @@ const removeChildNodes = (element: HTMLElement | null): void => {
   }
 };
 
-const removeInnerHTML = (element: HTMLElement | null) => {
+const removeInnerHTML = (element: HTMLElement | null): void => {
   if (element) {
     element.innerHTML = '';
   }
-};
-
-const getDataKey = (element: HTMLElement | null, key: string): string => {
-  if (element) {
-    return element.dataset.key ? element.dataset.key : '';
-  }
-  return '';
 };
 
 const setDataKey = (element: HTMLElement | null, key: string, text: string): void => {
@@ -41,4 +34,4 @@ const showSnackBar = async (text: string): Promise<void>  => {
   }
 };
 
-export { $, $$, wait, removeChildNodes, removeInnerHTML, getDataKey, setDataKey, showSnackBar };
+export { $, $$, wait, removeChildNodes, removeInnerHTML, setDataKey, showSnackBar };

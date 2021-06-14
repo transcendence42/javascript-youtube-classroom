@@ -10,10 +10,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 import { $, removeChildNodes, setDataKey, removeInnerHTML } from '../@shared/utils/utils.js';
 import { getQueryString } from '../model/get-query-string.js';
 import { renderSearchPage, getRecentSearchItem, getSearchVideoWrapper, renderSavedVideoLength, } from '../view/search-page.js';
-import { ENV } from '../@shared/constants/env.js';
+import { getVideoHTMLWithRawData } from '../view/index.js';
 import { VideoModel, model } from '../model/index.js';
 import { renderMainPage } from '../view/main-page.js';
-import { getVideoHTMLWithRawData } from '../view/index.js';
+import { ENV } from '../@shared/constants/env.js';
 const onModalShow = () => {
     var _a, _b;
     renderSavedVideoLength(model.getLocalStorageItem('videos').length);
@@ -93,7 +93,7 @@ const scrollThrottling = (lastKnownScrollPosition, ticking) => {
         ticking = true;
     }
 };
-const scrollModalInner = (e) => {
+const scrollModalInner = () => {
     let lastKnownScrollPosition = 0;
     let ticking = false;
     scrollThrottling(lastKnownScrollPosition, ticking);

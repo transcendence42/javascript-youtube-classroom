@@ -22,12 +22,6 @@ const removeInnerHTML = (element) => {
         element.innerHTML = '';
     }
 };
-const getDataKey = (element, key) => {
-    if (element) {
-        return element.dataset.key ? element.dataset.key : '';
-    }
-    return '';
-};
 const setDataKey = (element, key, text) => {
     if (element) {
         element.dataset[`${key}`] = text;
@@ -42,4 +36,4 @@ const showSnackBar = (text) => __awaiter(void 0, void 0, void 0, function* () {
         snackbar.classList.remove('show');
     }
 });
-export { $, $$, wait, removeChildNodes, removeInnerHTML, getDataKey, setDataKey, showSnackBar };
+export { $, $$, wait, removeChildNodes, removeInnerHTML, setDataKey, showSnackBar };

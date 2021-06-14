@@ -21,10 +21,6 @@ class VideoModel {
     this.checkView = false;
   }
 
-  // get _videoLink(): string {
-  //   return this.videoLink;
-  // }
-
   setVideoModel({
     videoLink,
     videoTitle,

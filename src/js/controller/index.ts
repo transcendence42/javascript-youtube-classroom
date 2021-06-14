@@ -1,13 +1,13 @@
-import { modalController } from './search-page.js';
-import { mainPageController } from './main-page.js';
 import { watchedPageController } from './watched-page.js';
-import { likedPageController } from './liked-page.js';
-import { model } from '../model/index.js';
-import { $ } from '../@shared/utils/utils.js';
-import { showSnackBar } from '../@shared/utils/utils.js';
 import { MESSAGE } from '../@shared/constants/message.js';
+import { showSnackBar } from '../@shared/utils/utils.js';
+import { likedPageController } from './liked-page.js';
+import { mainPageController } from './main-page.js';
+import { modalController } from './search-page.js';
+import { $ } from '../@shared/utils/utils.js';
+import { model } from '../model/index.js';
 
-const clickCheckView = (clip: HTMLElement | null) => {
+const clickCheckView = (clip: HTMLElement | null): void => {
   const checkViewClassList: DOMTokenList = clip?.querySelector('.checkView')?.classList as DOMTokenList;
   model.toggleCheckView(clip?.querySelector('iframe')?.src);
   if (checkViewClassList.contains('opacity-hover')) {
@@ -22,7 +22,7 @@ const clickCheckView = (clip: HTMLElement | null) => {
   }
 };
 
-const clickCheckLike = (clip: HTMLElement | null) => {
+const clickCheckLike = (clip: HTMLElement | null): void => {
   const checkLikeClassList: DOMTokenList = clip?.querySelector('.checkLike')?.classList as DOMTokenList;
   model.toggleCheckLike(clip?.querySelector('iframe')?.src);
   if (checkLikeClassList.contains('opacity-hover')) {
@@ -37,7 +37,7 @@ const clickCheckLike = (clip: HTMLElement | null) => {
   }
 };
 
-const clickCheckDelete = (clip: HTMLElement | null) => {
+const clickCheckDelete = (clip: HTMLElement | null): void => {
   if (!confirm('정말로 지우시겠습니까!!?!')) {
     return;
   }
@@ -46,12 +46,12 @@ const clickCheckDelete = (clip: HTMLElement | null) => {
   showSnackBar(MESSAGE.VIDEO_DELETE);
 };
 
-const clickCheckButtons = (e: Event) => {
+const clickCheckButtons = (e: Event): void => {
   const eventTarget: HTMLSpanElement | null = <HTMLSpanElement>e.target;
   if (eventTarget.tagName !== 'SPAN' || !eventTarget) {
     return;
   }
-  const checkedValue = eventTarget.innerText;
+  const checkedValue: string = eventTarget.innerText;
   switch (checkedValue) {
     case '✅':
       clickCheckView(eventTarget.closest('.clip'));
@@ -76,7 +76,7 @@ const clickNavButtons = (e: Event | null): void => {
 };
 
 const clickDarkModeButton = (e: Event | null): void => {
-  const checkbox = e?.target as HTMLInputElement;
+  const checkbox: HTMLInputElement = e?.target as HTMLInputElement;
   if (checkbox.checked) {
     $('body')?.classList.add('dark');
   } else {

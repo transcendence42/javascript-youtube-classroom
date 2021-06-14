@@ -1,7 +1,7 @@
 import { VideoModel } from './index';
 
 export const mainPageModel = {
-  getLocalStorageItem(str: string): never | Array<any> {
+  getLocalStorageItem(str: string): VideoModel[] | string[] {
     const rawItem = localStorage.getItem(str);
     if (!rawItem) {
       return [];
@@ -13,14 +13,14 @@ export const mainPageModel = {
     if (!videoLink) {
       return;
     }
-    let videoItems = this.getLocalStorageItem('videos');
-    localStorage.setItem('videos', JSON.stringify(videoItems.filter((x) => x.videoLink !== videoLink)));
+    let videoItems: VideoModel[] = this.getLocalStorageItem('videos') as VideoModel[];
+    localStorage.setItem('videos', JSON.stringify(videoItems.filter((x: VideoModel) => x.videoLink !== videoLink)));
   },
   toggleCheckLike(videoLink: string | undefined): void {
     if (!videoLink) {
       return;
     }
-    let videoItems = this.getLocalStorageItem('videos').map((x) => {
+    let videoItems: VideoModel[] = (<VideoModel[]>this.getLocalStorageItem('videos')).map((x: VideoModel) => {
       if (x.videoLink === videoLink) {
         x.checkLike = !x.checkLike;
       }
@@ -32,7 +32,7 @@ export const mainPageModel = {
     if (!videoLink) {
       return;
     }
-    let videoItems = this.getLocalStorageItem('videos').map((x) => {
+    let videoItems: VideoModel[] = (<VideoModel[]>this.getLocalStorageItem('videos')).map((x: VideoModel) => {
       if (x.videoLink === videoLink) {
         x.checkView = !x.checkView;
       }

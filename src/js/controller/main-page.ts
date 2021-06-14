@@ -1,12 +1,12 @@
-import { $ } from '../@shared/utils/utils.js';
-import { clickCheckButtons } from './index.js';
 import { renderMainPage } from '../view/main-page.js';
+import { clickCheckButtons } from './index.js';
+import { $ } from '../@shared/utils/utils.js';
 
-const clickMainPageButton = () => {
+const clickMainPageButton = (): void => {
   renderMainPage();
 };
 
-export const mainPageController = () => {
+export const mainPageController = (): void => {
   $('#main-videos')?.addEventListener('click', clickCheckButtons);
   $('#main-page-button')?.addEventListener('click', clickMainPageButton);
 };

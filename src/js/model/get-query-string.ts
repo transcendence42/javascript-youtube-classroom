@@ -68,4 +68,4 @@ const getQueryString = async ({
   return data;
 };
 
-export { YoutubeResponse, getQueryString };
+export { YoutubeItem, YoutubeResponse, getQueryString };

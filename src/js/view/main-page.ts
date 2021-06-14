@@ -1,5 +1,4 @@
 import { $, removeInnerHTML } from '../@shared/utils/utils.js';
-import { ENV } from '../@shared/constants/env.js';
 import { VideoModel, model } from '../model/index.js';
 import { getVideoHTML } from './index.js';
 
@@ -39,8 +38,8 @@ const getToWatchVideoWrapper = (video: VideoModel): string => {
   </article>`;
 };
 
-const renderMainPage = () => {
-  const videosToWatch = model.getLocalStorageItem('videos').filter((x) => x.checkView === false);
+const renderMainPage = (): void => {
+  const videosToWatch: VideoModel[] = (<VideoModel[]>model.getLocalStorageItem('videos')).filter((x: VideoModel) => x.checkView === false);
   const mainVideoSection: HTMLElement | null = $('#main-videos') as HTMLElement;
   mainVideoSection.innerHTML = getVideoHTML(videosToWatch, getToWatchVideoWrapper);
 };
