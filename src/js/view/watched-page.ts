@@ -1,7 +1,7 @@
 import { getToWatchVideoWrapper } from './main-page.js';
 import { model, VideoModel } from '../model/index.js';
-import { $ } from '../@shared/utils.js';
 import { getVideoHTML } from './index.js';
+import { $ } from '../@shared/utils.js';
 
 export const renderWatchedPage = (): void => {
   const videosWatched: VideoModel[] = (<VideoModel[]>model.getLocalStorageItem('videos')).filter(

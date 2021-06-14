@@ -1,6 +1,6 @@
-import { $, removeInnerHTML } from '../@shared/utils.js';
 import { VideoModel, model } from '../model/index.js';
 import { getVideoHTML } from './index.js';
+import { $ } from '../@shared/utils.js';
 
 const getToWatchVideoWrapper = (video: VideoModel): string => {
   return `<article class="clip">

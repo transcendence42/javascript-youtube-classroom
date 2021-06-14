@@ -1,4 +1,3 @@
-import { ENV } from '../@shared/env.js';
 import { searchPageModel } from './search-page.js';
 import { mainPageModel } from './main-page.js';
 

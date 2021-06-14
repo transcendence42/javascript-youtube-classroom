@@ -1,7 +1,7 @@
 import { model } from '../model/index.js';
 import { getModalWrapper } from './search-page.js';
-import { ENV } from '../@shared/env.js';
 import { renderMainPage } from './main-page.js';
+import { ENV } from '../@shared/env.js';
 import { $ } from '../@shared/utils.js';
 export function getVideoHTML(data, wrapper) {
     if (!data.length) {
