@@ -1,26 +1,26 @@
-import { IVideoInfo } from "../IVideoInfo.js";
+import { IVideoInfo } from '../IVideoInfo.js';
 
 export const getSavedVideos = (): IVideoInfo[] => {
-  const savedVideosStr: string | null = localStorage.getItem("savedVideos");
+  const savedVideosStr: string | null = localStorage.getItem('savedVideos');
   if (!savedVideosStr) {
     return [];
   }
-  let savedVideosList: IVideoInfo[]  = JSON.parse(savedVideosStr);
+  const savedVideosList: IVideoInfo[] = JSON.parse(savedVideosStr);
   return savedVideosList;
-}
+};
 
-export const saveVideo = (video: IVideoInfo) => {
+export const saveVideo = (video: IVideoInfo): void => {
   const savedVideosList: IVideoInfo[] = getSavedVideos();
-  video.saved = "yes";
+  video.saved = 'yes';
   savedVideosList.push(video);
-  localStorage.setItem("savedVideos", JSON.stringify(savedVideosList));
-}
+  localStorage.setItem('savedVideos', JSON.stringify(savedVideosList));
+};
 
-export const unsaveVideo = (videoId: string) => {
+export const unsaveVideo = (videoId: string): void => {
   let savedVideosList: IVideoInfo[] = getSavedVideos();
-  savedVideosList = savedVideosList.filter((video)=>video.videoId !== videoId);
-  localStorage.setItem("savedVideos", JSON.stringify(savedVideosList));
-}
+  savedVideosList = savedVideosList.filter((video) => video.videoId !== videoId);
+  localStorage.setItem('savedVideos', JSON.stringify(savedVideosList));
+};
 
 export const isSavedVideo = (videoId: string): boolean => {
   const savedVideosList: IVideoInfo[] = getSavedVideos();
@@ -29,6 +29,6 @@ export const isSavedVideo = (videoId: string): boolean => {
     if (video.videoId === videoId) {
       ret = true;
     }
-  })
+  });
   return ret;
-}
+};

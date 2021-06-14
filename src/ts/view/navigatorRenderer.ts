@@ -1,4 +1,4 @@
-import { $ } from "../util.js";
+import { $ } from '../util.js';
 
 const navigatorDiv = (): string => {
   return `
@@ -17,5 +17,5 @@ const navigatorDiv = (): string => {
 };
 
 export const navigatorRenderer = () => {
-  $("#app")?.insertAdjacentHTML("beforeend", navigatorDiv());
+  $('#app')?.insertAdjacentHTML('beforeend', navigatorDiv());
 };

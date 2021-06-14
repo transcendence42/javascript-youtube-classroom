@@ -24,7 +24,7 @@ import {
 } from "../model/handleLocalStorage/articleManager.js";
 import { keys } from "./apiKey.js";
 
-export const videoSearchPageController = () => {
+export const videoSearchPageController = (): void => {
   // add event close button
   const $modal: HTMLDivElement = $(".modal") as HTMLDivElement;
   $(".modal-close")!.addEventListener("click", () => onModalClose($modal));
@@ -38,10 +38,10 @@ export const videoSearchPageController = () => {
   showRecentKeywords();
 };
 
-const showRecentKeywords = () => {
+const showRecentKeywords = (): void => {
   getRecentKeywords()
     .reverse()
-    .forEach(keyword => {
+    .forEach((keyword: string) => {
       renderRecentKeyword(keyword);
       addClickEventToRecentKeyword(
         $("#recent-keyword > span")?.nextSibling as HTMLAnchorElement,
@@ -50,7 +50,7 @@ const showRecentKeywords = () => {
     });
 };
 
-const searchInfiniteScroll = () => {
+const searchInfiniteScroll = (): void => {
   if (
     $(".modal-inner")!.offsetHeight + $(".modal-inner")!.scrollTop >=
     $(".modal-inner")!.scrollHeight
@@ -64,11 +64,11 @@ const searchInfiniteScroll = () => {
   }
 };
 
-const onModalClose = ($modal: HTMLDivElement) => {
+const onModalClose = ($modal: HTMLDivElement): void => {
   $modal.classList.remove("open");
 };
 
-const searchOnYoutube = () => {
+const searchOnYoutube = (): void => {
   const inputValue: string = ($("#search-input") as HTMLInputElement).value;
   if (!isValidSearchInput(inputValue)) {
     ($("#search-input") as HTMLInputElement).value = "";
@@ -88,7 +88,7 @@ const isValidSearchInput = (searchValue: string): boolean => {
   return true;
 };
 
-const renderArticles = (searchValue: string) => {
+const renderArticles = (searchValue: string): void => {
   // when first search, delete articles
   if ($("#search-input")?.dataset.isFirstSearch === "true") {
     $("div.modal-inner section.video-wrapper")!.innerHTML = "";
@@ -128,7 +128,7 @@ const renderArticles = (searchValue: string) => {
     });
 };
 
-const addClickEventToSaveButton = (videoInfo: IVideoInfo) => {
+const addClickEventToSaveButton = (videoInfo: IVideoInfo): void => {
   const $saveButton: HTMLButtonElement = $(
     "div.modal-inner article.clip:last-child button"
   ) as HTMLButtonElement;
@@ -149,14 +149,14 @@ const addClickEventToSaveButton = (videoInfo: IVideoInfo) => {
   });
 };
 
-const convertDateFormat = (originalFormat: string) => {
+const convertDateFormat = (originalFormat: string): string => {
   const temp = new Date(originalFormat);
   return `${temp.getFullYear()}년 ${temp.getMonth() + 1}월 ${
     temp.getDate() + 1
   }일`;
 };
 
-const getSearchResult = async (searchTarget: string) => {
+const getSearchResult = async (searchTarget: string): Promise<string> => {
   const URI = `https://www.googleapis.com/youtube/v3/search?part=${
     keys.part
   }&key=${keys.apiKey}&q=${searchTarget}&maxResults=${keys.maxResults}&type=${
@@ -168,7 +168,7 @@ const getSearchResult = async (searchTarget: string) => {
   return body;
 };
 
-const addRecentKeyword = (searchValue: string) => {
+const addRecentKeyword = (searchValue: string): void => {
   removeDuplicateRecentKeyword(searchValue);
   renderRecentKeyword(searchValue);
   removeOldSearchKeyword();
@@ -179,7 +179,7 @@ const addRecentKeyword = (searchValue: string) => {
   );
 };
 
-const saveRecentKeywordListToLocalStorage = () => {
+const saveRecentKeywordListToLocalStorage = (): void => {
   let recentKeywordList: string[] = [];
   $$("a.chip")?.forEach(keyword => {
     recentKeywordList.push(keyword.innerText);
@@ -190,7 +190,7 @@ const saveRecentKeywordListToLocalStorage = () => {
 const addClickEventToRecentKeyword = (
   $keywordElement: HTMLAnchorElement,
   searchValue: string
-) => {
+): void => {
   $keywordElement.addEventListener("click", () => {
     removeModalArticles();
     $("#search-input")!.dataset.nextPageToken = "";
