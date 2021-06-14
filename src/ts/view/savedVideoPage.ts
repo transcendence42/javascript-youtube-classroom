@@ -7,7 +7,7 @@ export const renderEmptyVideoMessage = () => {
   ($('#saved-video-section') as HTMLDivElement).insertAdjacentHTML('beforeend', '<p>볼 영상이 없습니다.</p>');
 };
 
-export const renderVideo = (video: IVideoInfo): void => {
+export const renderArticle = (video: IVideoInfo): void => {
   ($('#saved-video-section') as HTMLDivElement).insertAdjacentHTML('beforeend', savedVideoArticle(video));
 };
 
@@ -20,7 +20,7 @@ export const savedVideoPageRenderer = (): void => {
     renderEmptyVideoMessage();
   }
   unwatchedVideoList.forEach((video) => {
-    renderVideo(video);
+    renderArticle(video);
   });
 };
 

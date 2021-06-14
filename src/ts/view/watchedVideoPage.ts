@@ -7,7 +7,7 @@ export const renderEmptyVideoMessage = () => {
   ($('#saved-video-section') as HTMLDivElement).insertAdjacentHTML('beforeend', '<p>본 영상이 없습니다.</p>');
 };
 
-export const renderVideo = (video: IVideoInfo): void => {
+export const renderArticle = (video: IVideoInfo): void => {
   ($('#saved-video-section') as HTMLDivElement).insertAdjacentHTML('beforeend', savedVideoArticle(video));
 };
 
@@ -20,7 +20,7 @@ export const watchedVideoPageRenderer = () => {
     renderEmptyVideoMessage();
   }
   watchedVideoList.forEach((video) => {
-    renderVideo(video);
+    renderArticle(video);
   });
   ($$('span.video-watched-button') as NodeListOf<HTMLSpanElement>).forEach((elem) => {
     elem.classList.remove('opacity-hover');
