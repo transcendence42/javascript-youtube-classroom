@@ -1,6 +1,6 @@
 import { $ } from '../util.js';
 import { videoSearchPageRenderer } from '../view/videoSearchPage.js';
-import { videoSearchPageController } from './videoSearchPageController.js';
+import { videoSearchPageController } from './videoSearchPage.js';
 
 const onModalShow = ($modal: HTMLDivElement): void => {
   $modal.classList.add('open');

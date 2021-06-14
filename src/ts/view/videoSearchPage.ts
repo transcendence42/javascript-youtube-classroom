@@ -8,7 +8,7 @@ import {
   modalArticleSection,
   modalArticle,
   skeleton,
-} from './modalPage/index.js';
+} from './videoSearchPageTemplates/index.js';
 import { IVideoInfo } from '../model/IVideoInfo.js';
 import { getSavedVideos } from '../model/handleLocalStorage/articleManager.js';
 
@@ -30,7 +30,7 @@ export const renderNotFoundImage = (): void => {
   removeModalArticles();
   $('div.modal-inner section.video-wrapper')?.insertAdjacentHTML(
     'beforeend',
-    '<img src="./src/images/status/not_found.png" />',
+    '<img src="./src/images/status/not_found.png" />'
   );
 };
 
@@ -47,9 +47,9 @@ export const reRenderNumOfSavedVideos = (): void => {
 };
 
 export const removeDuplicateRecentKeyword = (searchValue: string): void => {
-  ($$('.chip') as NodeListOf<HTMLAnchorElement>).forEach((elem) => {
-    if (elem.innerText === searchValue) {
-      elem.remove();
+  ($$('.chip') as NodeListOf<HTMLAnchorElement>).forEach((element) => {
+    if (element.innerText === searchValue) {
+      element.remove();
     }
   });
 };
@@ -61,8 +61,8 @@ export const removeOldSearchKeyword = (): void => {
 };
 
 export const removeSkeletons = (): void => {
-  $$('div.modal-inner section.video-wrapper .skeleton')?.forEach((elem) => {
-    elem.parentElement?.remove();
+  $$('div.modal-inner section.video-wrapper .skeleton')?.forEach((element) => {
+    element.parentElement?.remove();
   });
 };
 
