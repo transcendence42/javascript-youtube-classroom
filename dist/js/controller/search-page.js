@@ -31,6 +31,9 @@ const clickModalSearchButton = (e) => {
     if (e.keyCode && e.keyCode !== 13) {
         return;
     }
+    if (e.keyCode && e.keyCode === 13) {
+        console.log("hahahahaha", (e === null || e === void 0 ? void 0 : e.target).tagName);
+    }
     modalSearchInput =
         (e === null || e === void 0 ? void 0 : e.target).tagName === 'BUTTON' || (e === null || e === void 0 ? void 0 : e.target).tagName === 'INPUT'
             ? (_a = $('#modal-search-input')) === null || _a === void 0 ? void 0 : _a.value
@@ -122,7 +125,7 @@ export const modalController = () => {
     (_b = $('.modal-close')) === null || _b === void 0 ? void 0 : _b.addEventListener('click', onModalClose);
     (_c = $('#modal-search-button')) === null || _c === void 0 ? void 0 : _c.addEventListener('click', clickModalSearchButton);
     (_d = $('#modal-search-form')) === null || _d === void 0 ? void 0 : _d.addEventListener('submit', submitPreventDefault);
-    (_e = $('#modal-search-input')) === null || _e === void 0 ? void 0 : _e.addEventListener('keyup', clickModalSearchButton);
+    (_e = $('#modal-search-input')) === null || _e === void 0 ? void 0 : _e.addEventListener('keypress', clickModalSearchButton);
     (_f = $('#modal-recent-search-items')) === null || _f === void 0 ? void 0 : _f.addEventListener('click', clickModalSearchButton);
     (_g = $('#modal-videos')) === null || _g === void 0 ? void 0 : _g.addEventListener('click', clickModalVideosSaveButton);
     (_h = $('.modal-inner')) === null || _h === void 0 ? void 0 : _h.addEventListener('scroll', scrollModalInner);

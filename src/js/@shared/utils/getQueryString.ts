@@ -13,7 +13,7 @@ export const getQueryString = async ({
   nextPageToken: string;
 }) => {
   let data = await fetch(
-    `${ENV.YOUTUBE_SEARCH_URL}key=${ENV.API_KEY}&part=snippet&q=${q}&maxResults=${maxResults}&type=${type}&videoEmbeddable=true&pageToken=${nextPageToken}`,
+    encodeURI(`${ENV.YOUTUBE_SEARCH_URL}key=${ENV.API_KEY}&part=snippet&q=${q}&maxResults=${maxResults}&type=${type}&videoEmbeddable=true&pageToken=${nextPageToken}`),
   )
     .then((resp) => resp.json())
 	.then((items) => items);

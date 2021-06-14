@@ -113,7 +113,7 @@ const skeletonUI = `<article class="clip skeleton">
                       <p></p>
                     </div>
                     <div class="d-flex justify-end">
-                      <button class="btn modal-save-button">⬇️ 저장</button>
+                      <button class="btn modal-save-button opacity-hover">⬇️ 저장</button>
                     </div>
                   </div>
                 </div>

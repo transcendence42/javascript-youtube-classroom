@@ -22,7 +22,9 @@ const clickModalSearchButton = (e: Event | KeyboardEvent) => {
   if ((<KeyboardEvent>e).keyCode && (<KeyboardEvent>e).keyCode !== 13) {
     return;
   }
-
+  if ((<KeyboardEvent>e).keyCode && (<KeyboardEvent>e).keyCode === 13) {
+    console.log("hahahahaha", (<HTMLElement>e?.target).tagName)
+  }
   modalSearchInput =
     (<HTMLElement>e?.target).tagName === 'BUTTON' || (<HTMLElement>e?.target).tagName === 'INPUT'
       ? (<HTMLInputElement>$('#modal-search-input'))?.value
@@ -122,7 +124,7 @@ export const modalController = () => {
   $('.modal-close')?.addEventListener('click', onModalClose);
   $('#modal-search-button')?.addEventListener('click', clickModalSearchButton);
   $('#modal-search-form')?.addEventListener('submit', submitPreventDefault);
-  $('#modal-search-input')?.addEventListener('keyup', clickModalSearchButton);
+  $('#modal-search-input')?.addEventListener('keypress', clickModalSearchButton);
   $('#modal-recent-search-items')?.addEventListener('click', clickModalSearchButton);
   $('#modal-videos')?.addEventListener('click', clickModalVideosSaveButton);
   $('.modal-inner')?.addEventListener('scroll', scrollModalInner);
