@@ -39,7 +39,7 @@ export const renderSkeleton = (): void => {
 };
 
 export const reRenderSavedButtonText = ($button: HTMLButtonElement): void => {
-  $button.innerText = $button.innerText === '❌ 저장 취소' ? '⬇️ 저장' : '❌ 저장 취소';
+  $button.textContent = $button.textContent === '❌ 저장 취소' ? '⬇️ 저장' : '❌ 저장 취소';
 };
 
 export const reRenderNumOfSavedVideos = (): void => {
