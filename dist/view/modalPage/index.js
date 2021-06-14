@@ -6,14 +6,4 @@ import { modalDiv } from "./modalDiv.js";
 import { modalCloseButton } from "./modalCloseButton.js";
 import { modalHeader } from "./modalHeader.js";
 import { skeleton } from "./skeleton.js";
-
-export {
-  modalSearchForm,
-  modalRecentKeywordSection,
-  modalArticleSection,
-  modalArticle,
-  modalDiv,
-  modalCloseButton,
-  modalHeader,
-  skeleton
-};
+export { modalSearchForm, modalRecentKeywordSection, modalArticleSection, modalArticle, modalDiv, modalCloseButton, modalHeader, skeleton };

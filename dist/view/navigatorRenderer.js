@@ -1,7 +1,6 @@
 import { $ } from "../util.js";
-
-const navigatorDiv = (): string => {
-  return `
+const navigatorDiv = () => {
+    return `
   <div class="d-flex justify-center mt-5 w-100">
     <div class="w-100">
       <header class="my-4">
@@ -15,7 +14,7 @@ const navigatorDiv = (): string => {
     </div>
   </div>`;
 };
-
 export const navigatorRenderer = () => {
-  $("#app")?.insertAdjacentHTML("beforeend", navigatorDiv());
+    var _a;
+    (_a = $("#app")) === null || _a === void 0 ? void 0 : _a.insertAdjacentHTML("beforeend", navigatorDiv());
 };
