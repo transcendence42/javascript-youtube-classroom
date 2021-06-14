@@ -36,7 +36,7 @@ const showSnackBar = async (text: string): Promise<void>  => {
   if (snackbar) {
     snackbar.innerHTML = text;
     snackbar.classList.add('show');
-    await wait(3000);
+    await wait(2000);
     snackbar.classList.remove('show');
   }
 };

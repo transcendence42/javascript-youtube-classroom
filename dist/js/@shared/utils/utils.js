@@ -38,7 +38,7 @@ const showSnackBar = (text) => __awaiter(void 0, void 0, void 0, function* () {
     if (snackbar) {
         snackbar.innerHTML = text;
         snackbar.classList.add('show');
-        yield wait(3000);
+        yield wait(2000);
         snackbar.classList.remove('show');
     }
 });
