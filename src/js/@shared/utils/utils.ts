@@ -31,4 +31,14 @@ const setDataKey = (element: HTMLElement | null, key: string, text: string): voi
   }
 };
 
-export { $, $$, wait, removeChildNodes, removeInnerHTML, getDataKey, setDataKey };
+const showSnackBar = async (text: string): Promise<void>  => {
+  const snackbar: HTMLDivElement = $('#snackbar') as HTMLDivElement;
+  if (snackbar) {
+    snackbar.innerHTML = text;
+    snackbar.classList.add('show');
+    await wait(3000);
+    snackbar.classList.remove('show');
+  }
+};
+
+export { $, $$, wait, removeChildNodes, removeInnerHTML, getDataKey, setDataKey, showSnackBar };

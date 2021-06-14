@@ -4,14 +4,18 @@ import { watchedPageController } from './watched-page.js';
 import { likedPageController } from './liked-page.js';
 import { model } from '../model/index.js';
 import { $ } from '../@shared/utils/utils.js';
+import { showSnackBar } from '../@shared/utils/utils.js';
+import { MESSAGE } from '../@shared/constants/message.js';
 
 const clickCheckView = (clip: HTMLElement | null) => {
   const checkViewClassList: DOMTokenList = clip?.querySelector('.checkView')?.classList as DOMTokenList;
   model.toggleCheckView(clip?.querySelector('iframe')?.src);
   if (checkViewClassList.contains('opacity-hover')) {
     checkViewClassList.remove('opacity-hover');
+    showSnackBar(MESSAGE.VIEW_TRUE);
   } else {
     checkViewClassList.add('opacity-hover');
+    showSnackBar(MESSAGE.VIEW_FALSE);
   }
   if (!$('#liked-page-button')?.classList.contains('bg-cyan-100')) {
     clip?.remove();
@@ -23,8 +27,10 @@ const clickCheckLike = (clip: HTMLElement | null) => {
   model.toggleCheckLike(clip?.querySelector('iframe')?.src);
   if (checkLikeClassList.contains('opacity-hover')) {
     checkLikeClassList.remove('opacity-hover');
+    showSnackBar(MESSAGE.LIKE_TRUE);
   } else {
     checkLikeClassList.add('opacity-hover');
+    showSnackBar(MESSAGE.LIKE_FALSE);
     if ($('#liked-page-button')?.classList.contains('bg-cyan-100')) {
       clip?.remove();
     }
@@ -37,6 +43,7 @@ const clickCheckDelete = (clip: HTMLElement | null) => {
   }
   model.deleteSaveVideos(clip?.querySelector('iframe')?.src);
   clip?.remove();
+  showSnackBar(MESSAGE.VIDEO_DELETE);
 };
 
 const clickCheckButtons = (e: Event) => {

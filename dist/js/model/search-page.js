@@ -1,4 +1,5 @@
-import { ERROR_MESSAGE } from '../@shared/constants/error-message.js';
+import { MESSAGE } from '../@shared/constants/message.js';
+import { showSnackBar } from '../@shared/utils/utils.js';
 export const searchPageModel = {
     getLocalStorageItem(str) {
         const rawItem = localStorage.getItem(str);
@@ -27,7 +28,7 @@ export const searchPageModel = {
     addSaveVideos(video) {
         let videoItems = this.getLocalStorageItem('videos');
         if (videoItems.length >= 100) {
-            alert(ERROR_MESSAGE.MAX_VIDEO);
+            showSnackBar(MESSAGE.MAX_VIDEO_ERROR);
             return false;
         }
         if (videoItems.some((x) => x.videoLink === video.videoLink)) {

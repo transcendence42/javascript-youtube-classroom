@@ -33,4 +33,13 @@ const setDataKey = (element, key, text) => {
         element.dataset[`${key}`] = text;
     }
 };
-export { $, $$, wait, removeChildNodes, removeInnerHTML, getDataKey, setDataKey };
+const showSnackBar = (text) => __awaiter(void 0, void 0, void 0, function* () {
+    const snackbar = $('#snackbar');
+    if (snackbar) {
+        snackbar.innerHTML = text;
+        snackbar.classList.add('show');
+        yield wait(3000);
+        snackbar.classList.remove('show');
+    }
+});
+export { $, $$, wait, removeChildNodes, removeInnerHTML, getDataKey, setDataKey, showSnackBar };

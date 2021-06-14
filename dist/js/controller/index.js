@@ -4,15 +4,19 @@ import { watchedPageController } from './watched-page.js';
 import { likedPageController } from './liked-page.js';
 import { model } from '../model/index.js';
 import { $ } from '../@shared/utils/utils.js';
+import { showSnackBar } from '../@shared/utils/utils.js';
+import { MESSAGE } from '../@shared/constants/message.js';
 const clickCheckView = (clip) => {
     var _a, _b, _c;
     const checkViewClassList = (_a = clip === null || clip === void 0 ? void 0 : clip.querySelector('.checkView')) === null || _a === void 0 ? void 0 : _a.classList;
     model.toggleCheckView((_b = clip === null || clip === void 0 ? void 0 : clip.querySelector('iframe')) === null || _b === void 0 ? void 0 : _b.src);
     if (checkViewClassList.contains('opacity-hover')) {
         checkViewClassList.remove('opacity-hover');
+        showSnackBar(MESSAGE.VIEW_TRUE);
     }
     else {
         checkViewClassList.add('opacity-hover');
+        showSnackBar(MESSAGE.VIEW_FALSE);
     }
     if (!((_c = $('#liked-page-button')) === null || _c === void 0 ? void 0 : _c.classList.contains('bg-cyan-100'))) {
         clip === null || clip === void 0 ? void 0 : clip.remove();
@@ -24,9 +28,11 @@ const clickCheckLike = (clip) => {
     model.toggleCheckLike((_b = clip === null || clip === void 0 ? void 0 : clip.querySelector('iframe')) === null || _b === void 0 ? void 0 : _b.src);
     if (checkLikeClassList.contains('opacity-hover')) {
         checkLikeClassList.remove('opacity-hover');
+        showSnackBar(MESSAGE.LIKE_TRUE);
     }
     else {
         checkLikeClassList.add('opacity-hover');
+        showSnackBar(MESSAGE.LIKE_FALSE);
         if ((_c = $('#liked-page-button')) === null || _c === void 0 ? void 0 : _c.classList.contains('bg-cyan-100')) {
             clip === null || clip === void 0 ? void 0 : clip.remove();
         }
@@ -39,6 +45,7 @@ const clickCheckDelete = (clip) => {
     }
     model.deleteSaveVideos((_a = clip === null || clip === void 0 ? void 0 : clip.querySelector('iframe')) === null || _a === void 0 ? void 0 : _a.src);
     clip === null || clip === void 0 ? void 0 : clip.remove();
+    showSnackBar(MESSAGE.VIDEO_DELETE);
 };
 const clickCheckButtons = (e) => {
     const eventTarget = e.target;
