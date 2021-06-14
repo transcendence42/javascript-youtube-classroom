@@ -7,3 +7,10 @@
   border-style: none;
   cursor: pointer;
 }
+
+@media (prefers-color-scheme: dark) {
+  .btn {
+    color: white;
+    background-color: #5d5d5d;
+  }
+}

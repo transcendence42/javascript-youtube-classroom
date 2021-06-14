@@ -75,12 +75,22 @@ const clickNavButtons = (e: Event | null): void => {
   (<HTMLButtonElement>e?.target).classList.add('bg-cyan-100');
 };
 
+const clickDarkModeButton = (e: Event | null): void => {
+  const checkbox = e?.target as HTMLInputElement;
+  if (checkbox.checked) {
+    $('body')?.classList.add('dark');
+  } else {
+    $('body')?.classList.remove('dark');
+  }
+};
+
 function initController() {
   mainPageController();
   modalController();
   watchedPageController();
   likedPageController();
   $('#nav-buttons')?.addEventListener('click', clickNavButtons);
+  $('#dark-mode-toggle')?.addEventListener('click', clickDarkModeButton);
 }
 
 export { clickCheckButtons, initController };

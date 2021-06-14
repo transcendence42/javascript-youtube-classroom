@@ -75,12 +75,23 @@ const clickNavButtons = (e) => {
     (_d = $('#search-button')) === null || _d === void 0 ? void 0 : _d.classList.remove('bg-cyan-100');
     (e === null || e === void 0 ? void 0 : e.target).classList.add('bg-cyan-100');
 };
+const clickDarkModeButton = (e) => {
+    var _a, _b;
+    const checkbox = e === null || e === void 0 ? void 0 : e.target;
+    if (checkbox.checked) {
+        (_a = $('body')) === null || _a === void 0 ? void 0 : _a.classList.add('dark');
+    }
+    else {
+        (_b = $('body')) === null || _b === void 0 ? void 0 : _b.classList.remove('dark');
+    }
+};
 function initController() {
-    var _a;
+    var _a, _b;
     mainPageController();
     modalController();
     watchedPageController();
     likedPageController();
     (_a = $('#nav-buttons')) === null || _a === void 0 ? void 0 : _a.addEventListener('click', clickNavButtons);
+    (_b = $('#dark-mode-toggle')) === null || _b === void 0 ? void 0 : _b.addEventListener('click', clickDarkModeButton);
 }
 export { clickCheckButtons, initController };
