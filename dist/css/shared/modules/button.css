@@ -8,9 +8,7 @@
   cursor: pointer;
 }
 
-@media (prefers-color-scheme: dark) {
-  .btn {
-    color: white;
-    background-color: #5d5d5d;
-  }
+.dark .btn {
+  color: white;
+  background-color: #5d5d5d;
 }
