@@ -11,14 +11,14 @@ const onModalShow = ($modal: HTMLDivElement): void => {
   $('#search-input')?.focus();
 };
 
-const addClickEventToSavedVideoButton = () => {
+const addClickEventToSavedVideoButton = (): void => {
   ($('#watched-video-button') as HTMLButtonElement).classList.remove('bg-cyan-100');
   ($('#saved-video-button') as HTMLButtonElement).classList.add('bg-cyan-100');
   savedVideoPageRenderer();
   savedVideoPageController();
 };
 
-const addClickEventToWatchedVideoButton = () => {
+const addClickEventToWatchedVideoButton = (): void => {
   ($('#saved-video-button') as HTMLButtonElement).classList.remove('bg-cyan-100');
   ($('#watched-video-button') as HTMLButtonElement).classList.add('bg-cyan-100');
   watchedVideoPageRenderer();

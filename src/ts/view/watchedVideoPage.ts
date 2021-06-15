@@ -3,7 +3,7 @@ import { getSavedVideos } from '../model/handleLocalStorage/articleManager.js';
 import { savedVideoArticle, savedVideoSection } from './videoPage/index.js';
 import { IVideoInfo } from '../model/IVideoInfo.js';
 
-export const renderEmptyVideoMessage = () => {
+export const renderEmptyVideoMessage = (): void => {
   ($('#saved-video-section') as HTMLDivElement).insertAdjacentHTML('beforeend', '<p>본 영상이 없습니다.</p>');
 };
 
@@ -11,7 +11,7 @@ export const renderArticle = (video: IVideoInfo): void => {
   ($('#saved-video-section') as HTMLDivElement).insertAdjacentHTML('beforeend', savedVideoArticle(video));
 };
 
-export const watchedVideoPageRenderer = () => {
+export const watchedVideoPageRenderer = (): void => {
   $('#video-list')?.remove();
   $('header')?.insertAdjacentHTML('afterend', savedVideoSection());
   const savedVideoList = getSavedVideos();
@@ -19,7 +19,7 @@ export const watchedVideoPageRenderer = () => {
   if (watchedVideoList.length === 0) {
     renderEmptyVideoMessage();
   }
-  watchedVideoList.forEach((video) => {
+  watchedVideoList.forEach((video: IVideoInfo) => {
     renderArticle(video);
   });
   ($$('span.video-watched-button') as NodeListOf<HTMLSpanElement>).forEach((elem) => {
@@ -27,6 +27,6 @@ export const watchedVideoPageRenderer = () => {
   });
 };
 
-export const removeArticle = (article: HTMLDivElement) => {
+export const removeArticle = (article: HTMLDivElement): void => {
   article.remove();
 };

@@ -1,6 +1,6 @@
 import { snackbarRenderer } from '../view/snackbar.js';
 
-export const showSnackbar = (text: string) => {
+export const showSnackbar = (text: string): void => {
   const $snackbar: HTMLDivElement = document.createElement('div');
   $snackbar.classList.add('snackbar');
   $snackbar.textContent = text;

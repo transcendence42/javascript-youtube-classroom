@@ -3,7 +3,6 @@ import { unsaveVideo, changeWatchedState, getSavedVideos } from '../model/handle
 import { IVideoInfo } from '../model/IVideoInfo.js';
 import { removeArticle, renderEmptyVideoMessage } from '../view/savedVideoPage.js';
 import { reRenderSavedButtonText, reRenderNumOfSavedVideos } from '../view/videoSearchPage.js';
-import { showSnackbar } from './snackbar.js';
 
 const checkEmptyUnwatchedVideo = (): boolean => {
   let unwatchedVideoList: IVideoInfo[] = getSavedVideos().filter((video) => video.isWatched === false);
@@ -13,7 +12,7 @@ const checkEmptyUnwatchedVideo = (): boolean => {
   return false;
 };
 
-const addEventToWatchedButton = () => {
+const addEventToWatchedButton = (): void => {
   ($$('span.video-watched-button') as NodeListOf<HTMLSpanElement>).forEach((elem) => {
     elem.addEventListener('click', () => {
       const article: HTMLDivElement = elem.closest('article') as HTMLDivElement;
@@ -26,7 +25,7 @@ const addEventToWatchedButton = () => {
   });
 };
 
-const addEventToRemoveButton = () => {
+const addEventToRemoveButton = (): void => {
   ($$('span.video-remove-button') as NodeListOf<HTMLSpanElement>).forEach((elem) => {
     elem.addEventListener('click', () => {
       const article: HTMLDivElement = elem.closest('article') as HTMLDivElement;
@@ -52,7 +51,7 @@ const changeButtonInSearchPage = (article: HTMLDivElement): void => {
   });
 };
 
-export const savedVideoPageController = () => {
+export const savedVideoPageController = (): void => {
   addEventToWatchedButton();
   addEventToRemoveButton();
 };

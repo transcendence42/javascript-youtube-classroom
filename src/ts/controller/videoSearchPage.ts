@@ -16,7 +16,6 @@ import {
 import { saveVideo, unsaveVideo, isSavedVideo, getSavedVideos } from '../model/handleLocalStorage/articleManager.js';
 import { uriParameter } from './uriParameter.js';
 import { IYoutubeJSON } from '../model/IYoutubeJSON.js';
-import { renderArticle } from '../view/savedVideoPage.js';
 
 const onModalClose = ($modal: HTMLDivElement): void => {
   $modal.classList.remove('open');
@@ -57,7 +56,7 @@ const addRecentKeyword = (searchValue: string): void => {
 
 const saveRecentKeywordListToLocalStorage = (): void => {
   let recentKeywordList: string[] = [];
-  $$('a.chip')?.forEach((keyword) => {
+  $$('a.chip')?.forEach((keyword: HTMLAnchorElement) => {
     recentKeywordList.push(keyword.innerText);
   });
   saveRecentKeywordList(recentKeywordList);

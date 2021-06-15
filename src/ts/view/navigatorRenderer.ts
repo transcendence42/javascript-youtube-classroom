@@ -16,6 +16,6 @@ const navigatorDiv = (): string => {
   </div>`;
 };
 
-export const navigatorRenderer = () => {
+export const navigatorRenderer = (): void => {
   $('#app')?.insertAdjacentHTML('beforeend', navigatorDiv());
 };

@@ -3,7 +3,7 @@ import { getSavedVideos } from '../model/handleLocalStorage/articleManager.js';
 import { savedVideoArticle, savedVideoSection } from './videoPage/index.js';
 import { IVideoInfo } from '../model/IVideoInfo.js';
 
-export const renderEmptyVideoMessage = () => {
+export const renderEmptyVideoMessage = (): void => {
   ($('#saved-video-section') as HTMLDivElement).insertAdjacentHTML('beforeend', '<p>볼 영상이 없습니다.</p>');
 };
 
@@ -19,7 +19,7 @@ export const savedVideoPageRenderer = (): void => {
   if (unwatchedVideoList.length === 0) {
     renderEmptyVideoMessage();
   }
-  unwatchedVideoList.forEach((video) => {
+  unwatchedVideoList.forEach((video: IVideoInfo) => {
     renderArticle(video);
   });
 };

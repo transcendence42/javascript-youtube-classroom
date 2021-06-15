@@ -1,4 +1,4 @@
-import { $, $$ } from '../util.js';
+import { $$ } from '../util.js';
 import { changeWatchedState, unsaveVideo, getSavedVideos } from '../model/handleLocalStorage/articleManager.js';
 import { IVideoInfo } from '../model/IVideoInfo.js';
 import { removeArticle, renderEmptyVideoMessage } from '../view/watchedVideoPage.js';
@@ -12,7 +12,7 @@ const checkEmptyWatchedVideo = (): boolean => {
   return false;
 };
 
-const addEventToWatchedButton = () => {
+const addEventToWatchedButton = (): void => {
   ($$('span.video-watched-button') as NodeListOf<HTMLSpanElement>).forEach((elem) => {
     elem.addEventListener('click', () => {
       const article: HTMLDivElement = elem.closest('article') as HTMLDivElement;
@@ -51,7 +51,7 @@ const changeButtonInSearchPage = (article: HTMLDivElement): void => {
   });
 };
 
-export const watchedVideoPageController = () => {
+export const watchedVideoPageController = (): void => {
   addEventToWatchedButton();
   addEventToRemoveButton();
 };
