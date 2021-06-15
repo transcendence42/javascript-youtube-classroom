@@ -1,4 +1,6 @@
-dist
+# dist
+src/ts/controller/uriParameter.ts
+dist/js/controller/uriParameter.js
 
 # Logs
 logs
