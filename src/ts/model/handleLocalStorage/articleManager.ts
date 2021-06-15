@@ -12,7 +12,7 @@ export const getSavedVideos = (): IVideoInfo[] => {
 
 export const saveVideo = (video: IVideoInfo): void => {
   const savedVideosList: IVideoInfo[] = getSavedVideos();
-  video.saved = 'yes';
+  video.isSaved = true;
   savedVideosList.push(video);
   localStorage.setItem('savedVideos', JSON.stringify(savedVideosList));
   showSnackbar('동영상이 저장되었습니다.');

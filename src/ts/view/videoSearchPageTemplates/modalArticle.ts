@@ -1,7 +1,7 @@
-import { IVideoInfo } from "../../model/IVideoInfo.js";
+import { IVideoInfo } from '../../model/IVideoInfo.js';
 
 export const modalArticle = (obj: IVideoInfo): string => {
-  const buttonText: string = obj.saved === "yes" ? "❌ 저장 취소" : "⬇️ 저장";
+  const buttonText: string = obj.isSaved ? '❌ 저장 취소' : '⬇️ 저장';
   return `
   <article class="clip">
     <div class="preview-container">
@@ -20,9 +20,9 @@ export const modalArticle = (obj: IVideoInfo): string => {
           <p>${obj.publishedAt}</p>
         </div>
         <div class="d-flex justify-end">
-          <button class="btn" data-video-id="${obj.videoId}" data-saved="${obj.saved}">${buttonText}</button>
+          <button class="btn" data-video-id="${obj.videoId}" data-saved="${obj.isSaved}">${buttonText}</button>
         </div>
       </div>
     </div>
   </article>`;
-}
+};

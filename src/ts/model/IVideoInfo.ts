@@ -4,6 +4,6 @@ export interface IVideoInfo {
   publishedAt: string;
   channelId: string;
   channelTitle: string;
-  saved: string;
+  isSaved: boolean;
   isWatched: boolean;
 }

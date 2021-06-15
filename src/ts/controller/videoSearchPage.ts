@@ -56,7 +56,7 @@ const addRecentKeyword = (searchValue: string): void => {
 
 const saveRecentKeywordListToLocalStorage = (): void => {
   let recentKeywordList: string[] = [];
-  $$('a.chip')?.forEach((keyword: HTMLAnchorElement) => {
+  ($$('a.chip') as NodeListOf<HTMLAnchorElement>).forEach((keyword): void => {
     recentKeywordList.push(keyword.innerText);
   });
   saveRecentKeywordList(recentKeywordList);
@@ -95,7 +95,7 @@ const renderArticles = (searchValue: string): void => {
           publishedAt: convertDateFormat(video.snippet.publishedAt),
           channelId: video.snippet.channelId,
           channelTitle: video.snippet.channelTitle,
-          saved: isSavedVideo(video.id.videoId) ? 'yes' : 'no',
+          isSaved: isSavedVideo(video.id.videoId) ? true : false,
           isWatched: false,
         };
         renderSearchedArticle(videoInfo);
@@ -123,19 +123,19 @@ const getSearchResult = async (searchTarget: string): Promise<string> => {
 const addClickEventToSaveButton = (videoInfo: IVideoInfo): void => {
   const $saveButton: HTMLButtonElement = $('div.modal-inner article.clip:last-child button') as HTMLButtonElement;
   $saveButton.addEventListener('click', () => {
-    if ($saveButton.dataset.saved === 'no') {
+    if ($saveButton.dataset.saved === 'false') {
       if (getSavedVideos().length === 100) {
         alert('저장된 동영상의 갯수가 100개를 넘을 수 없습니다.');
         return;
       }
       saveVideo(videoInfo);
-      $saveButton.dataset.saved = 'yes';
+      $saveButton.dataset.saved = 'true';
     } else {
       if (!confirm('정말 삭제하시겠습니까?')) {
         return;
       }
       unsaveVideo($saveButton.dataset.videoId!);
-      $saveButton.dataset.saved = 'no';
+      $saveButton.dataset.saved = 'false';
     }
     reRenderSavedButtonText($saveButton);
     reRenderNumOfSavedVideos();

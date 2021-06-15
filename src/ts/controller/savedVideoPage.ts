@@ -45,7 +45,7 @@ const addEventToRemoveButton = (): void => {
 const changeButtonInSearchPage = (article: HTMLDivElement): void => {
   ($$('#searched-article-wrapper button') as NodeListOf<HTMLButtonElement>).forEach((elem) => {
     if (elem.dataset.videoId === article.dataset.videoId) {
-      elem.dataset.saved = 'no';
+      elem.dataset.saved = 'false';
       reRenderSavedButtonText(elem);
     }
   });

@@ -55,13 +55,13 @@ export const removeDuplicateRecentKeyword = (searchValue: string): void => {
 };
 
 export const removeOldSearchKeyword = (): void => {
-  if (($$('.chip') as NodeList).length === 4) {
+  if (($$('.chip') as NodeListOf<HTMLAnchorElement>).length === 4) {
     $('a.chip:last-child')?.remove();
   }
 };
 
 export const removeSkeletons = (): void => {
-  $$('div.modal-inner section.video-wrapper .skeleton')?.forEach((element) => {
+  ($$('div.modal-inner section.video-wrapper .skeleton') as NodeListOf<HTMLDivElement>).forEach((element) => {
     element.parentElement?.remove();
   });
 };
