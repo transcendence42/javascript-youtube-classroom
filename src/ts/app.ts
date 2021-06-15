@@ -1,5 +1,5 @@
-import { navigatorController } from './controller/navigatorController.js';
-import { navigatorRenderer } from './view/navigatorRenderer.js';
+import { navigatorController } from './controller/navigator.js';
+import { navigatorRenderer } from './view/navigator.js';
 
 export const app = (): void => {
   navigatorRenderer();

@@ -1,6 +1,6 @@
 import { $ } from '../util.js';
 import { getSavedVideos } from '../model/handleLocalStorage/articleManager.js';
-import { savedVideoArticle, savedVideoSection } from './videoPage/index.js';
+import { savedVideoArticle, savedVideoSection } from './videoPageTemplates/index.js';
 import { IVideoInfo } from '../model/IVideoInfo.js';
 
 export const renderEmptyVideoMessage = (): void => {
