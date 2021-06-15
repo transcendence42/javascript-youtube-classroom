@@ -109,9 +109,7 @@ const renderArticles = (searchValue: string): void => {
 };
 
 const getSearchResult = async (searchTarget: string): Promise<string> => {
-  const URI: string = `https://www.googleapis.com/youtube/v3/search?part=${uriParameter.part}&key=${
-    uriParameter.key
-  }&q=${searchTarget}&maxResults=${uriParameter.maxResults}&type=${uriParameter.type}&pageToken=${
+  const URI: string = `https://wizardly-almeida-959c19.netlify.app/.netlify/functions/myFunction/search?part=${uriParameter.part}&q=${searchTarget}&maxResults=${uriParameter.maxResults}&type=${uriParameter.type}&pageToken=${
     $('#search-input')!.dataset.nextPageToken
   }`;
   const response = await fetch(URI);
