@@ -1,8 +1,9 @@
-import { $, $$ } from '../util.js';
+import { $$ } from '../util.js';
 import { unsaveVideo, changeWatchedState, getSavedVideos } from '../model/handleLocalStorage/articleManager.js';
 import { IVideoInfo } from '../model/IVideoInfo.js';
 import { removeArticle, renderEmptyVideoMessage } from '../view/savedVideoPage.js';
 import { reRenderSavedButtonText, reRenderNumOfSavedVideos } from '../view/videoSearchPage.js';
+import { showSnackbar } from './snackbar.js';
 
 const checkEmptyUnwatchedVideo = (): boolean => {
   let unwatchedVideoList: IVideoInfo[] = getSavedVideos().filter((video) => video.isWatched === false);
